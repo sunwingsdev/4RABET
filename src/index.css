@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* Style the container to allow proper positioning */
 .slider-container {
   position: relative;
@@ -29,4 +30,14 @@
 .mySwiper .swiper-pagination-bullet-active {
   background-color: #0051ff; /* Active dot color */
   opacity: 1;
+
+/* Custom scrollbar hide */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+
 }
