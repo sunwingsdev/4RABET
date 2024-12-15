@@ -22,7 +22,7 @@ const PopularCategory = () => {
   }, []);
 
   return (
-    <div>
+    <div className="w-[97.5rem]">
       {/* Header Section */}
       <div className="flex flex-row items-center justify-between">
         <div className="flex flex-row gap-2 mb-8">
