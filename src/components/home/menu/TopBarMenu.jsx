@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import logo from "../../../assets/logo.svg";
 import flag from "../../../assets/EN.svg";
+import { topMenu } from "../../MenuItems";
 
 const TopBarMenu = () => {
   return (
@@ -19,21 +20,13 @@ const TopBarMenu = () => {
           </Link>
         </div>
         <div className="flex gap-6 text-white font-bold text-base">
-          <Link>
-            <p className="py-4 border-b-2 hover:text-[#1976d2] border-[#18263AE6] hover:border-[#1976d2] duration-300">
-              Main
-            </p>
-          </Link>
-          <Link>
-            <p className="py-4 border-b-2 hover:text-[#1976d2] border-[#18263AE6] hover:border-[#1976d2] duration-300">
-              Main
-            </p>
-          </Link>
-          <Link>
-            <p className="py-4 border-b-2 hover:text-[#1976d2] border-[#18263AE6] hover:border-[#1976d2] duration-300">
-              Main
-            </p>
-          </Link>
+          {topMenu.map((menu) => (
+            <Link key={menu.id} to={menu.link}>
+              <p className="py-4 border-b-2 hover:text-[#1976d2] border-[#18263AE6] hover:border-[#1976d2] duration-300">
+                {menu.label}
+              </p>
+            </Link>
+          ))}
         </div>
       </div>
       <div className="flex items-center gap-6">

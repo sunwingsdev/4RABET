@@ -16,7 +16,7 @@ const MainLayout = () => {
             <LeftSitBarMenu />
           </div>
         </div>
-        <div className="pt-20 pr-20 pl-64">
+        <div className="absolute top-0 left-60 right-0">
           <Outlet />
         </div>
         <div className="fixed right-0 z-10">

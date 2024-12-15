@@ -1,13 +1,7 @@
-
 import "./App.css";
-import AllGames from "./pages/all-games/AllGames";
 
 function App() {
-  return (
-    <>
-      <AllGames />
-    </>
-  );
+  return <></>;
 }
 
 export default App;
