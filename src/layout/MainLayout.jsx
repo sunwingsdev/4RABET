@@ -5,28 +5,24 @@ import RightSitBarMenu from "../components/home/menu/RightSitBarMenu";
 
 const MainLayout = () => {
   return (
-    <div className="bg-[#152234] h-screen overflow-hidden">
-      {/* টপবার */}
+    <div className="bg-[#152234]">
+      {/* <Menu /> */}
       <div className="fixed top-0 z-50 w-full">
         <TopBarMenu />
       </div>
-
-      {/* লেফট সাইডবার */}
-      <div className="fixed left-0 z-10">
-        <div className="w-60 h-screen bg-[#0d1827] border-r border-[#293b55]">
-          <LeftSitBarMenu />
+      <div className="flex">
+        <div className="fixed left-0 z-10">
+          <div className="w-60 h-screen overflow-y-auto scrollbar-hide bg-[#0d1827] border-r border-[#293b55]">
+            <LeftSitBarMenu />
+          </div>
         </div>
-      </div>
-
-      {/* আউটলেট (মেইন কন্টেন্ট) */}
-      <div className="ml-60 mr-16 pt-20 h-screen overflow-y-auto bg-red-800">
-        <Outlet />
-      </div>
-
-      {/* রাইট সাইডবার */}
-      <div className="fixed right-0 z-50">
-        <div className="w-16 h-screen bg-[#182539] border-l border-[#293b55]">
-          <RightSitBarMenu />
+        <div className="pt-20 pr-20 pl-64">
+          <Outlet />
+        </div>
+        <div className="fixed right-0 z-10">
+          <div className="w-16 h-screen overflow-y-auto scrollbar-hide bg-[#182539] border-l border-[#293b55]">
+            <RightSitBarMenu />
+          </div>
         </div>
       </div>
     </div>
