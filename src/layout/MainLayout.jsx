@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import TopBarMenu from "../components/home/menu/TopBarMenu";
 import LeftSitBarMenu from "../components/home/menu/LeftSitBarMenu";
 import RightSitBarMenu from "../components/home/menu/RightSitBarMenu";
+import Footer from "../components/shared/Footer";
 
 const MainLayout = () => {
   return (
@@ -18,6 +19,7 @@ const MainLayout = () => {
         </div>
         <div className="absolute top-0 left-60 right-0">
           <Outlet />
+          <Footer />
         </div>
         <div className="fixed right-0 z-10">
           <div className="w-16 h-screen overflow-y-auto scrollbar-hide bg-[#182539] border-l border-[#293b55]">
