@@ -1,5 +1,12 @@
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import baccaratImg from "../../assets/menu/11.png";
 import { Swiper, SwiperSlide } from "swiper/react";
-import popularImg from "../../assets/images/icons/popular.png";
+import "swiper/css";
+import "swiper/css/grid";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
+import { useEffect, useRef } from "react";
+import Games from "../shared/Games";
 import aviatorImg from "../../assets/images/aviator.jpeg";
 import superAceImg from "../../assets/popular/2.jpg";
 import funkyTimeImg from "../../assets/popular/3.jpg";
@@ -11,25 +18,16 @@ import coinVolcanoImg from "../../assets/popular/8.jpg";
 import luckyNekoImg from "../../assets/popular/9.jpg";
 import bonusManiaImg from "../../assets/popular/10.jpg";
 import sunOfEgyptImg from "../../assets/popular/11.jpg";
-import "swiper/css";
-import "swiper/css/grid";
-import "swiper/css/navigation";
-import { Grid, Navigation } from "swiper/modules";
-import Games from "../shared/Games";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useEffect, useRef } from "react";
 
-const PopularCategory = () => {
-  const swiperRef = useRef(null); // Create a reference for Swiper instance
-
+const BaccaratGames = () => {
+  const swiperRef9 = useRef(null);
   useEffect(() => {
     // Ensure navigation links are ready
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.navigation.update();
+    if (swiperRef9.current && swiperRef9.current.swiper) {
+      swiperRef9.current.swiper.navigation.update();
     }
   }, []);
-
-  const popularGames = [
+  const baccaratGames = [
     { id: 1, img: aviatorImg, title: "Aviator" },
     { id: 2, img: superAceImg, title: "Super Ace" },
     { id: 3, img: funkyTimeImg, title: "Funky Time" },
@@ -51,29 +49,28 @@ const PopularCategory = () => {
     { id: 19, img: sunOfEgyptImg, title: "Sun Of Egypt" },
     { id: 20, img: sunOfEgyptImg, title: "Sun Of Egypt" },
   ];
-
   return (
     <div className="w-[97.5rem] bg-gradient-to-b from-[#0e192a] to-[#091222]">
       {/* Header Section */}
-      <div className="flex flex-row items-center justify-between py-4">
+      <div className="flex flex-row items-center justify-between  py-4">
         <div className="flex flex-row items-center gap-1">
           <img
-            src={popularImg}
+            src={baccaratImg}
             className="w-10 h-10"
-            alt="popular category image"
+            alt="new game category image"
           />
-          <h1 className="text-lg font-bold text-white">Popular</h1>
+          <h1 className="text-lg font-bold text-white">Baccarat</h1>
         </div>
         <div className="flex flex-row items-center gap-2">
           <div className="px-4 py-1 bg-[#152436] rounded-md">
-            <p className="text-sm text-slate-400">114 Games</p>
+            <p className="text-sm text-slate-400">143 Games</p>
           </div>
           {/* Custom Swiper Navigation */}
           <div className="flex flex-row items-center gap-2">
-            <div className="custom-prev bg-[#152436] w-8 h-8 rounded-md flex items-center justify-center cursor-pointer">
+            <div className="baccarat-prev bg-[#152436] w-8 h-8 rounded-md flex items-center justify-center cursor-pointer">
               <IoIosArrowBack className="text-slate-400 text-xl" />
             </div>
-            <div className="custom-next bg-[#152436] w-8 h-8 rounded-md flex items-center justify-center cursor-pointer">
+            <div className="baccarat-next bg-[#152436] w-8 h-8 rounded-md flex items-center justify-center cursor-pointer">
               <IoIosArrowForward className="text-slate-400 text-xl" />
             </div>
           </div>
@@ -83,22 +80,18 @@ const PopularCategory = () => {
       {/* Swiper Component */}
       <div>
         <Swiper
-          ref={swiperRef} // Attach ref to Swiper
+          ref={swiperRef9} // Attach ref to Swiper
           slidesPerView={7}
-          grid={{
-            rows: 2,
-            fill: "col",
-          }}
           spaceBetween={20}
           navigation={{
-            prevEl: ".custom-prev",
-            nextEl: ".custom-next",
+            prevEl: ".baccarat-prev",
+            nextEl: ".baccarat-next",
           }}
-          modules={[Grid, Navigation]}
+          modules={[Navigation]}
           className="mySwiper"
         >
           {/* Map over popularGames to render Games component */}
-          {popularGames.map((game) => (
+          {baccaratGames.map((game) => (
             <SwiperSlide key={game.id}>
               <div className="text-white rounded-md text-center">
                 <Games img={game.img} title={game.title} /> {/* Pass props */}
@@ -111,4 +104,4 @@ const PopularCategory = () => {
   );
 };
 
-export default PopularCategory;
+export default BaccaratGames;

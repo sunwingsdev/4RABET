@@ -1,3 +1,18 @@
+import allGameImg from "../assets/menu/1.png";
+import popularImg from "../assets/menu/2.png";
+import rabetImg from "../assets/menu/3.png";
+import newGameImg from "../assets/menu/4.png";
+import liveGameImg from "../assets/menu/5.png";
+import slotImg from "../assets/menu/6.png";
+import crashGameImg from "../assets/menu/7.png";
+import localGameImg from "../assets/menu/8.png";
+import fastGameImg from "../assets/menu/9.png";
+import rouletteImg from "../assets/menu/10.png";
+import baccaratImg from "../assets/menu/11.png";
+import blackjackImg from "../assets/menu/12.png";
+import tableImg from "../assets/menu/13.png";
+import virtualSportsImg from "../assets/menu/14.png";
+import otherImg from "../assets/menu/15.png";
 // Top Menu
 const topMenu = [
   {
@@ -61,91 +76,91 @@ const leftSideMenu = [
   {
     id: 1,
     label: "All Games",
-    Icon: "FaGamepad",
+    Icon: allGameImg,
     link: "/all-games",
   },
   {
     id: 2,
     label: "Popular",
-    Icon: "FaStar",
+    Icon: popularImg,
     link: "/popular",
   },
   {
     id: 3,
     label: "4Rabet Exclusive",
-    Icon: "FaCrown",
+    Icon: rabetImg,
     link: "/4rabet-exclusive",
   },
   {
     id: 4,
     label: "New Games",
-    Icon: "FaClock",
+    Icon: newGameImg,
     link: "/new-games",
   },
   {
     id: 5,
     label: "Live Games",
-    Icon: "FaTv",
+    Icon: liveGameImg,
     link: "/live-games",
   },
   {
     id: 6,
     label: "Slots",
-    Icon: "FaDice",
+    Icon: slotImg,
     link: "/slots",
   },
   {
     id: 7,
     label: "Crash Games",
-    Icon: "FaRocket",
+    Icon: crashGameImg,
     link: "/crash-games",
   },
   {
     id: 8,
     label: "Local Games",
-    Icon: "FaFlag",
+    Icon: localGameImg,
     link: "/local-games",
   },
   {
     id: 9,
     label: "Fast Games",
-    Icon: "FaBolt",
+    Icon: fastGameImg,
     link: "/fast-games",
   },
   {
     id: 10,
     label: "Roulette",
-    Icon: "FaCircle",
+    Icon: rouletteImg,
     link: "/roulette",
   },
   {
     id: 11,
     label: "Baccarat",
-    Icon: "FaSuitcase",
+    Icon: baccaratImg,
     link: "/baccarat",
   },
   {
     id: 12,
     label: "Blackjack",
-    Icon: "FaBlackTie",
+    Icon: blackjackImg,
     link: "/blackjack",
   },
   {
     id: 13,
     label: "Table",
-    Icon: "FaTable",
+    Icon: tableImg,
     link: "/table",
   },
   {
     id: 14,
     label: "Virtual Sports",
-    Icon: "FaFootballBall",
+    Icon: virtualSportsImg,
     link: "/virtual-sports",
   },
   {
     id: 15,
     label: "Other",
-    Icon: "FaEllipsisH",
+    Icon: otherImg,
     link: "/other",
   },
 ];
