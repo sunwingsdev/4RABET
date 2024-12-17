@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+input[data-autocompleted] {
+  background-color: transparent !important;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 
 /* Style the container to allow proper positioning */
 .slider-container {
@@ -30,7 +47,7 @@
 .mySwiper .swiper-pagination-bullet-active {
   background-color: #0051ff; /* Active dot color */
   opacity: 1;
-
+}
 /* Custom scrollbar hide */
 .scrollbar-hide {
   scrollbar-width: none; /* Firefox */
@@ -39,5 +56,4 @@
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
-
 }

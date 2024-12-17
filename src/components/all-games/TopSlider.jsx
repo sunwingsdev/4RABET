@@ -8,7 +8,7 @@ import image3 from "../../assets/images/3.jpg";
 
 const TopSlider = () => {
   return (
-    <div className="slider-container">
+    <div className="slider-container w-[97.5rem] overflow-hidden rounded-md">
       <Swiper
         pagination={{
           clickable: true,
@@ -20,12 +20,15 @@ const TopSlider = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
+        {/* Slide 1 */}
         <SwiperSlide>
           <img src={image1} alt="Slide 1" />
         </SwiperSlide>
+        {/* Slide 2 */}
         <SwiperSlide>
           <img src={image2} alt="Slide 2" />
         </SwiperSlide>
+        {/* Slide 3 */}
         <SwiperSlide>
           <img src={image3} alt="Slide 3" />
         </SwiperSlide>

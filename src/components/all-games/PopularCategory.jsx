@@ -1,5 +1,16 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import popularImg from "../../assets/images/icons/popular.png";
+import aviatorImg from "../../assets/images/aviator.jpeg";
+import superAceImg from "../../assets/popular/2.jpg";
+import funkyTimeImg from "../../assets/popular/3.jpg";
+import fortuneGemsImg from "../../assets/popular/4.jpg";
+import superBurningWinsImg from "../../assets/popular/5.jpg";
+import dragonpearlsImg from "../../assets/popular/6.jpg";
+import dreamCatcherImg from "../../assets/popular/7.jpg";
+import coinVolcanoImg from "../../assets/popular/8.jpg";
+import luckyNekoImg from "../../assets/popular/9.jpg";
+import bonusManiaImg from "../../assets/popular/10.jpg";
+import sunOfEgyptImg from "../../assets/popular/11.jpg";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/navigation";
@@ -11,9 +22,6 @@ import { useEffect, useRef } from "react";
 const PopularCategory = () => {
   const swiperRef = useRef(null); // Create a reference for Swiper instance
 
-  // Array to render Games component 20 times
-  const gamesArray = Array.from({ length: 20 }, (_, i) => i + 1);
-
   useEffect(() => {
     // Ensure navigation links are ready
     if (swiperRef.current && swiperRef.current.swiper) {
@@ -21,14 +29,37 @@ const PopularCategory = () => {
     }
   }, []);
 
+  const popularGames = [
+    { id: 1, img: aviatorImg, title: "Aviator" },
+    { id: 2, img: superAceImg, title: "Super Ace" },
+    { id: 3, img: funkyTimeImg, title: "Funky Time" },
+    { id: 4, img: fortuneGemsImg, title: "Fortune Gems" },
+    { id: 5, img: superBurningWinsImg, title: "Super Burning Wins" },
+    { id: 6, img: dragonpearlsImg, title: "Dragon Pearls" },
+    { id: 7, img: dreamCatcherImg, title: "Dream Catcher" },
+    { id: 8, img: coinVolcanoImg, title: "Coin Volcano" },
+    { id: 9, img: luckyNekoImg, title: "Lucky Neko" },
+    { id: 10, img: bonusManiaImg, title: "Bonus Mania" },
+    { id: 11, img: sunOfEgyptImg, title: "Sun Of Egypt" },
+    { id: 12, img: sunOfEgyptImg, title: "Sun Of Egypt" },
+    { id: 13, img: sunOfEgyptImg, title: "Sun Of Egypt" },
+    { id: 14, img: sunOfEgyptImg, title: "Sun Of Egypt" },
+    { id: 15, img: sunOfEgyptImg, title: "Sun Of Egypt" },
+    { id: 16, img: sunOfEgyptImg, title: "Sun Of Egypt" },
+    { id: 17, img: sunOfEgyptImg, title: "Sun Of Egypt" },
+    { id: 18, img: sunOfEgyptImg, title: "Sun Of Egypt" },
+    { id: 19, img: sunOfEgyptImg, title: "Sun Of Egypt" },
+    { id: 20, img: sunOfEgyptImg, title: "Sun Of Egypt" },
+  ];
+
   return (
-    <div>
+    <div className="w-[97.5rem] bg-gradient-to-b from-[#0e192a] to-[#091222]">
       {/* Header Section */}
-      <div className="flex flex-row items-center justify-between">
-        <div className="flex flex-row gap-2 mb-8">
+      <div className="flex flex-row items-center justify-between py-4">
+        <div className="flex flex-row items-center gap-1">
           <img
             src={popularImg}
-            className="w-6 h-6"
+            className="w-10 h-10"
             alt="popular category image"
           />
           <h1 className="text-lg font-bold text-white">Popular</h1>
@@ -66,11 +97,11 @@ const PopularCategory = () => {
           modules={[Grid, Navigation]}
           className="mySwiper"
         >
-          {/* Map over gamesArray to render Games component */}
-          {gamesArray.map((_, index) => (
-            <SwiperSlide key={index}>
+          {/* Map over popularGames to render Games component */}
+          {popularGames.map((game) => (
+            <SwiperSlide key={game.id}>
               <div className="text-white rounded-md text-center">
-                <Games /> {/* Render the Games component */}
+                <Games img={game.img} title={game.title} /> {/* Pass props */}
               </div>
             </SwiperSlide>
           ))}
