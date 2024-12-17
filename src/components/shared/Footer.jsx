@@ -209,66 +209,69 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-3 border-y-2 border-[#283548] py-5 mt-8">
+
+        <div className="grid items-center grid-cols-3 xl:grid-cols-9 gap-3 border-y-2 border-[#283548] py-5 mt-8">
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-              className="w-20"
+              className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
             />
           </div>
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-              className="w-20"
+
+              className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
             />
           </div>
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-              className="w-20"
+
+              className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
             />
           </div>
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-              className="w-20"
+              className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
             />
           </div>
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-              className="w-20"
+              className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
             />
           </div>
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-              className="w-20"
+              className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
             />
           </div>
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-              className="w-20"
+              className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
             />
           </div>
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-              className="w-20"
+              className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
             />
           </div>
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-              className="w-20"
+              className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
             />
@@ -312,18 +315,26 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="w-full mt-5 grid grid-cols-4 gap-2 gap-y-4">
+        <div className="w-full mt-5 grid grid-cols-1 xl:grid-cols-4 gap-2 gap-y-4">
           {faqs.map((faq, index) => (
-            <div key={index} className={index === 0 ? "col-span-4" : ""}>
+            <div
+              key={index}
+              className={index === 0 ? "col-span-1 xl:col-span-4" : ""}
+            >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full flex justify-between items-center text-xs font-semibold bg-[#182536] text-white border border-[#283548] px-4 py-2 rounded-lg focus:outline-none focus:ring-0"
+                className={`w-full flex justify-between items-center text-xs font-semibold bg-[#182536] text-white border border-[#283548] px-4 py-2 
+          ${
+            openIndex === index
+              ? "rounded-t-lg" // টপ রাউন্ডেড
+              : "rounded-lg" // নরমাল রাউন্ডেড
+          } focus:outline-none focus:ring-0`}
               >
                 <span>{faq.question}</span>
                 <span>{openIndex === index ? "▲" : "▼"}</span>
               </button>
               {openIndex === index && (
-                <div className="px-4 py-2 text-[10px] bg-[#182536] rounded-lg text-[#60748d] border border-[#283548]">
+                <div className="px-4 py-2 text-[10px] bg-[#182536] text-[#60748d] border border-[#283548] rounded-b-lg">
                   {faq.answer}
                 </div>
               )}
