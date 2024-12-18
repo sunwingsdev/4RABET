@@ -3,27 +3,17 @@ import logo from "../../../assets/logo.svg";
 import flag from "../../../assets/EN.svg";
 import { topMenu } from "../../MenuItems";
 import { useState } from "react";
-import { FaApple, FaAvianex, FaTimes, FaUserTag } from "react-icons/fa"; // Close Icon Import
-import { FcGoogle } from "react-icons/fc"; // Google Icon Import
-import { MdOutlineMailOutline, MdPhoneAndroid } from "react-icons/md";
-import { HiMenuAlt1 } from "react-icons/hi";
-import { TiMessages } from "react-icons/ti";
-import { TbRobot } from "react-icons/tb";
-import { HiX } from "react-icons/hi";
-import { BsGridFill } from "react-icons/bs";
-import { LuMonitorStop, LuTableColumnsSplit } from "react-icons/lu";
-import { BiBookBookmark } from "react-icons/bi";
-import { GiDonut, GiRocketThruster } from "react-icons/gi";
-import { IoIosFootball } from "react-icons/io";
-import { LiaProceduresSolid } from "react-icons/lia";
-import { CgLivePhoto } from "react-icons/cg";
-import { PiNumberCircleSevenFill } from "react-icons/pi";
-import { FaBaseballBatBall } from "react-icons/fa6";
+import SignInModal from "../../shared/modal/SignInModal";
+import RegistrationModal from "../../shared/modal/RegistrationModal";
+import crashImg from "../../../assets/images/offers/crash.png";
+import gearImg from "../../../assets/images/offers/gear.png";
+import holdAndWinImg from "../../../assets/images/offers/holdAndWin.png";
+import ladyImg from "../../../assets/images/offers/lady.png";
+import sportImg from "../../../assets/images/offers/sport.jpg";
 
 const TopBarMenu = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("email");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -36,11 +26,56 @@ const TopBarMenu = () => {
     flag: "https://flagcdn.com/w320/bd.png", // বাংলাদেশের পতাকা
   });
 
-  const countries = [
-    { name: "Bangladesh", flag: "https://flagcdn.com/w320/bd.png" },
-    { name: "India", flag: "https://flagcdn.com/w320/in.png" },
-    { name: "United States", flag: "https://flagcdn.com/w320/us.png" },
-    { name: "United Kingdom", flag: "https://flagcdn.com/w320/gb.png" },
+  const currencies = [
+    { symbol: "BDT", label: "BDT", flag: "https://flagcdn.com/w320/bd.png" },
+    { symbol: "\u20B9", label: "INR", flag: "https://flagcdn.com/w320/in.png" },
+    { symbol: "FBu", label: "BIF", flag: "https://flagcdn.com/w320/bi.png" },
+    { symbol: "R$", label: "BRL", flag: "https://flagcdn.com/w320/br.png" },
+    { symbol: "CDF", label: "CDF", flag: "https://flagcdn.com/w320/cd.png" },
+    { symbol: "GHC", label: "GHS", flag: "https://flagcdn.com/w320/gh.png" },
+    {
+      symbol: "\u0DBB\u0DD4",
+      label: "LKR",
+      flag: "https://flagcdn.com/w320/lk.png",
+    },
+    { symbol: "K", label: "MMK", flag: "https://flagcdn.com/w320/mm.png" },
+    { symbol: "MT", label: "MZN", flag: "https://flagcdn.com/w320/mz.png" },
+    {
+      symbol: "\u0930\u0941.",
+      label: "NPR",
+      flag: "https://flagcdn.com/w320/np.png",
+    },
+    { symbol: "\u20B1", label: "PHP", flag: "https://flagcdn.com/w320/ph.png" },
+    { symbol: "FRw", label: "RWF", flag: "https://flagcdn.com/w320/rw.png" },
+    { symbol: "TSh", label: "TZS", flag: "https://flagcdn.com/w320/tz.png" },
+  ];
+
+  const offers = [
+    {
+      label: "Welcome Crash Bonus",
+      value: "welcome_crash_bonus",
+      img: crashImg,
+    },
+    {
+      label: "Welcome Live Bonus",
+      value: "welcome_live_bonus",
+      img: ladyImg,
+    },
+    {
+      label: "Welcome Slots Bonus",
+      value: "welcome_slots_bonus",
+      img: holdAndWinImg,
+    },
+    {
+      label: "Sport Welcome Pack 700%",
+      value: "sport_welcome_pack_700",
+      img: sportImg,
+    },
+    {
+      label: "Crash Welcome Pack 700%",
+      value: "crash_welcome_pack_700",
+      img: gearImg,
+    },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -308,276 +343,19 @@ const TopBarMenu = () => {
       </div>
 
       {/* Sign In modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="text-white bg-[#152234] w-[900px] h-[700px] rounded-lg shadow-lg flex overflow-hidden relative">
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-[#59647a] text-2xl hover:text-blue-600 duration-300"
-            >
-              <FaTimes />
-            </button>
-
-            {/* Left Section - Image */}
-            <div className="w-1/2">
-              <img
-                className="w-full h-full object-cover"
-                src="https://ifrd.4rabetsite25.com/img/registration-modal-HI.webp"
-                alt=""
-              />
-            </div>
-
-            {/* Right Section - Tabs and Sign In Form */}
-            <div className="w-1/2 p-8 flex flex-col">
-              <h2 className="text-2xl font-semibold mb-6 text-center text-white">
-                LOGIN
-              </h2>
-
-              {/* Tabs */}
-              <div className="flex gap-3 mb-4">
-                <button
-                  className={`flex justify-center items-center gap-2 w-1/2 text-center py-2 font-semibold bg-[#1c2d44] rounded-lg ${
-                    activeTab === "email"
-                      ? "bg-blue-600 text-white rounded-lg"
-                      : "text-[#59647a]"
-                  }`}
-                  onClick={() => setActiveTab("email")}
-                >
-                  <MdOutlineMailOutline size={28} />
-                  Email
-                </button>
-                <button
-                  className={`flex justify-center items-center gap-2 w-1/2 text-center py-2 font-semibold bg-[#1c2d44] rounded-lg ${
-                    activeTab === "phone"
-                      ? "bg-blue-600 text-white rounded-lg"
-                      : "text-[#59647a]"
-                  }`}
-                  onClick={() => setActiveTab("phone")}
-                >
-                  <MdPhoneAndroid size={28} />
-                  Phone
-                </button>
-              </div>
-
-              {/* Form Content */}
-              {activeTab === "email" && (
-                <form className="flex flex-col">
-                  <input
-                    type="email"
-                    className="w-full mb-4 px-5 py-3 bg-[#1c2d44] rounded-lg focus:outline-none focus:ring-0"
-                    placeholder="Email"
-                  />
-                  <input
-                    type="password"
-                    className="w-full mb-2 px-5 py-3 bg-[#1c2d44] rounded-lg focus:outline-none focus:ring-0"
-                    placeholder="Password"
-                  />
-                  <div className="text-center mb-40">
-                    <p className="text-sm font-semibold text-[#5c7391]">
-                      Don’t remember?{" "}
-                      <Link className="text-white text-base font-medium underline">
-                        Recover a password
-                      </Link>
-                    </p>
-                  </div>
-                  <div className="text-center mb-2">
-                    <p className="text-sm font-semibold text-[#5c7391]">
-                      Don{"'"}t have an account?
-                    </p>
-                    <Link>
-                      <p className="text-sm font-semibold underline">Sign in</p>
-                    </Link>
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full text-sm font-bold bg-blue-500 text-white py-3 rounded-2xl hover:bg-blue-600 duration-300"
-                  >
-                    SIGN IN
-                  </button>
-                </form>
-              )}
-
-              {activeTab === "phone" && (
-                <form className="flex flex-col">
-                  <input
-                    type="number"
-                    className="w-full mb-4 px-5 py-3 bg-[#1c2d44] rounded-lg focus:outline-none focus:ring-0"
-                    placeholder="Phone Number"
-                  />
-                  <input
-                    type="password"
-                    className="w-full mb-2 px-5 py-3 bg-[#1c2d44] rounded-lg focus:outline-none focus:ring-0"
-                    placeholder="Password"
-                  />
-                  <div className="text-center mb-40">
-                    <p className="text-sm font-semibold text-[#5c7391]">
-                      Don’t remember?{" "}
-                      <Link className="text-white text-base font-medium underline">
-                        Recover a password
-                      </Link>
-                    </p>
-                  </div>
-                  <div className="text-center mb-2">
-                    <p className="text-sm font-semibold text-[#5c7391]">
-                      Don{"'"}t have an account?
-                    </p>
-                    <Link>
-                      <p className="text-sm font-semibold underline">Sign in</p>
-                    </Link>
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full text-sm font-bold bg-blue-500 text-white py-3 rounded-2xl hover:bg-blue-600 duration-300"
-                  >
-                    SIGN IN
-                  </button>
-                </form>
-              )}
-
-              {/* or */}
-              <div className="flex justify-center items-center gap-2 mt-5">
-                <p className="w-full h-1 border-b border-[#2d3949]"></p>
-                <p className="text-sm font-bold text-white">OR</p>
-                <p className="w-full h-1 border-b border-[#2d3949]"></p>
-              </div>
-
-              {/* Google Login */}
-              <button className="flex items-center gap-20 mt-5 text-sm font-bold bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-3xl duration-300">
-                <div className="text-start p-2 bg-white rounded-full">
-                  <FcGoogle className="text-xl" />
-                </div>
-                <p className="">Continue with Google</p>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {isModalOpen && <SignInModal closeModal={closeModal} />}
 
       {/* Registration Modal */}
       {isRegistrationOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="text-white bg-[#152234] w-[900px] h-[700px] rounded-lg shadow-lg flex overflow-hidden relative">
-            {/* Close Button */}
-            <button
-              onClick={closeRegistrationModal}
-              className="absolute top-4 right-4 text-[#59647a] text-2xl hover:text-blue-600 duration-300"
-            >
-              <FaTimes />
-            </button>
-
-            {/* Modal Content */}
-            <div className="w-1/2">
-              <img
-                className="w-full h-full object-cover"
-                src="https://ifrd.4rabetsite25.com/img/registration-modal-HI.webp"
-                alt="Register"
-              />
-            </div>
-            <div className="w-1/2 p-8 flex flex-col justify-center">
-              <div className="flex items-center gap-4 bg-[#212d43] rounded-xl mb-4">
-                <div className="bg-[#ffb131] px-1 rounded-xl">
-                  <img
-                    className="w-16"
-                    src="https://ifrd.4rabetsite25.com/img/gifs/gift.png"
-                    alt=""
-                  />
-                </div>
-                <p className="text-base font-bold text-[#ffb131]">
-                  6000 BDT ON FIRST <br /> DEPOSIT
-                </p>
-              </div>
-              <form>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
-                />
-                <input
-                  type="number"
-                  placeholder="Phone Number"
-                  className="w-full mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="w-full mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
-                />
-                <div className="relative mb-4">
-                  <button
-                    type="button"
-                    onClick={toggleDropdown}
-                    className="w-full flex items-center justify-between bg-[#1d2b3d] text-white px-4 py-2 rounded-full border border-[#283548] focus:outline-none focus:ring-[#283548]"
-                  >
-                    <div className="flex items-center">
-                      {selectedCountry.flag && (
-                        <img
-                          src={selectedCountry.flag}
-                          alt={selectedCountry.name}
-                          className="w-6 h-4 mr-2"
-                        />
-                      )}
-                      {selectedCountry.name}
-                    </div>
-                    <span>{isOpen ? "▲" : "▼"}</span>
-                  </button>
-
-                  {isOpen && (
-                    <ul className="absolute z-10 w-full text-white bg-[#1d2b3d] border border-[#283548] rounded-lg mt-1 max-h-60 overflow-y-auto">
-                      {countries.map((country) => (
-                        <li
-                          key={country.name}
-                          onClick={() => handleSelect(country)}
-                          className="flex items-center px-4 py-2 hover:bg-[#283548] cursor-pointer"
-                        >
-                          <img
-                            src={country.flag}
-                            alt={country.name}
-                            className="w-6 h-4 mr-2"
-                          />
-                          {country.name}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-                <button
-                  type="submit"
-                  className="w-full text-sm font-bold bg-blue-500 text-white py-3 rounded-full hover:bg-blue-600 duration-300"
-                >
-                  SIGN UP
-                </button>
-              </form>
-              {/* or */}
-              <div className="flex justify-center items-center gap-2 mt-3">
-                <p className="w-full h-1 border-b border-[#2d3949]"></p>
-                <p className="text-sm font-bold text-white">OR</p>
-                <p className="w-full h-1 border-b border-[#2d3949]"></p>
-              </div>
-
-              {/* Google Login */}
-              <button className="flex items-center gap-20 mt-3 text-sm font-bold bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-3xl duration-300">
-                <div className="text-start p-2 bg-white rounded-full">
-                  <FcGoogle className="text-xl" />
-                </div>
-                <p className="">Continue with Google</p>
-              </button>
-              <div className="text-center mt-6 mb-2">
-                <p className="text-[13px] font-semibold text-[#5c7391]">
-                  I confirm all the{" "}
-                  <Link className="text-white text-xs underline">
-                    Terms of user agreement
-                  </Link>{" "}
-                  and that I am over 18
-                </p>
-              </div>
-              <p className=" text-center text-sm font-semibold text-[#5c7391]">
-                Already registered?{" "}
-                <Link className="text-white text-base underline">Sign in</Link>
-              </p>
-            </div>
-          </div>
-        </div>
+        <RegistrationModal
+          closeRegistrationModal={closeRegistrationModal}
+          toggleDropdown={toggleDropdown}
+          selectedCountry={selectedCountry}
+          isOpen={isOpen}
+          currencies={currencies}
+          offers={offers}
+          handleSelect={handleSelect}
+        />
       )}
     </div>
   );
