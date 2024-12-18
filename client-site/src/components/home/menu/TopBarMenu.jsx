@@ -10,6 +10,19 @@ import gearImg from "../../../assets/images/offers/gear.png";
 import holdAndWinImg from "../../../assets/images/offers/holdAndWin.png";
 import ladyImg from "../../../assets/images/offers/lady.png";
 import sportImg from "../../../assets/images/offers/sport.jpg";
+import { HiMenuAlt1, HiX } from "react-icons/hi";
+import { TiMessages } from "react-icons/ti";
+import { FaApple, FaAvianex, FaUserTag } from "react-icons/fa";
+import { TbRobot } from "react-icons/tb";
+import { BsGridFill } from "react-icons/bs";
+import { LuMonitorStop, LuTableColumnsSplit } from "react-icons/lu";
+import { FaBaseballBatBall } from "react-icons/fa6";
+import { PiNumberCircleSevenFill } from "react-icons/pi";
+import { CgLivePhoto } from "react-icons/cg";
+import { GiDonut, GiRocketThruster } from "react-icons/gi";
+import { LiaProceduresSolid } from "react-icons/lia";
+import { IoIosFootball } from "react-icons/io";
+import { BiBookBookmark } from "react-icons/bi";
 
 const TopBarMenu = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
