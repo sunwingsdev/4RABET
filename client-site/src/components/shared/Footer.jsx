@@ -67,12 +67,12 @@ const Footer = () => {
   };
   return (
     <div className="bg-[#152234]">
-      <div className="max-w-7xl m-auto bg-[#152234] py-6">
+      <div className="max-w-7xl m-auto bg-[#152234] pt-6 pb-24 lg:pb-12 pl-6 pr-6 lg:pr-20">
         <div className="flex gap-6 items-center py-8">
           <img className="w-14" src={footerTop} alt="" />
           <p className="border-t border-[#283548] w-full h-1"></p>
         </div>
-        <div className="flex justify-between">
+        <div className="grid grid-cols-2 sm:flex sm:justify-between gap-6 flex-wrap">
           <div className="">
             <h2 className="mb-3 text-lg font-bold text-white">Casino</h2>
             <Link>
@@ -145,7 +145,7 @@ const Footer = () => {
               </div>
             </Link>
           </div>
-          <div className="">
+          <div className="col-span-2">
             <div className="relative w-70">
               <button
                 onClick={toggleDropdown}
@@ -183,7 +183,7 @@ const Footer = () => {
                 </ul>
               )}
             </div>
-            <div className="flex gap-2 mt-3 w-full bg-[#1d2b3d] text-white px-4 py-2 rounded-lg border border-[#283548] focus:outline-none focus:ring-[#283548]">
+            <div className="flex justify-between gap-2 mt-3 w-full bg-[#1d2b3d] text-white px-4 py-2 rounded-lg border border-[#283548] focus:outline-none focus:ring-[#283548]">
               <div className="flex gap-2 items-center">
                 <BiSupport size={20} />
                 <div className="">
@@ -220,7 +220,6 @@ const Footer = () => {
           </div>
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-
               className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
@@ -228,7 +227,6 @@ const Footer = () => {
           </div>
           <div className="bg-[#1d2b3d] text-white py-3 px-6 rounded-lg">
             <img
-
               className="w-20 m-auto"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/spribe.svg"
               alt=""
@@ -302,6 +300,7 @@ const Footer = () => {
           </div>
           <div className="flex gap-6 items-center">
             <img
+              className="hidden sm:block"
               src="https://ifrd.4rabetsite25.com/img/main/providers/banners/qr.svg"
               alt=""
             />
