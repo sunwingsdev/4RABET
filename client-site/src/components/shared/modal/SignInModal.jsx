@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { FaTimes } from "react-icons/fa";
-import { MdOutlineMailOutline } from "react-icons/md";
+import { MdOutlineMailOutline, MdPhoneAndroid } from "react-icons/md";
 import { AuthContext } from "../../../providers/AuthProvider";
 import GoogleSignIn from "./GoogleSignIn";
 import { useNavigate } from "react-router";
@@ -74,18 +74,45 @@ const SignInModal = ({ closeModal }) => {
               <MdOutlineMailOutline size={28} />
               Email
             </button>
+            <button
+              className={`flex justify-center items-center gap-2 w-1/2 text-center py-2 font-semibold bg-[#1c2d44] rounded-lg ${
+                activeTab === "phone"
+                  ? "bg-blue-600 text-white"
+                  : "text-[#59647a]"
+              }`}
+              onClick={() => setActiveTab("phone")}
+            >
+              <MdPhoneAndroid size={28} />
+              Phone
+            </button>
           </div>
 
           {/* Form Content */}
           <form onSubmit={handleSubmit} className="flex flex-col">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full mb-4 px-5 py-3 bg-[#1c2d44] rounded-lg focus:outline-none"
-              placeholder="Email"
-              required
-            />
+            {activeTab === "email" && (
+              <>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full mb-4 px-5 py-3 bg-[#1c2d44] rounded-lg focus:outline-none"
+                  placeholder="Email"
+                  required
+                />
+              </>
+            )}
+            {activeTab === "phone" && (
+              <>
+                <input
+                  type="number"
+                  // value={phone}
+                  // onChange={(e) => setPhone(e.target.value)}
+                  className="w-full mb-4 px-5 py-3 bg-[#1c2d44] rounded-lg focus:outline-none"
+                  placeholder="Phone Number"
+                  required
+                />
+              </>
+            )}
             <input
               type="password"
               value={password}
