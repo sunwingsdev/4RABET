@@ -1,25 +1,13 @@
+import { FaCoins, FaGamepad } from "react-icons/fa";
 import TopSlider from "../../components/all-games/TopSlider";
 import { CiSearch } from "react-icons/ci";
 import { FaStar } from "react-icons/fa6";
-import PopularCategory from "../../components/all-games/PopularCategory";
-import { FaGamepad } from "react-icons/fa";
-import RabetExclusive from "../../components/all-games/RabetExclusive";
-import NewGames from "../../components/all-games/NewGames";
-import LiveGames from "../../components/all-games/LiveGames";
-import SlotsGame from "../../components/all-games/SlotsGame";
-import CrashGames from "../../components/all-games/CrashGames";
-import LocalGames from "../../components/all-games/LocalGames";
-import RouletteGames from "../../components/all-games/RouletteGames";
-import FastGames from "../../components/all-games/FastGames";
-import BaccaratGames from "../../components/all-games/BaccaratGames";
-import BlackJackGames from "../../components/all-games/BlackJackGames";
-import TableGames from "../../components/all-games/TableGames";
-import VirtualSports from "../../components/all-games/VirtualSports";
-import OtherGames from "../../components/all-games/OtherGames";
+import newGamesImg from "../../assets/menu/4.png";
+import { gamesData } from "../../components/shared/GamesData";
+import Games from "../../components/shared/Games";
 import MobileBannerBottom from "../../components/home/menu/MobileBannerBottom";
-import { Link } from "react-router";
 
-const AllGames = () => {
+const NewGames = () => {
   const menuBannerBottom = [
     {
       title: "All Game",
@@ -133,26 +121,24 @@ const AllGames = () => {
             />
           ))}
         </div>
-
-        <div className="flex flex-col gap-4">
-          <PopularCategory />
-          <RabetExclusive />
-          <NewGames />
-          <LiveGames />
-          <SlotsGame />
-          <CrashGames />
-          <LocalGames />
-          <FastGames />
-          <RouletteGames />
-          <BaccaratGames />
-          <BlackJackGames />
-          <TableGames />
-          <VirtualSports />
-          <OtherGames />
+        <div>
+          <div className="flex flex-row items-center gap-1 mb-4">
+            <img
+              src={newGamesImg}
+              className="w-10 h-10"
+              alt="new games image"
+            />
+            <h1 className="text-lg font-bold text-white">New Games</h1>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-y-4 gap-x-2 lg:pr-16">
+            {gamesData?.map((game) => (
+              <Games key={game.id} img={game.img} title={game.title} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default AllGames;
+export default NewGames;

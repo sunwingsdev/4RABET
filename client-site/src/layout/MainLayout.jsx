@@ -9,16 +9,16 @@ const MainLayout = () => {
   return (
     <div className="bg-[#152234]">
       {/* <Menu /> */}
-      <div className="fixed top-0 z-50 w-full lg:block hidden">
+      <div className="fixed top-0 z-50 w-full">
         <TopBarMenu />
       </div>
       <div className="flex">
         <div className="fixed left-0 z-10 lg:block hidden">
-          <div className="w-60 h-screen overflow-y-auto scrollbar-hide bg-[#0d1827] border-r border-[#293b55]">
+          <div className="w-52 xl:w-60 h-screen overflow-y-auto scrollbar-hide bg-[#0d1827] border-r border-[#293b55]">
             <LeftSitBarMenu />
           </div>
         </div>
-        <div className="absolute top-0 left-0 lg:left-60 right-0">
+        <div className="absolute top-0 left-0 lg:left-52 xl:left-60 right-0">
           <Outlet />
           <Footer />
         </div>
