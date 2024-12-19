@@ -155,56 +155,63 @@ const TopBarMenu = () => {
         <div className="flex items-center gap-4 xl:gap-6">
           <div className="flex items-center gap-2 text-white pl-2 xl:pl-4 2xl:pl-6 border-l border-[#293b55] ">
             {user ? (
-              <div className="relative">
-                {/* Dropdown Trigger */}
-                <button
-                  onClick={toggleLogOutDropdown}
-                  className="flex items-center gap-2 px-4 py-2 bg-[#293b55] text-white font-bold rounded-md hover:bg-[#1e2a3d]"
-                >
-                  <span className="flex items-center gap-1">
-                    <FaRegUserCircle className="size-6" />
-                    BDT 0.00
-                  </span>
-
-                  {isLogOutDropdownOpen ? (
-                    <IoIosArrowUp className="w-5 h-5" />
-                  ) : (
-                    <IoIosArrowDown className="w-5 h-5" />
-                  )}
+              <>
+                <button>
+                  <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
+                    DEPOSIT
+                  </p>
                 </button>
+                <div className="relative">
+                  {/* Dropdown Trigger */}
+                  <button
+                    onClick={toggleLogOutDropdown}
+                    className="flex items-center gap-2 px-4 py-2 bg-[#293b55] text-white font-bold rounded-md hover:bg-[#1e2a3d]"
+                  >
+                    <span className="flex items-center gap-1">
+                      <FaRegUserCircle className="size-6" />
+                      BDT 0.00
+                    </span>
 
-                {/* Dropdown Content */}
-                {isLogOutDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-64 bg-[#1e293b] text-white rounded-lg shadow-lg">
-                    <div className="flex flex-row items-center justify-between p-4 border-b border-[#293b55] bg-blue-500 mx-4 mt-4 rounded-lg">
-                      <div>
-                        <p className="text-sm">Balance:</p>
-                        <p className="text-lg font-bold">BDT 0</p>
+                    {isLogOutDropdownOpen ? (
+                      <IoIosArrowUp className="w-5 h-5" />
+                    ) : (
+                      <IoIosArrowDown className="w-5 h-5" />
+                    )}
+                  </button>
+
+                  {/* Dropdown Content */}
+                  {isLogOutDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-64 bg-[#1e293b] text-white rounded-lg shadow-lg">
+                      <div className="flex flex-row items-center justify-between p-4 border-b border-[#293b55] bg-blue-500 mx-4 mt-4 rounded-lg">
+                        <div>
+                          <p className="text-sm">Balance:</p>
+                          <p className="text-lg font-bold">BDT 0</p>
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="text-sm underline">Default</span>
+                          <input
+                            type="radio"
+                            name="account"
+                            checked
+                            className="accent-white"
+                          />
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="text-sm underline">Default</span>
-                        <input
-                          type="radio"
-                          name="account"
-                          checked
-                          className="accent-white"
-                        />
+                      <div className="p-4 space-y-2">
+                        <button className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-sm font-bold">
+                          MY PROFILE
+                        </button>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold"
+                        >
+                          LOGOUT
+                        </button>
                       </div>
                     </div>
-                    <div className="p-4 space-y-2">
-                      <button className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-sm font-bold">
-                        MY PROFILE
-                      </button>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold"
-                      >
-                        LOGOUT
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              </>
             ) : (
               <>
                 <Link onClick={openModal}>
