@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { FiPlusCircle } from "react-icons/fi";
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { Link } from "react-router";
+import GoogleSignIn from "./GoogleSignIn";
 
 const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
-  const { createUser, googleSignIn } = useContext(AuthContext); // Using context for Firebase Auth
+  const { createUser } = useContext(AuthContext); // Using context for Firebase Auth
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -19,37 +19,6 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
   const handleApplyPromoCode = () => {
     // Handle promo code application logic here
     console.log("Promo Code Applied:", promoCode);
-  };
-
-  const handleGoogleSignIn = async () => {
-    try {
-      const userCredential = await googleSignIn();
-      const user = userCredential.user;
-
-      // Save user data to MongoDB
-      const userData = {
-        email: user.email,
-        phone: phone,
-        name: user.displayName,
-        photoURL: user.photoURL,
-      };
-
-      const response = await fetch("http://localhost:5000/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      const data = await response.json();
-      console.log(data);
-
-      // Close modal after successful registration
-      closeRegistrationModal();
-    } catch (error) {
-      console.error("Error during Google sign-in:", error.message);
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -68,13 +37,16 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
         promoCode,
       };
 
-      const response = await fetch("http://localhost:5000/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_API_URL}/api/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
       const data = await response.json();
       console.log(data);
 
@@ -234,15 +206,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
           </div>
 
           {/* Google Login */}
-          <button
-            onClick={handleGoogleSignIn}
-            className="flex items-center gap-20 mt-3 text-sm font-bold bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-3xl duration-300"
-          >
-            <div className="text-start p-2 bg-white rounded-full">
-              <FcGoogle className="text-xl" />
-            </div>
-            <p className="">Continue with Google</p>
-          </button>
+          <GoogleSignIn closeRegistrationModal={closeRegistrationModal} />
 
           <div className="text-center mt-6 mb-2 flex flex-row items-center gap-2">
             <input type="checkbox" checked />

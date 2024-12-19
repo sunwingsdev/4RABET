@@ -1,53 +1,37 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { FaTimes } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { MdOutlineMailOutline, MdPhoneAndroid } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { useToasts } from "react-toast-notifications";
-import {
-  useLoginUserMutation,
-  useLazyGetAuthenticatedUserQuery,
-} from "../../../redux/features/allApis/usersApi/usersApi";
-import { setCredentials } from "../../../redux/slices/authSlice";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { AuthContext } from "../../../providers/AuthProvider";
+import GoogleSignIn from "./GoogleSignIn";
 import { useNavigate } from "react-router";
+import { useToasts } from "react-toast-notifications";
 
 const SignInModal = ({ closeModal }) => {
   const [activeTab, setActiveTab] = useState("email");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
+  const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const { addToast } = useToasts();
-  const [loginUser, { isLoading }] = useLoginUserMutation();
-  const [getUser] = useLazyGetAuthenticatedUserQuery();
 
   // Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
-      const payload =
-        activeTab === "email"
-          ? { username: email, password }
-          : { username: phone, password };
-
-      const { data: loginData } = await loginUser(payload);
-      if (loginData?.token) {
-        const { data: userData } = await getUser(loginData.token);
-        dispatch(setCredentials({ token: loginData.token, user: userData }));
-        addToast("Login successful", {
-          appearance: "success",
-          autoDismiss: true,
-        });
-        closeModal();
-        navigate("/");
-      }
-    } catch (error) {
-      addToast("Invalid credentials. Please try again.", {
+      // Firebase সাইন ইন ফাংশন কল
+      await signIn(email, password);
+      addToast("Login successful!", { appearance: "success" });
+      navigate("/");
+      closeModal();
+    } catch (err) {
+      setError("Invalid email or password. Please try again.");
+      addToast("Login failed. Please check your credentials.", {
         appearance: "error",
-        autoDismiss: true,
       });
+      console.error("Sign-in error:", err.message);
     }
   };
 
@@ -90,46 +74,18 @@ const SignInModal = ({ closeModal }) => {
               <MdOutlineMailOutline size={28} />
               Email
             </button>
-            <button
-              className={`flex justify-center items-center gap-2 w-1/2 text-center py-2 font-semibold bg-[#1c2d44] rounded-lg ${
-                activeTab === "phone"
-                  ? "bg-blue-600 text-white"
-                  : "text-[#59647a]"
-              }`}
-              onClick={() => setActiveTab("phone")}
-            >
-              <MdPhoneAndroid size={28} />
-              Phone
-            </button>
           </div>
 
           {/* Form Content */}
           <form onSubmit={handleSubmit} className="flex flex-col">
-            {activeTab === "email" && (
-              <>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full mb-4 px-5 py-3 bg-[#1c2d44] rounded-lg focus:outline-none"
-                  placeholder="Email"
-                  required
-                />
-              </>
-            )}
-            {activeTab === "phone" && (
-              <>
-                <input
-                  type="number"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full mb-4 px-5 py-3 bg-[#1c2d44] rounded-lg focus:outline-none"
-                  placeholder="Phone Number"
-                  required
-                />
-              </>
-            )}
-
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full mb-4 px-5 py-3 bg-[#1c2d44] rounded-lg focus:outline-none"
+              placeholder="Email"
+              required
+            />
             <input
               type="password"
               value={password}
@@ -139,13 +95,15 @@ const SignInModal = ({ closeModal }) => {
               required
             />
 
+            {/* Error Message */}
+            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
             {/* Submit Button */}
             <button
               type="submit"
               className="w-full text-sm font-bold bg-blue-500 text-white py-3 rounded-2xl hover:bg-blue-600 duration-300"
-              disabled={isLoading}
             >
-              {isLoading ? "Loading..." : "SIGN IN"}
+              SIGN IN
             </button>
           </form>
 
@@ -156,12 +114,7 @@ const SignInModal = ({ closeModal }) => {
           </div>
 
           {/* Google Login */}
-          <button className="flex items-center gap-20 mt-5 text-sm font-bold bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-3xl duration-300">
-            <div className="text-start p-2 bg-white rounded-full">
-              <FcGoogle className="text-xl" />
-            </div>
-            <p>Continue with Google</p>
-          </button>
+          <GoogleSignIn closeModal={closeModal} />
         </div>
       </div>
     </div>
