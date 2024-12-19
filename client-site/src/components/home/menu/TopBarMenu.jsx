@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import logo from "../../../assets/logo.svg";
 import flag from "../../../assets/EN.svg";
 import { topMenu } from "../../MenuItems";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import SignInModal from "../../shared/modal/SignInModal";
 import RegistrationModal from "../../shared/modal/RegistrationModal";
 import crashImg from "../../../assets/images/offers/crash.png";
@@ -12,7 +12,7 @@ import ladyImg from "../../../assets/images/offers/lady.png";
 import sportImg from "../../../assets/images/offers/sport.jpg";
 import { HiMenuAlt1, HiX } from "react-icons/hi";
 import { TiMessages } from "react-icons/ti";
-import { FaApple, FaAvianex, FaUserTag } from "react-icons/fa";
+import { FaApple, FaAvianex, FaUserTag, FaRegUserCircle } from "react-icons/fa";
 import { TbRobot } from "react-icons/tb";
 import { BsGridFill } from "react-icons/bs";
 import { LuMonitorStop, LuTableColumnsSplit } from "react-icons/lu";
@@ -21,15 +21,24 @@ import { PiNumberCircleSevenFill } from "react-icons/pi";
 import { CgLivePhoto } from "react-icons/cg";
 import { GiDonut, GiRocketThruster } from "react-icons/gi";
 import { LiaProceduresSolid } from "react-icons/lia";
-import { IoIosFootball } from "react-icons/io";
+import { IoIosFootball, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { BiBookBookmark } from "react-icons/bi";
+import { AuthContext } from "../../../providers/AuthProvider";
+import { useToasts } from "react-toast-notifications";
 
 const TopBarMenu = () => {
+  const { user, logOut } = useContext(AuthContext); // কনটেক্সট থেকে logout ফাংশন নিয়ে আসা
+  const { addToast } = useToasts();
+  const [isLogOutDropdownOpen, setIsLogOutDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const toggleLogOutDropdown = () => {
+    setIsLogOutDropdownOpen(!isLogOutDropdownOpen);
+  };
 
   const openRegistrationModal = () => setIsRegistrationOpen(true);
   const closeRegistrationModal = () => setIsRegistrationOpen(false);
@@ -108,6 +117,15 @@ const TopBarMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleLogout = () => {
+    logOut();
+
+    addToast("Successfully logged out!", {
+      appearance: "success",
+      autoDismiss: true,
+    });
+  };
+
   return (
     <div className="bg-[#18263AE6] border-b border-[#293b55]">
       <div className="hidden lg:flex justify-between items-center gap-2">
@@ -135,17 +153,72 @@ const TopBarMenu = () => {
           </div>
         </div>
         <div className="flex items-center gap-4 xl:gap-6">
-          <div className="flex items-center gap-2 text-white pl-2 xl:pl-4 2xl:pl-6 border-l border-[#293b55]">
-            <Link onClick={openModal}>
-              <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
-                SIGN IN
-              </p>
-            </Link>
-            <Link onClick={openRegistrationModal}>
-              <p className="text-sm font-bold px-5 xl:px-6 py-2 rounded-full bg-[#F44336] hover:bg-[#cf4137] duration-300">
-                REGISTRATION
-              </p>
-            </Link>
+          <div className="flex items-center gap-2 text-white pl-2 xl:pl-4 2xl:pl-6 border-l border-[#293b55] ">
+            {user ? (
+              <div className="relative">
+                {/* Dropdown Trigger */}
+                <button
+                  onClick={toggleLogOutDropdown}
+                  className="flex items-center gap-2 px-4 py-2 bg-[#293b55] text-white font-bold rounded-md hover:bg-[#1e2a3d]"
+                >
+                  <span className="flex items-center gap-1">
+                    <FaRegUserCircle className="size-6" />
+                    BDT 0.00
+                  </span>
+
+                  {isLogOutDropdownOpen ? (
+                    <IoIosArrowUp className="w-5 h-5" />
+                  ) : (
+                    <IoIosArrowDown className="w-5 h-5" />
+                  )}
+                </button>
+
+                {/* Dropdown Content */}
+                {isLogOutDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-64 bg-[#1e293b] text-white rounded-lg shadow-lg">
+                    <div className="flex flex-row items-center justify-between p-4 border-b border-[#293b55] bg-blue-500 mx-4 mt-4 rounded-lg">
+                      <div>
+                        <p className="text-sm">Balance:</p>
+                        <p className="text-lg font-bold">BDT 0</p>
+                      </div>
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="text-sm underline">Default</span>
+                        <input
+                          type="radio"
+                          name="account"
+                          checked
+                          className="accent-white"
+                        />
+                      </div>
+                    </div>
+                    <div className="p-4 space-y-2">
+                      <button className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-sm font-bold">
+                        MY PROFILE
+                      </button>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold"
+                      >
+                        LOGOUT
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link onClick={openModal}>
+                  <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
+                    SIGN IN
+                  </p>
+                </Link>
+                <Link onClick={openRegistrationModal}>
+                  <p className="text-sm font-bold px-5 xl:px-6 py-2 rounded-full bg-[#F44336] hover:bg-[#cf4137] duration-300">
+                    REGISTRATION
+                  </p>
+                </Link>
+              </>
+            )}
           </div>
 
           <div className="w-16 h-14 text-white border-l border-[#293b55]">
