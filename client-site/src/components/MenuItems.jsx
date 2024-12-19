@@ -19,7 +19,7 @@ const topMenu = [
     id: 1,
     label: "Main",
     Icon: "FaUser",
-    link: "/main",
+    link: "/",
   },
   {
     id: 2,
@@ -77,7 +77,7 @@ const leftSideMenu = [
     id: 1,
     label: "All Games",
     Icon: allGameImg,
-    link: "/all-games",
+    link: "/",
   },
   {
     id: 2,
