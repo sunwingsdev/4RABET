@@ -1,8 +1,43 @@
+import { useState } from "react";
+import { FaStar } from "react-icons/fa";
+import { Link } from "react-router";
+
 const Games = ({ img, title }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className="flex flex-col items-center gap-2 rounded-md">
-      <img src={img} className="w-48 h-36 rounded-md" alt="game image" />
-      <p className="text-base font-bold text-white">{title}</p>
+    <div
+      className="relative flex flex-col items-center gap-2 lg:gap-4 rounded-md"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="relative rounded-md overflow-hidden duration-300">
+        <img
+          src={img}
+          className={`w-48 h-28 sm:h-36 rounded-md transition-transform duration-500 ${
+            isHovered ? "scale-110" : "scale-100"
+          }`}
+          alt="game image"
+        />
+        {isHovered && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black bg-opacity-50 duration-300">
+            <button className="px-4 py-2 bg-blue-500 text-white text-sm font-bold rounded hover:bg-blue-600 duration-300">
+              PLAY
+            </button>
+            <Link
+              to="https://game.aviatrix.bet/?cid=demolanding"
+              target="-blank"
+              className="px-4 py-0.5 bg-[#cfd0d16e] text-white text-[10px] font-bold rounded hover:bg-slate-500 duration-300"
+            >
+              DEMO
+            </Link>
+            <button className="absolute top-0 right-0 bg-slate-800 rounded-l-md">
+              <FaStar size={26} className="text-slate-500 p-1.5" />
+            </button>
+          </div>
+        )}
+      </div>
+      <p className="text-xs lg:text-base font-bold text-white">{title}</p>
     </div>
   );
 };

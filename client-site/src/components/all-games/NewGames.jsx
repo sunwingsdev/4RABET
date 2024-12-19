@@ -30,7 +30,7 @@ const NewGames = () => {
           />
           <h1 className="text-lg font-bold text-white">New Games</h1>
         </div>
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row items-center gap-2 2xl:pr-16">
           <div className="px-4 py-1 bg-[#152436] rounded-md">
             <p className="text-sm text-slate-400">204 Games</p>
           </div>
@@ -51,17 +51,13 @@ const NewGames = () => {
         <Swiper
           ref={swiperRef2} // Attach ref to Swiper
           breakpoints={{
-            320: {
-              slidesPerView: 2, // 320px বা ছোট স্ক্রিনে 2 স্লাইড দেখাবে
-            },
             640: {
-              slidesPerView: 3, // 640px স্ক্রিনে 3 স্লাইড দেখাবে
-            },
-            1024: {
-              slidesPerView: 4, // 1024px স্ক্রিনে 5 স্লাইড দেখাবে
+              slidesPerView: 4, // 640px স্ক্রিনে 3 স্লাইড দেখাবে
+              spaceBetween: 12,
             },
             1280: {
               slidesPerView: 5, // 1280px স্ক্রিনে 7 স্লাইড দেখাবে
+              spaceBetween: 20,
             },
             1536: {
               slidesPerView: 7, // 1280px স্ক্রিনে 7 স্লাইড দেখাবে
@@ -70,7 +66,8 @@ const NewGames = () => {
               slidesPerView: 9, // 1280px স্ক্রিনে 7 স্লাইড দেখাবে
             },
           }}
-          spaceBetween={20}
+          slidesPerView={2.5}
+          spaceBetween={8}
           navigation={{
             prevEl: ".newGame-prev",
             nextEl: ".newGame-next",

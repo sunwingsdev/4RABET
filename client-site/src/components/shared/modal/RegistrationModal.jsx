@@ -59,33 +59,33 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="text-white bg-[#152234] w-[900px] h-[700px] rounded-lg shadow-lg flex overflow-hidden relative">
+      <div className="text-white bg-[#152234] w-[90%] lg:w-[900px] 2xl:w-[900px] h-[700px] lg:h-[520px] 2xl:h-[700px] rounded-lg shadow-lg flex overflow-hidden relative">
         {/* Close Button */}
         <button
           onClick={closeRegistrationModal}
-          className="absolute top-4 right-4 text-[#59647a] text-2xl hover:text-blue-600 duration-300"
+          className="absolute top-2 md:top-4 right-2 md:right-4 text-[#59647a] text-lg hover:text-blue-600 duration-300"
         >
           <FaTimes />
         </button>
 
         {/* Modal Content */}
-        <div className="w-1/2">
+        <div className="w-1/2 lg:block hidden">
           <img
             className="w-full h-full object-cover"
             src="https://ifrd.4rabetsite25.com/img/registration-modal-HI.webp"
             alt="Register"
           />
         </div>
-        <div className="w-1/2 p-8 flex flex-col justify-center">
-          <div className="flex items-center gap-4 bg-[#212d43] rounded-xl mb-4">
+        <div className="w-full lg:w-1/2 p-4 md:p-8 flex flex-col justify-center overflow-y-auto scrollbar-hide md:pt-52 2xl:pt-0 md:mt-10 2xl:mt-6">
+          <div className="flex items-center gap-4 bg-[#212d43] rounded-xl mb-3 sm:mb-4">
             <div className="bg-[#ffb131] px-1 rounded-xl">
               <img
-                className="w-16"
+                className="w-12 sm:w-16"
                 src="https://ifrd.4rabetsite25.com/img/gifs/gift.png"
                 alt=""
               />
             </div>
-            <p className="text-base font-bold text-[#ffb131]">
+            <p className="text-xs sm:text-base font-bold text-[#ffb131]">
               6000 BDT ON FIRST <br /> DEPOSIT
             </p>
           </div>
@@ -95,24 +95,24 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
+              className="w-full mb-2 sm:mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
             />
             <input
               type="number"
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
+              className="w-full mb-2 sm:mb-4  px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
             />
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
+              className="w-full mb-2 sm:mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
             />
             {/* Currency section */}
-            <div className="relative mb-4">
+            <div className="relative mb-2 sm:mb-4">
               <select
                 value={selectedCurrency.label}
                 onChange={(e) => {
@@ -136,7 +136,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
             </div>
 
             {/* Promo Code Section */}
-            <div className="mt-4 mb-4">
+            <div className="mt-2 sm:mt-4 mb-2 sm:mb-4">
               {!showPromoInput ? (
                 <button
                   onClick={() => setShowPromoInput(true)}
@@ -168,7 +168,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
             </div>
 
             {/* Offer Section */}
-            <div className="relative mb-4">
+            <div className="relative mb-2 sm:mb-4">
               <select
                 value={selectedOffer.label}
                 onChange={(e) => {
