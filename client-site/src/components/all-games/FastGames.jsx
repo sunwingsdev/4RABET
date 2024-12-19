@@ -44,7 +44,7 @@ const FastGames = () => {
     <div className="w-full lg:pr-16 2xl:pr-0 bg-gradient-to-b from-[#0e192a] to-[#091222]">
       {/* Header Section */}
       <div className="flex flex-row items-center justify-between  py-4">
-        <div className="flex flex-row items-center gap-1">
+        <div className="flex flex-row items-center gap-1 2xl:pr-16">
           <img
             src={fastGamesImg}
             className="w-10 h-10"
@@ -73,17 +73,13 @@ const FastGames = () => {
         <Swiper
           ref={swiperRef8} // Attach ref to Swiper
           breakpoints={{
-            320: {
-              slidesPerView: 2, // 320px বা ছোট স্ক্রিনে 2 স্লাইড দেখাবে
-            },
             640: {
-              slidesPerView: 3, // 640px স্ক্রিনে 3 স্লাইড দেখাবে
-            },
-            1024: {
-              slidesPerView: 4, // 1024px স্ক্রিনে 5 স্লাইড দেখাবে
+              slidesPerView: 4, // 640px স্ক্রিনে 3 স্লাইড দেখাবে
+              spaceBetween: 12,
             },
             1280: {
               slidesPerView: 5, // 1280px স্ক্রিনে 7 স্লাইড দেখাবে
+              spaceBetween: 20,
             },
             1536: {
               slidesPerView: 7, // 1280px স্ক্রিনে 7 স্লাইড দেখাবে
@@ -92,7 +88,8 @@ const FastGames = () => {
               slidesPerView: 9, // 1280px স্ক্রিনে 7 স্লাইড দেখাবে
             },
           }}
-          spaceBetween={20}
+          slidesPerView={2.5}
+          spaceBetween={8}
           navigation={{
             prevEl: ".fast-prev",
             nextEl: ".fast-next",

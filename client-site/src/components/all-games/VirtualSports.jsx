@@ -53,12 +53,12 @@ const VirtualSports = () => {
           />
           <h1 className="text-lg font-bold text-white">Virtual Sports</h1>
         </div>
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row items-center gap-2 2xl:pr-16">
           <div className="px-4 py-1 bg-[#152436] rounded-md">
             <p className="text-sm text-slate-400">19 Games</p>
           </div>
           {/* Custom Swiper Navigation */}
-          <div className="flex flex-row items-center gap-2">
+          <div className="flex flex-row items-center gap-2 2xl:pr-16">
             <div className="virtual-prev bg-[#152436] w-8 h-8 rounded-md flex items-center justify-center cursor-pointer">
               <IoIosArrowBack className="text-slate-400 text-xl" />
             </div>
@@ -74,17 +74,13 @@ const VirtualSports = () => {
         <Swiper
           ref={swiperRef12} // Attach ref to Swiper
           breakpoints={{
-            320: {
-              slidesPerView: 2, // 320px বা ছোট স্ক্রিনে 2 স্লাইড দেখাবে
-            },
             640: {
-              slidesPerView: 3, // 640px স্ক্রিনে 3 স্লাইড দেখাবে
-            },
-            1024: {
-              slidesPerView: 4, // 1024px স্ক্রিনে 5 স্লাইড দেখাবে
+              slidesPerView: 4, // 640px স্ক্রিনে 3 স্লাইড দেখাবে
+              spaceBetween: 12,
             },
             1280: {
               slidesPerView: 5, // 1280px স্ক্রিনে 7 স্লাইড দেখাবে
+              spaceBetween: 20,
             },
             1536: {
               slidesPerView: 7, // 1280px স্ক্রিনে 7 স্লাইড দেখাবে
@@ -93,7 +89,8 @@ const VirtualSports = () => {
               slidesPerView: 9, // 1280px স্ক্রিনে 7 স্লাইড দেখাবে
             },
           }}
-          spaceBetween={20}
+          slidesPerView={2.5}
+          spaceBetween={8}
           navigation={{
             prevEl: ".virtual-prev",
             nextEl: ".virtual-next",

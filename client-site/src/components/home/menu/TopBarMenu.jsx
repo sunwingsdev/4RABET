@@ -124,7 +124,7 @@ const TopBarMenu = () => {
               />
             </Link>
           </div>
-          <div className="flex gap-4 xl:gap-6 text-white font-bold text-base overflow-x-auto">
+          <div className="flex gap-4 xl:gap-6 text-white font-bold text-base overflow-x-auto scrollbar-hide">
             {topMenu.map((menu) => (
               <Link key={menu.id} to={menu.link}>
                 <p className="py-4 border-b-2 hover:text-[#1976d2] border-[#18263AE6] hover:border-[#1976d2] duration-300 whitespace-nowrap">
