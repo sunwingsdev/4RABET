@@ -32,7 +32,7 @@ const Router = createBrowserRouter([
         element: <Popular />,
       },
       {
-        path: "/4rabet-exclusive",
+        path: "/betruss-exclusive",
         element: <RabetExclusive />,
       },
       {

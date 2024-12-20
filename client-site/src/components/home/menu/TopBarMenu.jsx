@@ -203,10 +203,27 @@ const TopBarMenu = () => {
                           />
                         </div>
                       </div>
-                      <div className="p-4 space-y-2">
-                        <button className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-sm font-bold">
-                          MY PROFILE
-                        </button>
+                      <div className="p-4 flex flex-col items-center gap-2">
+                        <Link to="/my-profile" className="w-full">
+                          <button className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold">
+                            MY PROFILE
+                          </button>
+                        </Link>
+                        <Link to="/withdrawal" className="w-full">
+                          <button className="w-full py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-bold">
+                            WITHDRAWAL
+                          </button>
+                        </Link>
+                        <Link to="/payment-history" className="w-full">
+                          <button className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-sm font-bold">
+                            Payment History
+                          </button>
+                        </Link>
+                        <Link to="/rules" className="w-full">
+                          <button className="w-full py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-bold">
+                            Rules
+                          </button>
+                        </Link>
                         <button
                           onClick={handleLogout}
                           className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold"
