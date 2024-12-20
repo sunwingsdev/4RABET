@@ -7,7 +7,7 @@ import PageGridSection from "../../components/shared/PageGridSection";
 
 const VirtualSport = () => {
   return (
-    <div className="bg-[#091222] pt-14 mt-[51px] lg:mt-0">
+    <div className="bg-[#091222] pt-8 mt-[51px] lg:mt-0">
       <PageTop title="Virtual Sports" Icon={FaFutbol} />
       <div className="p-4">
         <TopSection />
