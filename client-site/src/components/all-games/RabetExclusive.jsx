@@ -28,7 +28,7 @@ const RabetExclusive = () => {
             className="w-10 h-10"
             alt="popular category image"
           />
-          <h1 className="text-lg font-bold text-white">4RABET Exclusives</h1>
+          <h1 className="text-lg font-bold text-white">BETRUSS Exclusives</h1>
         </div>
         <div className="flex flex-row items-center gap-2 2xl:pr-16">
           <div className="px-4 py-1 bg-[#152436] rounded-md">
