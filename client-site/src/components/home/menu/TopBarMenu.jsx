@@ -444,17 +444,27 @@ const TopBarMenu = () => {
             </li>
           </ul>
         </div>
-        <div className="flex items-center gap-2 text-sm font-bold text-white w-full">
-          <Link onClick={openModal} className="w-1/2">
-            <p className="w-full py-2 rounded-md bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 text-center">
-              SIGN IN
-            </p>
-          </Link>
-          <Link onClick={openRegistrationModal} className="w-1/2">
-            <p className="w-full py-2 rounded-md bg-[#4caf50] hover:bg-[#388f3b] duration-300 text-center">
-              REGISTRATION
-            </p>
-          </Link>
+        <div className="flex items-center justify-center gap-2 text-sm font-bold text-white w-full">
+          {user ? (
+            <button className="mb-2">
+              <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
+                DEPOSIT
+              </p>
+            </button>
+          ) : (
+            <>
+              <Link onClick={openModal} className="w-1/2">
+                <p className="w-full py-2 rounded-md bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 text-center">
+                  SIGN IN
+                </p>
+              </Link>
+              <Link onClick={openRegistrationModal} className="w-1/2">
+                <p className="w-full py-2 rounded-md bg-[#4caf50] hover:bg-[#388f3b] duration-300 text-center">
+                  REGISTRATION
+                </p>
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
