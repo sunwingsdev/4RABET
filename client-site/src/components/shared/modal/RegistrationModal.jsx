@@ -115,7 +115,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="text-white bg-[#152234] w-[90%] lg:w-[900px] 2xl:w-[900px] h-[700px] lg:h-[520px] 2xl:h-[700px] rounded-lg shadow-lg flex overflow-hidden relative">
+      <div className="text-white bg-[#152234] w-[90%] lg:w-[900px] 2xl:w-[900px] h-auto lg:h-[520px] 2xl:h-[700px] rounded-lg shadow-lg flex overflow-hidden relative">
         {/* Close Button */}
         <button
           onClick={closeRegistrationModal}

@@ -87,9 +87,9 @@ const leftSideMenu = [
   },
   {
     id: 3,
-    label: "4Rabet Exclusive",
+    label: "BETRUSS Exclusive",
     Icon: rabetImg,
-    link: "/4rabet-exclusive",
+    link: "/betruss-exclusive",
   },
   {
     id: 4,

@@ -31,6 +31,8 @@ import { BiBookBookmark } from "react-icons/bi";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
 import ApiConnectionModal from "../../shared/ApiConnectionModal";
+import DepositModal from "../../depositModal/DepositModal";
+
 
 const TopBarMenu = () => {
   const {
@@ -44,6 +46,10 @@ const TopBarMenu = () => {
   const { addToast } = useToasts();
   const [isLogOutDropdownOpen, setIsLogOutDropdownOpen] = useState(false);
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+  const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
+
+  const openDepositModal = () => setIsDepositModalOpen(true);
+  const closeDepositModal = () => setIsDepositModalOpen(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -180,7 +186,7 @@ const TopBarMenu = () => {
           <div className="flex items-center gap-4 text-white pl-2 xl:pl-4 2xl:pl-6 border-l border-[#293b55] ">
             {user ? (
               <>
-                <button>
+                <button onClick={openDepositModal}>
                   <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
                     DEPOSIT
                   </p>
@@ -222,10 +228,27 @@ const TopBarMenu = () => {
                           />
                         </div>
                       </div>
-                      <div className="p-4 space-y-2">
-                        <button className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-sm font-bold">
-                          MY PROFILE
-                        </button>
+                      <div className="p-4 flex flex-col items-center gap-2">
+                        <Link to="/my-profile" className="w-full">
+                          <button className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold">
+                            MY PROFILE
+                          </button>
+                        </Link>
+                        <Link to="/withdrawal" className="w-full">
+                          <button className="w-full py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-bold">
+                            WITHDRAWAL
+                          </button>
+                        </Link>
+                        <Link to="/payment-history" className="w-full">
+                          <button className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-sm font-bold">
+                            Payment History
+                          </button>
+                        </Link>
+                        <Link to="/rules" className="w-full">
+                          <button className="w-full py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-bold">
+                            Rules
+                          </button>
+                        </Link>
                         <button
                           onClick={handleLogout}
                           className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold"
@@ -317,7 +340,10 @@ const TopBarMenu = () => {
             <HiX size={28} />
           </button>
           <div className="px-5">
-            <button className="mt-6 w-full py-2 rounded-md text-sm font-bold text-white bg-blue-500">
+            <button
+              onClick={openDepositModal}
+              className="mt-6 w-full py-2 rounded-md text-sm font-bold text-white bg-blue-500"
+            >
               DEPOSIT
             </button>
           </div>
@@ -446,17 +472,34 @@ const TopBarMenu = () => {
             </li>
           </ul>
         </div>
-        <div className="flex items-center gap-2 text-sm font-bold text-white w-full">
-          <Link onClick={openModal} className="w-1/2">
-            <p className="w-full py-2 rounded-md bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 text-center">
-              SIGN IN
-            </p>
-          </Link>
-          <Link onClick={openRegistrationModal} className="w-1/2">
-            <p className="w-full py-2 rounded-md bg-[#4caf50] hover:bg-[#388f3b] duration-300 text-center">
-              REGISTRATION
-            </p>
-          </Link>
+        <div className="flex items-center justify-center gap-2 text-sm font-bold text-white w-full">
+          {user ? (
+            <>
+              <button className="mb-2">
+                <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
+                  DEPOSIT
+                </p>
+              </button>
+              <button onClick={handleLogout} className="mb-2">
+                <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-red-600 hover:bg-red-700 duration-300 whitespace-nowrap">
+                  LOGOUT
+                </p>
+              </button>
+            </>
+          ) : (
+            <>
+              <Link onClick={openModal} className="w-1/2">
+                <p className="w-full py-2 rounded-md bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 text-center">
+                  SIGN IN
+                </p>
+              </Link>
+              <Link onClick={openRegistrationModal} className="w-1/2">
+                <p className="w-full py-2 rounded-md bg-[#4caf50] hover:bg-[#388f3b] duration-300 text-center">
+                  REGISTRATION
+                </p>
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
@@ -476,8 +519,12 @@ const TopBarMenu = () => {
         />
       )}
 
+
       {isApiModalOpen && (
         <ApiConnectionModal closeApiModal={() => setIsApiModalOpen(false)} />
+      {/* Deposit In modal */}
+      {isDepositModalOpen && (
+        <DepositModal closeDepositModal={closeDepositModal} />
       )}
     </div>
   );
