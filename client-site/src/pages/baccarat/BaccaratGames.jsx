@@ -6,7 +6,7 @@ import TopSection from "../../components/shared/TopSection";
 import PageGridSection from "../../components/shared/PageGridSection";
 const BaccaratGames = () => {
   return (
-    <div className="bg-[#091222] pt-7 sm:pt-14 mt-[51px] lg:mt-0">
+    <div className="bg-[#091222] pt-10 sm:pt-14 mt-[51px] lg:mt-0">
       <PageTop title="Baccarat" Icon={GiCash} />
       <div className="p-4">
         <TopSection />
