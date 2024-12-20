@@ -1,21 +1,21 @@
-import { FaCoins } from "react-icons/fa";
-import newGamesImg from "../../assets/menu/4.png";
+import { FaTrophy } from "react-icons/fa";
+import slotGamesImg from "../../assets/menu/6.png";
 import { gamesData } from "../../components/shared/GamesData";
 import PageTop from "../../components/shared/PageTop";
 import TopSection from "../../components/shared/TopSection";
 import PageGridSection from "../../components/shared/PageGridSection";
 
-const NewGames = () => {
+const SlotGames = () => {
   return (
     <div className="bg-[#091222] pt-10 mt-[51px] lg:mt-0">
-      <PageTop title="New Games" Icon={FaCoins} />
+      <PageTop title="Slot Games" Icon={FaTrophy} />
       <div className="p-4">
         <TopSection />
 
         <div>
           <PageGridSection
-            title="New Games"
-            img={newGamesImg}
+            title="Slot Games"
+            img={slotGamesImg}
             games={gamesData}
           />
         </div>
@@ -24,4 +24,4 @@ const NewGames = () => {
   );
 };
 
-export default NewGames;
+export default SlotGames;
