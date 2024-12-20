@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import logo from "../../../assets/logo.svg";
+import logo from "../../../assets/logo.png";
 import flag from "../../../assets/EN.svg";
 import { topMenu } from "../../MenuItems";
 import { useContext, useState } from "react";
@@ -21,7 +21,12 @@ import { PiNumberCircleSevenFill } from "react-icons/pi";
 import { CgLivePhoto } from "react-icons/cg";
 import { GiDonut, GiRocketThruster } from "react-icons/gi";
 import { LiaProceduresSolid } from "react-icons/lia";
-import { IoIosFootball, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import {
+  IoIosFootball,
+  IoIosArrowDown,
+  IoIosArrowUp,
+  IoIosMail,
+} from "react-icons/io";
 import { BiBookBookmark } from "react-icons/bi";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
@@ -153,7 +158,7 @@ const TopBarMenu = () => {
           </div>
         </div>
         <div className="flex items-center gap-4 xl:gap-6">
-          <div className="flex items-center gap-2 text-white pl-2 xl:pl-4 2xl:pl-6 border-l border-[#293b55] ">
+          <div className="flex items-center gap-4 text-white pl-2 xl:pl-4 2xl:pl-6 border-l border-[#293b55] ">
             {user ? (
               <>
                 <button>
@@ -161,6 +166,7 @@ const TopBarMenu = () => {
                     DEPOSIT
                   </p>
                 </button>
+                <IoIosMail className="text-5xl text-blue-500" />
                 <div className="relative">
                   {/* Dropdown Trigger */}
                   <button

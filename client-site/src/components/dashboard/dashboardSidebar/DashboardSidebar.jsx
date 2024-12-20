@@ -33,7 +33,7 @@ import {
   IoSettingsSharp,
 } from "react-icons/io5";
 import { Link } from "react-router";
-import logo from "../../../assets/logo.svg";
+import logo from "../../../assets/logo.png";
 
 const DashboardSidebar = ({ open, setOpen }) => {
   // State to track submenu visibility for each menu item

@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 import { IoClose } from "react-icons/io5"; // Close icon
 import { Link } from "react-router";
-import logo from "../../../assets/logo.svg";
+import logo from "../../../assets/logo.png";
 
 const DashboardMobilMenu = ({ open }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

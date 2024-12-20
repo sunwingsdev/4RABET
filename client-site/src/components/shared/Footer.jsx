@@ -6,7 +6,7 @@ import { FaInstagram, FaTelegramPlane } from "react-icons/fa";
 import { TbRating18Plus } from "react-icons/tb";
 import ios from "../../assets/footer/ios.png";
 import and from "../../assets/footer/and.png";
-import footerTop from "../../assets/logo.svg";
+import footerTop from "../../assets/logo.png";
 
 const Footer = () => {
   const [selectedCountry, setSelectedCountry] = useState({
