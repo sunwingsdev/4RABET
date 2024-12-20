@@ -7,7 +7,7 @@ import PageGridSection from "../../components/shared/PageGridSection";
 
 const LiveGames = () => {
   return (
-    <div className="bg-[#091222] pt-8 mt-[51px] lg:mt-0">
+    <div className="bg-[#091222] pt-10 mt-[51px] lg:mt-0">
       <PageTop title="Live Games" Icon={GiSwordman} />
       <div className="p-4">
         <TopSection />

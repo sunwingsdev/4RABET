@@ -18,7 +18,7 @@ import PageTop from "../../components/shared/PageTop";
 
 const AllGames = () => {
   return (
-    <div className="bg-[#091222] pt-7 sm:pt-14 mt-[51px] lg:mt-0">
+    <div className="bg-[#091222] pt-10 sm:pt-14 mt-[51px] lg:mt-0">
       <PageTop title="All Games" Icon={FaGamepad} />
       <div className="p-4">
         <TopSection />

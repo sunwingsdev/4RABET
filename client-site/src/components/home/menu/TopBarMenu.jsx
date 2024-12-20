@@ -454,11 +454,18 @@ const TopBarMenu = () => {
         </div>
         <div className="flex items-center justify-center gap-2 text-sm font-bold text-white w-full">
           {user ? (
-            <button className="mb-2">
-              <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
-                DEPOSIT
-              </p>
-            </button>
+            <>
+              <button className="mb-2">
+                <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
+                  DEPOSIT
+                </p>
+              </button>
+              <button onClick={handleLogout} className="mb-2">
+                <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-red-600 hover:bg-red-700 duration-300 whitespace-nowrap">
+                  LOGOUT
+                </p>
+              </button>
+            </>
           ) : (
             <>
               <Link onClick={openModal} className="w-1/2">
