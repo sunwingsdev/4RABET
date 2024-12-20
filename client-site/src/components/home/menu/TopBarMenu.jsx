@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import logo from "../../../assets/logo.svg";
+import logo from "../../../assets/logo.png";
 import flag from "../../../assets/EN.svg";
 import { topMenu } from "../../MenuItems";
 import { useContext, useState } from "react";
@@ -21,16 +21,28 @@ import { PiNumberCircleSevenFill } from "react-icons/pi";
 import { CgLivePhoto } from "react-icons/cg";
 import { GiDonut, GiRocketThruster } from "react-icons/gi";
 import { LiaProceduresSolid } from "react-icons/lia";
-import { IoIosFootball, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import {
+  IoIosFootball,
+  IoIosArrowDown,
+  IoIosArrowUp,
+  IoIosMail,
+} from "react-icons/io";
 import { BiBookBookmark } from "react-icons/bi";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
+import ApiConnectionModal from "../../shared/ApiConnectionModal";
 
 const TopBarMenu = () => {
-  const { user, logOut } = useContext(AuthContext); // কনটেক্সট থেকে logout ফাংশন নিয়ে আসা
+  const {
+    user,
+    logOut,
+    setIsModalOpen,
+    setIsApiModalOpen,
+    isModalOpen,
+    isApiModalOpen,
+  } = useContext(AuthContext);
   const { addToast } = useToasts();
   const [isLogOutDropdownOpen, setIsLogOutDropdownOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -126,6 +138,18 @@ const TopBarMenu = () => {
     });
   };
 
+  const handleMenuSelect = () => {
+    if (!user) {
+      openModal();
+      addToast("Please login first", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    } else {
+      setIsApiModalOpen(true);
+    }
+  };
+
   return (
     <div className="bg-[#18263AE6] border-b border-[#293b55]">
       <div className="hidden lg:flex justify-between items-center gap-2">
@@ -144,16 +168,16 @@ const TopBarMenu = () => {
           </div>
           <div className="flex gap-4 xl:gap-6 text-white font-bold text-base overflow-x-auto scrollbar-hide">
             {topMenu.map((menu) => (
-              <Link key={menu.id} to={menu.link}>
+              <div onClick={handleMenuSelect} key={menu.id}>
                 <p className="py-4 border-b-2 hover:text-[#1976d2] border-[#18263AE6] hover:border-[#1976d2] duration-300 whitespace-nowrap">
                   {menu.label}
                 </p>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
         <div className="flex items-center gap-4 xl:gap-6">
-          <div className="flex items-center gap-2 text-white pl-2 xl:pl-4 2xl:pl-6 border-l border-[#293b55] ">
+          <div className="flex items-center gap-4 text-white pl-2 xl:pl-4 2xl:pl-6 border-l border-[#293b55] ">
             {user ? (
               <>
                 <button>
@@ -161,6 +185,7 @@ const TopBarMenu = () => {
                     DEPOSIT
                   </p>
                 </button>
+                <IoIosMail className="text-5xl text-blue-500" />
                 <div className="relative">
                   {/* Dropdown Trigger */}
                   <button
@@ -449,6 +474,10 @@ const TopBarMenu = () => {
           offers={offers}
           handleSelect={handleSelect}
         />
+      )}
+
+      {isApiModalOpen && (
+        <ApiConnectionModal closeApiModal={() => setIsApiModalOpen(false)} />
       )}
     </div>
   );

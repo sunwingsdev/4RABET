@@ -3,7 +3,7 @@ import { FaTimes } from "react-icons/fa";
 import { MdOutlineMailOutline, MdPhoneAndroid } from "react-icons/md";
 import { AuthContext } from "../../../providers/AuthProvider";
 import GoogleSignIn from "./GoogleSignIn";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useToasts } from "react-toast-notifications";
 
 const SignInModal = ({ closeModal }) => {
@@ -14,7 +14,8 @@ const SignInModal = ({ closeModal }) => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const { addToast } = useToasts();
-
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   // Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +25,7 @@ const SignInModal = ({ closeModal }) => {
       // Firebase সাইন ইন ফাংশন কল
       await signIn(email, password);
       addToast("Login successful!", { appearance: "success" });
-      navigate("/");
+      navigate(from);
       closeModal();
     } catch (err) {
       setError("Invalid email or password. Please try again.");
