@@ -37,17 +37,17 @@ const SignInModal = ({ closeModal }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="text-white bg-[#152234] w-[900px] h-[700px] rounded-lg shadow-lg flex overflow-hidden relative">
+      <div className="text-white bg-[#152234] w-[90%] lg:w-[900px] 2xl:w-[900px] h-auto 2xl:h-[700px] rounded-lg shadow-lg flex overflow-hidden relative">
         {/* Close Button */}
         <button
           onClick={closeModal}
-          className="absolute top-4 right-4 text-[#59647a] text-2xl hover:text-blue-600 duration-300"
+          className="absolute top-2 md:top-4 right-2 md:right-4 text-[#59647a] text-lg hover:text-blue-600 duration-300"
         >
           <FaTimes />
         </button>
 
         {/* Left Section - Image */}
-        <div className="w-1/2">
+        <div className="w-1/2 lg:block hidden">
           <img
             className="w-full h-full object-cover"
             src="https://ifrd.4rabetsite25.com/img/registration-modal-HI.webp"
@@ -56,7 +56,7 @@ const SignInModal = ({ closeModal }) => {
         </div>
 
         {/* Right Section - Tabs and Sign In Form */}
-        <div className="w-1/2 p-8 flex flex-col">
+        <div className="w-full lg:w-1/2 p-4 md:p-8 flex flex-col justify-center overflow-y-auto scrollbar-hide 2xl:pt-0 2xl:mt-6">
           <h2 className="text-2xl font-semibold mb-6 text-center text-white">
             LOGIN
           </h2>
