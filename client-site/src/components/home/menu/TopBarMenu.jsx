@@ -33,7 +33,6 @@ import { useToasts } from "react-toast-notifications";
 import ApiConnectionModal from "../../shared/ApiConnectionModal";
 import DepositModal from "../../depositModal/DepositModal";
 
-
 const TopBarMenu = () => {
   const {
     user,
@@ -519,10 +518,10 @@ const TopBarMenu = () => {
         />
       )}
 
-
       {isApiModalOpen && (
         <ApiConnectionModal closeApiModal={() => setIsApiModalOpen(false)} />
-      {/* Deposit In modal */}
+      )}
+      {/* Deposit In modal  */}
       {isDepositModalOpen && (
         <DepositModal closeDepositModal={closeDepositModal} />
       )}
