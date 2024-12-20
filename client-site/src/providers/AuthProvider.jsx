@@ -18,6 +18,9 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isApiModalOpen, setIsApiModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [singleUser, setSingleUser] = useState(null);
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -65,6 +68,12 @@ const AuthProvider = ({ children }) => {
     googleSignIn,
     logOut,
     updateUserProfile,
+    isApiModalOpen,
+    setIsApiModalOpen,
+    isModalOpen,
+    setIsModalOpen,
+    singleUser,
+    setSingleUser,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

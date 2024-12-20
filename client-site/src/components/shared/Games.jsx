@@ -1,9 +1,27 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router";
+import { AuthContext } from "../../providers/AuthProvider";
+import ApiConnectionModal from "./ApiConnectionModal";
+import { useToasts } from "react-toast-notifications";
 
 const Games = ({ img, title }) => {
+  const { user, setIsApiModalOpen, setIsModalOpen, isApiModalOpen } =
+    useContext(AuthContext);
   const [isHovered, setIsHovered] = useState(false);
+  const { addToast } = useToasts();
+
+  const handleGameOpen = () => {
+    if (!user) {
+      setIsModalOpen(true);
+      addToast("Please login first", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    } else {
+      setIsApiModalOpen(true);
+    }
+  };
 
   return (
     <div
@@ -21,7 +39,10 @@ const Games = ({ img, title }) => {
         />
         {isHovered && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black bg-opacity-50 duration-300">
-            <button className="px-4 py-2 bg-blue-500 text-white text-sm font-bold rounded hover:bg-blue-600 duration-300">
+            <button
+              onClick={handleGameOpen}
+              className="px-4 py-2 bg-blue-500 text-white text-sm font-bold rounded hover:bg-blue-600 duration-300"
+            >
               PLAY
             </button>
             <Link
@@ -38,6 +59,10 @@ const Games = ({ img, title }) => {
         )}
       </div>
       <p className="text-xs lg:text-base font-bold text-white">{title}</p>
+
+      {isApiModalOpen && (
+        <ApiConnectionModal closeApiModal={() => setIsApiModalOpen(false)} />
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 
@@ -60,6 +60,13 @@ async function run() {
           error: error.message,
         });
       }
+    });
+
+    app.get("/api/users/:email", async (req, res) => {
+      const { email } = req.params;
+      const query = { email };
+      const result = await usersCollection.findOne(query);
+      res.send(result);
     });
     // APIs end
 
