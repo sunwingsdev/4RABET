@@ -30,6 +30,7 @@ import {
 import { BiBookBookmark } from "react-icons/bi";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
+import DepositModal from "../../depositModal/DepositModal";
 
 const TopBarMenu = () => {
   const { user, logOut } = useContext(AuthContext); // কনটেক্সট থেকে logout ফাংশন নিয়ে আসা
@@ -37,6 +38,10 @@ const TopBarMenu = () => {
   const [isLogOutDropdownOpen, setIsLogOutDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+  const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
+
+  const openDepositModal = () => setIsDepositModalOpen(true);
+  const closeDepositModal = () => setIsDepositModalOpen(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -161,7 +166,7 @@ const TopBarMenu = () => {
           <div className="flex items-center gap-4 text-white pl-2 xl:pl-4 2xl:pl-6 border-l border-[#293b55] ">
             {user ? (
               <>
-                <button>
+                <button onClick={openDepositModal}>
                   <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
                     DEPOSIT
                   </p>
@@ -298,7 +303,10 @@ const TopBarMenu = () => {
             <HiX size={28} />
           </button>
           <div className="px-5">
-            <button className="mt-6 w-full py-2 rounded-md text-sm font-bold text-white bg-blue-500">
+            <button
+              onClick={openDepositModal}
+              className="mt-6 w-full py-2 rounded-md text-sm font-bold text-white bg-blue-500"
+            >
               DEPOSIT
             </button>
           </div>
@@ -455,6 +463,11 @@ const TopBarMenu = () => {
           offers={offers}
           handleSelect={handleSelect}
         />
+      )}
+
+      {/* Deposit In modal */}
+      {isDepositModalOpen && (
+        <DepositModal closeDepositModal={closeDepositModal} />
       )}
     </div>
   );
