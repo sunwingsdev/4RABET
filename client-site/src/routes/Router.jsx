@@ -17,6 +17,7 @@ import BlackJack from "../pages/blackjack/BlackJack";
 import TableGames from "../pages/table/TableGames";
 import VirtualSport from "../pages/virtual-sports/VirtualSport";
 import OtherGames from "../pages/other-games/OtherGames";
+// import AdminRoute from "./AdminRoute";
 
 const Router = createBrowserRouter([
   {
@@ -87,7 +88,11 @@ const Router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      // <AdminRoute>
+        <DashboardLayout />
+      // </AdminRoute>
+    ),
     children: [
       {
         path: "",

@@ -1,10 +1,65 @@
 import { useState } from "react";
-import { FaTimes } from "react-icons/fa";
+import { FaAngleDown, FaAngleUp, FaTimes } from "react-icons/fa";
 import { FiPlusCircle } from "react-icons/fi";
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { Link } from "react-router";
 import GoogleSignIn from "./GoogleSignIn";
+
+const CustomDropdown = ({
+  currencies,
+  selectedCurrency,
+  setSelectedCurrency,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSelect = (currency) => {
+    setSelectedCurrency(currency);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="relative">
+      {/* Selected Option */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full bg-[#1c2d44] text-white px-4 py-2 rounded-lg border border-[#283548] focus:outline-none flex items-center justify-between"
+      >
+        <div className="flex items-center gap-2">
+          <img src={selectedCurrency.flag} alt="" className="w-5 h-5" />
+          <span>
+            {selectedCurrency.symbol} - {selectedCurrency.label}
+          </span>
+        </div>
+        <span>
+          <FaAngleDown
+            className={`${
+              isOpen && "rotate-180"
+            } transition-all duration-300 ease-in-out`}
+          />
+        </span>
+      </button>
+
+      {/* Dropdown Options */}
+      {isOpen && (
+        <ul className="absolute mt-2 w-full bg-[#1c2d44] text-white rounded-lg border border-[#283548] shadow-lg z-10">
+          {currencies.map((currency) => (
+            <li
+              key={currency.label}
+              onClick={() => handleSelect(currency)}
+              className="px-4 py-2 hover:bg-[#283548] cursor-pointer flex items-center gap-2"
+            >
+              <img src={currency.flag} alt="" className="w-5 h-5" />
+              <span>
+                {currency.symbol} - {currency.label}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
 
 const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
   const { createUser } = useContext(AuthContext); // Using context for Firebase Auth
@@ -15,6 +70,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
   const [selectedOffer, setSelectedOffer] = useState(offers[0]);
   const [showPromoInput, setShowPromoInput] = useState(false);
   const [promoCode, setPromoCode] = useState("");
+
 
   const handleApplyPromoCode = () => {
     // Handle promo code application logic here
@@ -112,7 +168,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
               className="w-full mb-2 sm:mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
             />
             {/* Currency section */}
-            <div className="relative mb-2 sm:mb-4">
+            {/* <div className="relative mb-2 sm:mb-4">
               <select
                 value={selectedCurrency.label}
                 onChange={(e) => {
@@ -129,11 +185,20 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
                     value={currency.label}
                     className="flex items-center"
                   >
-                    {currency.symbol} - {currency.label}
+                    <img src={currency?.flag} alt="" />
+                    <p>
+                      {currency.symbol} - {currency.label}
+                    </p>
                   </option>
                 ))}
               </select>
-            </div>
+            </div> */}
+
+            <CustomDropdown
+              currencies={currencies}
+              selectedCurrency={selectedCurrency}
+              setSelectedCurrency={setSelectedCurrency}
+            />
 
             {/* Promo Code Section */}
             <div className="mt-2 sm:mt-4 mb-2 sm:mb-4">

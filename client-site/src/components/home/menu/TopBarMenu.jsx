@@ -30,13 +30,21 @@ import {
 import { BiBookBookmark } from "react-icons/bi";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
+import ApiConnectionModal from "../../shared/ApiConnectionModal";
 import DepositModal from "../../depositModal/DepositModal";
 
+
 const TopBarMenu = () => {
-  const { user, logOut } = useContext(AuthContext); // কনটেক্সট থেকে logout ফাংশন নিয়ে আসা
+  const {
+    user,
+    logOut,
+    setIsModalOpen,
+    setIsApiModalOpen,
+    isModalOpen,
+    isApiModalOpen,
+  } = useContext(AuthContext);
   const { addToast } = useToasts();
   const [isLogOutDropdownOpen, setIsLogOutDropdownOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
 
@@ -136,6 +144,18 @@ const TopBarMenu = () => {
     });
   };
 
+  const handleMenuSelect = () => {
+    if (!user) {
+      openModal();
+      addToast("Please login first", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    } else {
+      setIsApiModalOpen(true);
+    }
+  };
+
   return (
     <div className="bg-[#18263AE6] border-b border-[#293b55]">
       <div className="hidden lg:flex justify-between items-center gap-2">
@@ -154,11 +174,11 @@ const TopBarMenu = () => {
           </div>
           <div className="flex gap-4 xl:gap-6 text-white font-bold text-base overflow-x-auto scrollbar-hide">
             {topMenu.map((menu) => (
-              <Link key={menu.id} to={menu.link}>
+              <div onClick={handleMenuSelect} key={menu.id}>
                 <p className="py-4 border-b-2 hover:text-[#1976d2] border-[#18263AE6] hover:border-[#1976d2] duration-300 whitespace-nowrap">
                   {menu.label}
                 </p>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -499,6 +519,9 @@ const TopBarMenu = () => {
         />
       )}
 
+
+      {isApiModalOpen && (
+        <ApiConnectionModal closeApiModal={() => setIsApiModalOpen(false)} />
       {/* Deposit In modal */}
       {isDepositModalOpen && (
         <DepositModal closeDepositModal={closeDepositModal} />
