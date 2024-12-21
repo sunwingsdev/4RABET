@@ -27,13 +27,14 @@ const DepositModal = ({ closeDepositModal }) => {
           <FaTimes />
         </button>
         {/* Header */}
-        <div className="flex items-center space-x-3">
+        <div className="flex justify-center items-center space-x-3">
           <div className="w-10 h-10 rounded-full bg-indigo-500 flex justify-center items-center text-white text-lg font-bold">
             BR
           </div>
           <h2 className="text-2xl font-semibold text-white">
             <span className="text-yellow-300">Bet</span>Rush
           </h2>
+          <p className="text-2xl font-bold text-white">Deposit</p>
         </div>
 
         {/* Bottom Tabs */}

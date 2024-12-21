@@ -33,6 +33,7 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
 import ApiConnectionModal from "../../shared/ApiConnectionModal";
 import DepositModal from "../../depositModal/DepositModal";
+import { IoPhonePortraitOutline } from "react-icons/io5";
 
 const TopBarMenu = () => {
   const {
@@ -309,8 +310,13 @@ const TopBarMenu = () => {
               />
             </Link>
           </div>
-
           <div className="text-white flex gap-1 items-center">
+            <Link>
+              <FaApple size={28} />
+            </Link>
+            <Link>
+              <IoPhonePortraitOutline size={28} />
+            </Link>
             {user ? (
               <button onClick={openDepositModal} className="mb-2">
                 <div className="flex flex-row items-center gap-1 px-4 xl:px-6 py-2 rounded-full bg-red-700 hover:bg-red-600 duration-300 whitespace-nowrap">
@@ -363,7 +369,7 @@ const TopBarMenu = () => {
             OUR APPLICATION
             <div className="flex gap-1 items-center text-blue-500">
               <FaApple size={22} />
-              <TbRobot size={22} />
+              <IoPhonePortraitOutline size={22} />
             </div>
           </p>
           <ul className="font-bold text-white">
