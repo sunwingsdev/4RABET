@@ -311,12 +311,6 @@ const TopBarMenu = () => {
             </Link>
           </div>
           <div className="text-white flex gap-1 items-center">
-            <Link>
-              <FaApple size={28} />
-            </Link>
-            <Link>
-              <IoPhonePortraitOutline size={28} />
-            </Link>
             {user ? (
               <button onClick={openDepositModal} className="mb-2">
                 <div className="flex flex-row items-center gap-1 px-4 xl:px-6 py-2 rounded-full bg-red-700 hover:bg-red-600 duration-300 whitespace-nowrap">
@@ -330,7 +324,7 @@ const TopBarMenu = () => {
                   <FaApple size={28} />
                 </Link>
                 <Link>
-                  <TbRobot size={28} />
+                  <IoPhonePortraitOutline size={28} />
                 </Link>
               </>
             )}
