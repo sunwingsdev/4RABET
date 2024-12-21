@@ -4,8 +4,10 @@ const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
+const { upload, deleteFile } = require("./utils");
 
 const usersApi = require("./apis/usersApi/usersApi");
+const depositsApi = require("./apis/depositsApi/depositsApi");
 
 const corsConfig = {
   origin: "http://localhost:5173",
@@ -32,6 +34,33 @@ const client = new MongoClient(uri, {
   },
 });
 
+// Routes for image upload and delete
+app.post("/upload", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded" });
+  }
+  res.status(200).json({
+    message: "File uploaded successfully",
+    filePath: `/uploads/images/${req.file.filename}`,
+  });
+});
+
+app.delete("/delete", async (req, res) => {
+  const { filePath } = req.body;
+
+  if (!filePath) {
+    return res.status(400).json({ error: "File path not provided" });
+  }
+
+  try {
+    await deleteFile(filePath);
+    res.status(200).json({ message: "File deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -39,11 +68,14 @@ async function run() {
 
     //collections start
     const usersCollection = client.db("rabet").collection("users");
+    const depositsCollection = client.db("rabet").collection("deposits");
     //collections end
 
     // APIs start
     app.use("/users", usersApi(usersCollection));
+    app.use("/deposits", depositsApi(depositsCollection));
 
+    // ---------=======>
     app.get("/api/users/:email", async (req, res) => {
       const { email } = req.params;
       const query = { email };

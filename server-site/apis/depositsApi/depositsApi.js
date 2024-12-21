@@ -1,0 +1,56 @@
+const express = require("express");
+
+const depositsApi = (depositsCollection) => {
+  const router = express.Router();
+
+  //   add a deposit
+  router.post("/", async (req, res) => {
+    const depositInfo = req.body;
+    depositInfo.status = "pending";
+    depositInfo.createdAt = new Date();
+    const result = await depositsCollection.insertOne(depositInfo);
+    res.send(result);
+  });
+
+  //   get all deposits
+  router.get("/", async (req, res) => {
+    try {
+      const result = await depositsCollection
+        .aggregate([
+          {
+            $addFields: {
+              userId: { $toObjectId: "$userId" },
+            },
+          },
+          {
+            $lookup: {
+              from: "users",
+              localField: "userId",
+              foreignField: "_id",
+              as: "userInfo",
+            },
+          },
+          {
+            $unwind: {
+              path: "$userInfo",
+              preserveNullAndEmptyArrays: true,
+            },
+          },
+          {
+            $project: {
+              "userInfo.password": 0,
+            },
+          },
+        ])
+        .toArray();
+
+      res.send(result);
+    } catch (error) {
+      console.error("Error fetching deposits:", error);
+      res.status(500).send({ error: "Failed to fetch deposits" });
+    }
+  });
+
+  return router;
+};
+module.exports = depositsApi;
