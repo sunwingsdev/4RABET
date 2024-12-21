@@ -32,6 +32,7 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
 import ApiConnectionModal from "../../shared/ApiConnectionModal";
 import DepositModal from "../../depositModal/DepositModal";
+import { IoPhonePortraitOutline } from "react-icons/io5";
 
 const TopBarMenu = () => {
   const {
@@ -313,7 +314,7 @@ const TopBarMenu = () => {
               <FaApple size={28} />
             </Link>
             <Link>
-              <TbRobot size={28} />
+              <IoPhonePortraitOutline size={28} />
             </Link>
           </div>
         </div>
@@ -350,7 +351,7 @@ const TopBarMenu = () => {
             OUR APPLICATION
             <div className="flex gap-1 items-center text-blue-500">
               <FaApple size={22} />
-              <TbRobot size={22} />
+              <IoPhonePortraitOutline size={22} />
             </div>
           </p>
           <ul className="font-bold text-white">

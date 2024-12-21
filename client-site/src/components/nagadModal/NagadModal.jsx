@@ -8,7 +8,7 @@ const NagadModal = ({ closeNagadModal }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="w-full max-w-md bg-[#152234] rounded-lg shadow-md p-6 flex flex-col overflow-hidden relative">
+      <div className="w-full max-w-md bg-[#ffffff] rounded-lg shadow-md p-6 flex flex-col overflow-hidden relative">
         {/* Close Button */}
         <button
           onClick={closeNagadModal}
@@ -16,6 +16,39 @@ const NagadModal = ({ closeNagadModal }) => {
         >
           <FaTimes />
         </button>
+
+        <div className="">
+          <p className="text-lg font-bold text-black">Deposit</p>
+          <div className="grid grid-cols-3 gap-2">
+            <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+              400 BDT
+            </p>
+            <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+              400 BDT
+            </p>
+            <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+              400 BDT
+            </p>
+            <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+              400 BDT
+            </p>
+            <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+              400 BDT
+            </p>
+            <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+              400 BDT
+            </p>
+            <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+              400 BDT
+            </p>
+            <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+              400 BDT
+            </p>
+            <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+              400 BDT
+            </p>
+          </div>
+        </div>
         {/* Header */}
         <div className="flex items-center space-x-3">
           <img
@@ -26,17 +59,33 @@ const NagadModal = ({ closeNagadModal }) => {
         </div>
 
         <div className="flex gap-2">
-          <div className="w-3/4 text-white bg-[#1936447e] py-2 px-3 rounded-lg">
-            <h2 className="text-lg font-semibold">Hasan Islam</h2>
-            <p className="text-sm">ID : fkvogeikvoaeif454</p>
+          <div className="w-3/4 text-white bg-[#ee3c42]  py-2 px-3 rounded-lg">
+            <h2 className="text-xl font-semibold">Hasan Islam</h2>
+            <p className="text-sm">Mobile : 01700000000</p>
           </div>
-          <div className="w-1/4 text-center text-[#d4d4d4] bg-[#1936447e] py-2 px-3 rounded-lg">
-            <h2 className="text-lg font-semibold">
+          <div className="w-1/4 text-center text-white bg-[#ee3c42]  py-2 px-3 rounded-lg">
+            <h2 className="text-xl font-semibold">
               9000 <span className="">BDT</span>
             </h2>
           </div>
         </div>
-        <div className="text-[#f3f3f3] text-base rounded-md py-2 px-3 mt-4">
+
+        <form action="">
+          <input
+            type="number"
+            className="w-full my-2 px-5 py-3 bg-gray-200 border-2 border-gray-400 rounded-lg focus:outline-none placeholder-black"
+            placeholder="Sender Account Number"
+            required
+          />
+          <input
+            type="text"
+            className="w-full my-2 px-5 py-3 bg-gray-200 border-2 border-gray-400 rounded-lg focus:outline-none placeholder-black"
+            placeholder="Transaction ID"
+            required
+          />
+        </form>
+
+        <div className="text-[#f3f3f3] bg-[#ee3c42] text-base rounded-md py-4 pl-6 pr-3 mt-2">
           <ul>
             <li className="list-decimal">
               Go to your NAGAD Mobile Menu by dialing: *167# or Open NAGAD App.
@@ -73,7 +122,7 @@ const NagadModal = ({ closeNagadModal }) => {
         </div>
 
         {/* Payment Button */}
-        <button className="mt-6 w-full py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 duration-300">
+        <button className="mt-2 w-full py-2 bg-[#ee3c42] text-white rounded-md hover:bg-[#d8373c] duration-300">
           Deposit
         </button>
       </div>
