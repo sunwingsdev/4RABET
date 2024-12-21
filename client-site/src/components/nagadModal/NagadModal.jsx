@@ -17,7 +17,7 @@ const NagadModal = ({ closeNagadModal }) => {
           <FaTimes />
         </button>
 
-        <div className="">
+        {/* <div className="">
           <p className="text-lg font-bold text-black">Deposit</p>
           <div className="grid grid-cols-3 gap-2">
             <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
@@ -48,7 +48,7 @@ const NagadModal = ({ closeNagadModal }) => {
               400 BDT
             </p>
           </div>
-        </div>
+        </div> */}
         {/* Header */}
         <div className="flex items-center space-x-3">
           <img
