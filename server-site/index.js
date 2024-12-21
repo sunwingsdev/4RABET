@@ -5,6 +5,8 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 
+const usersApi = require("./apis/usersApi/usersApi");
+
 const corsConfig = {
   origin: "http://localhost:5173",
   credential: true,
@@ -40,27 +42,7 @@ async function run() {
     //collections end
 
     // APIs start
-
-    // POST API to save user data after Firebase registration
-    app.post("/api/users", async (req, res) => {
-      const user = req.body; // Getting the user data from frontend
-
-      try {
-        const result = await usersCollection.insertOne(user);
-        res.status(201).send({
-          success: true,
-          message: "User registered successfully",
-          data: result,
-        });
-      } catch (error) {
-        console.error("Error inserting user:", error.message);
-        res.status(500).send({
-          success: false,
-          message: "Failed to register user",
-          error: error.message,
-        });
-      }
-    });
+    app.use("/users", usersApi(usersCollection));
 
     app.get("/api/users/:email", async (req, res) => {
       const { email } = req.params;
