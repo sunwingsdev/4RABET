@@ -21,6 +21,7 @@ import { PiNumberCircleSevenFill } from "react-icons/pi";
 import { CgLivePhoto } from "react-icons/cg";
 import { GiDonut, GiRocketThruster } from "react-icons/gi";
 import { LiaProceduresSolid } from "react-icons/lia";
+import { GoPlusCircle } from "react-icons/go";
 import {
   IoIosFootball,
   IoIosArrowDown,
@@ -289,7 +290,7 @@ const TopBarMenu = () => {
       </div>
 
       {/* mobile menu */}
-      <div className="px-4 sm:px-6 lg:hidden">
+      <div className="px-4 sm:px-6 lg:hidden bg-[#18283d]">
         <div className="flex items-center justify-between py-3">
           <div className="text-white flex gap-3 sm:gap-4 items-center">
             <button onClick={toggleMenu}>
@@ -316,6 +317,23 @@ const TopBarMenu = () => {
             <Link>
               <IoPhonePortraitOutline size={28} />
             </Link>
+            {user ? (
+              <button onClick={openDepositModal} className="mb-2">
+                <div className="flex flex-row items-center gap-1 px-4 xl:px-6 py-2 rounded-full bg-red-700 hover:bg-red-600 duration-300 whitespace-nowrap">
+                  <p className="text-[12px] font-extrabold">DEPOSIT</p>
+                  <GoPlusCircle className="text-xl" />
+                </div>
+              </button>
+            ) : (
+              <>
+                <Link>
+                  <FaApple size={28} />
+                </Link>
+                <Link>
+                  <TbRobot size={28} />
+                </Link>
+              </>
+            )}
           </div>
         </div>
 
@@ -472,19 +490,40 @@ const TopBarMenu = () => {
             </li>
           </ul>
         </div>
-        <div className="flex items-center justify-center gap-2 text-sm font-bold text-white w-full">
+        <div className="flex items-center justify-start gap-2 text-sm font-bold text-white w-full">
           {user ? (
             <>
-              <button className="mb-2">
-                <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
-                  DEPOSIT
-                </p>
-              </button>
-              <button onClick={handleLogout} className="mb-2">
+              {/* <button onClick={handleLogout} className="mb-2">
                 <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-red-600 hover:bg-red-700 duration-300 whitespace-nowrap">
                   LOGOUT
                 </p>
-              </button>
+              </button> */}
+              <div className="flex flex-row items-center gap-2">
+                <Link
+                  to="/my-profile"
+                  className="uppercase text-slate-500 text-[12px]"
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/deposit"
+                  className="uppercase text-slate-500 text-[12px]"
+                >
+                  Deposit
+                </Link>
+                <Link
+                  to="/payment-history"
+                  className="uppercase text-slate-500 text-[12px]"
+                >
+                  payment history
+                </Link>
+                <Link
+                  to="/bet-history"
+                  className="uppercase text-slate-500 text-[12px]"
+                >
+                  bet history
+                </Link>
+              </div>
             </>
           ) : (
             <>
