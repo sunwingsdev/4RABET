@@ -1,39 +1,22 @@
-// import { useContext, useEffect, useState } from "react";
-// import { AuthContext } from "../providers/AuthProvider";
-// import { Navigate, useLocation } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
+import { Navigate, useLocation } from "react-router";
+import { useGetUserByEmailQuery } from "../redux/features/allApis/usersApi/usersApi";
 
-// const AdminRoute = ({ children }) => {
-//   const { user, loading, setIsModalOpen } = useContext(AuthContext);
-//   const [singleUser, setSingleUser] = useState(null);
-//   const location = useLocation();
+const AdminRoute = ({ children }) => {
+  const { user, loading, setIsModalOpen } = useContext(AuthContext);
+  const { data: singleUser } = useGetUserByEmailQuery(user?.email);
+  const location = useLocation();
 
-//   useEffect(() => {
-//     const fetchUser = async () => {
-//       if (user?._id) {
-//         try {
-//           const res = await fetch(
-//             `${import.meta.env.VITE_BASE_API_URL}/api/users/${user._id}`
-//           );
-//           const data = await res.json();
-//           setSingleUser(data);
-//         } catch (error) {
-//           console.error("Error fetching user:", error);
-//         }
-//       }
-//     };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-//     fetchUser();
-//   }, [user]);
+  if (user && singleUser && singleUser?.role === "admin") {
+    return children;
+  }
+  setIsModalOpen(true);
+  return <Navigate to="/" state={{ from: location }} />;
+};
 
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (user && singleUser && singleUser?.role === "admin") {
-//     return children;
-//   }
-//   setIsModalOpen(true);
-//   return <Navigate to="/" state={{ from: location }} />;
-// };
-
-// export default AdminRoute;
+export default AdminRoute;

@@ -15,6 +15,12 @@ const usersApi = (usersCollection) => {
     res.send(result);
   });
 
+  router.get("/:email", async (req, res) => {
+    const { email } = req.params;
+    const result = await usersCollection.findOne({ email });
+    res.send(result);
+  });
+
   router.get("/", async (req, res) => {
     const result = await usersCollection.find().toArray();
     res.send(result);
