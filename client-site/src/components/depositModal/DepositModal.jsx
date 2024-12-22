@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 // import { FaFacebookMessenger } from "react-icons/fa6";
 // import { IoLogoWhatsapp } from "react-icons/io";
@@ -8,8 +8,13 @@ import { Link } from "react-router";
 import NagadModal from "../nagadModal/NagadModal";
 
 import { HiArrowLongLeft } from "react-icons/hi2";
+import { AuthContext } from "../../providers/AuthProvider";
+import { useGetUserByEmailQuery } from "../../redux/features/allApis/usersApi/usersApi";
 
 const DepositModal = ({ closeDepositModal }) => {
+  const { user } = useContext(AuthContext);
+  const { data: singleUser } = useGetUserByEmailQuery(user?.email);
+  console.log("si U", singleUser);
   //   const [activeTabTop, setActiveTabTop] = useState("SUPPORT");
   const [activeTabBottom, setActiveTabBottom] = useState("MOBILE_BANKING");
 
@@ -170,6 +175,38 @@ const DepositModal = ({ closeDepositModal }) => {
                 </div>
               </div>
 
+              <div className="my-4">
+                <div className="grid grid-cols-3 gap-2">
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                </div>
+              </div>
+
               {/* Form */}
               <form action="">
                 <input
@@ -266,6 +303,38 @@ const DepositModal = ({ closeDepositModal }) => {
                     <span className="">9000</span>{" "}
                     <span className="text-base leading-3 font-normal">BDT</span>
                   </div>
+                </div>
+              </div>
+
+              <div className="my-4">
+                <div className="grid grid-cols-3 gap-2">
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
+                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
+                    400 BDT
+                  </p>
                 </div>
               </div>
 
