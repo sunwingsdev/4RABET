@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { BiBookBookmark } from "react-icons/bi";
 import { BsGridFill } from "react-icons/bs";
 import { CgLivePhoto } from "react-icons/cg";
@@ -11,8 +11,10 @@ import { LiaProceduresSolid } from "react-icons/lia";
 import { LuMonitorStop, LuTableColumnsSplit } from "react-icons/lu";
 import { PiNumberCircleSevenFill } from "react-icons/pi";
 import { Link } from "react-router";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 const MobileMainMenu = ({ isMenuOpen, toggleMenu, openDepositModal }) => {
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     // Prevent body scrolling when the menu is open
     if (isMenuOpen) {
@@ -63,6 +65,21 @@ const MobileMainMenu = ({ isMenuOpen, toggleMenu, openDepositModal }) => {
           </div>
         </div>
       </p>
+
+      {user && (
+        <div className=" py-4 px-2 mx-2 bg-gradient-to-l from-blue-300 to-blue-600 flex flex-row items-center justify-between rounded-md">
+          <div className="flex flex-row items-center gap-2">
+            <img
+              src="https://ifrd.4rabetsite25.com/img/main/top-sections/cup.svg"
+              alt=""
+            />
+            <p className="text-white text-lg font-semibold">Rewards</p>
+          </div>
+          <div className="px-3 py-2 bg-yellow-300 rounded-md">
+            <p className="text-black font-bold">Open</p>
+          </div>
+        </div>
+      )}
 
       {/* Menu List */}
       <ul className="font-bold text-white">
