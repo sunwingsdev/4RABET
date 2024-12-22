@@ -384,28 +384,28 @@ const TopBarMenu = () => {
                   LOGOUT
                 </p>
               </button> */}
-              <div className="flex flex-row items-center gap-2">
+              <div className="flex flex-row items-center gap-2 whitespace-nowrap">
                 <Link
                   to="/my-profile"
-                  className="uppercase text-slate-500 text-[12px]"
+                  className="uppercase text-slate-500 text-[10px] md:text-[12px]"
                 >
                   Profile
                 </Link>
-                <Link
-                  to="/deposit"
-                  className="uppercase text-slate-500 text-[12px]"
+                <div
+                  onClick={openDepositModal}
+                  className="uppercase text-slate-500 text-[10px] md:text-[12px]"
                 >
                   Deposit
-                </Link>
+                </div>
                 <Link
                   to="/payment-history"
-                  className="uppercase text-slate-500 text-[12px]"
+                  className="uppercase text-slate-500 text-[10px] md:text-[12px]"
                 >
                   payment history
                 </Link>
                 <Link
                   to="/bet-history"
-                  className="uppercase text-slate-500 text-[12px]"
+                  className="uppercase text-slate-500 text-[10px] md:text-[12px]"
                 >
                   bet history
                 </Link>
