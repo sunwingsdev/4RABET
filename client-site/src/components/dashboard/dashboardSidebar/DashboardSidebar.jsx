@@ -166,7 +166,7 @@ const DashboardSidebar = ({ open, setOpen }) => {
       icon: <BsPiggyBank />,
       submenu: [
         { label: "Deposit Methord", to: "/dashboard" },
-        { label: "Deposit History", to: "/dashboard" },
+        { label: "Deposit History", to: "/dashboard/deposits" },
       ],
     },
     {

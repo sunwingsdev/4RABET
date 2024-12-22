@@ -12,7 +12,7 @@ const GoogleSignIn = ({ closeRegistrationModal }) => {
       // Save user data to MongoDB
       const userData = {
         email: user.email,
-        name: user.displayName,
+        name: user.displayName || "Not Set Yet",
         photoURL: user.photoURL,
       };
 
