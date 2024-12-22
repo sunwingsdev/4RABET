@@ -10,30 +10,17 @@ import gearImg from "../../../assets/images/offers/gear.png";
 import holdAndWinImg from "../../../assets/images/offers/holdAndWin.png";
 import ladyImg from "../../../assets/images/offers/lady.png";
 import sportImg from "../../../assets/images/offers/sport.jpg";
-import { HiMenuAlt1, HiX } from "react-icons/hi";
+import { HiMenuAlt1 } from "react-icons/hi";
 import { TiMessages } from "react-icons/ti";
-import { FaApple, FaAvianex, FaUserTag, FaRegUserCircle } from "react-icons/fa";
+import { FaApple, FaRegUserCircle } from "react-icons/fa";
 import { TbRobot } from "react-icons/tb";
-import { BsGridFill } from "react-icons/bs";
-import { LuMonitorStop, LuTableColumnsSplit } from "react-icons/lu";
-import { FaBaseballBatBall } from "react-icons/fa6";
-import { PiNumberCircleSevenFill } from "react-icons/pi";
-import { CgLivePhoto } from "react-icons/cg";
-import { GiDonut, GiRocketThruster } from "react-icons/gi";
-import { LiaProceduresSolid } from "react-icons/lia";
 import { GoPlusCircle } from "react-icons/go";
-import {
-  IoIosFootball,
-  IoIosArrowDown,
-  IoIosArrowUp,
-  IoIosMail,
-} from "react-icons/io";
-import { BiBookBookmark } from "react-icons/bi";
+import { IoIosArrowDown, IoIosArrowUp, IoIosMail } from "react-icons/io";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
 import ApiConnectionModal from "../../shared/ApiConnectionModal";
 import DepositModal from "../../depositModal/DepositModal";
-import { IoPhonePortraitOutline } from "react-icons/io5";
+import MobileMainMenu from "./MobileMainMenu";
 
 const TopBarMenu = () => {
   const {
@@ -374,150 +361,12 @@ const TopBarMenu = () => {
         )}
 
         {/* Side Menu */}
-        <div
-          className={`fixed top-0 left-0 h-full w-[70%] sm:w-1/2 bg-[#152133] z-50 py-6 transform overflow-y-auto ${
-            isMenuOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300`}
-        >
-          <button
-            onClick={toggleMenu}
-            className="text-white absolute top-3 right-3"
-          >
-            <HiX size={28} />
-          </button>
-          <div className="px-5">
-            <button
-              onClick={openDepositModal}
-              className="mt-6 w-full py-2 rounded-md text-sm font-bold text-white bg-blue-500"
-            >
-              DEPOSIT
-            </button>
-          </div>
-          <p className="flex justify-between gap-5 text-xs font-bold items-center text-white bg-[#18263a] mt-3 py-3 px-5">
-            OUR APPLICATION
-            <div className="flex gap-1 items-center text-blue-500">
-              <FaApple size={22} />
-              <IoPhonePortraitOutline size={22} />
-            </div>
-          </p>
-          <ul className="font-bold text-white">
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <BsGridFill size={20} className="text-blue-500" />
-                  Main
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <LuMonitorStop size={20} className="text-blue-500" />
-                  LIVE
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <LuTableColumnsSplit size={20} className="text-blue-500" />
-                  SPORTS
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <FaBaseballBatBall size={20} className="text-blue-500" />
-                  Cricket
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <PiNumberCircleSevenFill
-                    size={20}
-                    className="text-blue-500"
-                  />
-                  Casino
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <CgLivePhoto size={20} className="text-blue-500" />
-                  Live Dealers
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <LuMonitorStop size={20} className="text-blue-500" />
-                  TV Games
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center text-red-600 hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <GiRocketThruster size={20} className="text-red-600" />
-                  Auiator
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <LiaProceduresSolid size={20} className="text-blue-500" />
-                  JetX
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <FaAvianex size={20} className="text-blue-500" />
-                  AviatriX
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <IoIosFootball size={20} className="text-blue-500" />
-                  eSport
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <GiDonut size={20} className="text-blue-500" />
-                  Bonuses
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <FaUserTag size={20} className="text-blue-500" />
-                  Rules
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <BiBookBookmark size={20} className="text-blue-500" />
-                  Tutorials
-                </p>
-              </Link>
-            </li>
-          </ul>
-        </div>
+        <MobileMainMenu
+          isMenuOpen={isMenuOpen}
+          toggleMenu={toggleMenu}
+          openDepositModal={openDepositModal}
+        />
+
         <div className="flex items-center justify-start gap-2 text-sm font-bold text-white w-full">
           {user ? (
             <>
