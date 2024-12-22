@@ -70,6 +70,57 @@ const topMenu = [
     link: "/bonuses",
   },
 ];
+// main menu bottom menu
+const leftSideMenuTop = [
+  {
+    id: 1,
+    label: "All Games",
+    Icon: "https://www.babu88g.com/static/svg/gameTabHolder/homepageHot.svg",
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Cricket",
+    Icon: "https://www.babu88g.com/static/svg/gameTabHolder/cricket.svg",
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "casino",
+    Icon: "https://www.babu88g.com/static/svg/gameTabHolder/ld.svg",
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Slot",
+    Icon: "https://www.babu88g.com/static/svg/gameTabHolder/rng.svg",
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Table",
+    Icon: "https://www.babu88g.com/static/svg/gameTabHolder/table.svg",
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Sports",
+    Icon: "https://www.babu88g.com/static/svg/gameTabHolder/sb.svg",
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Fishing",
+    Icon: "https://www.babu88g.com/static/svg/gameTabHolder/fishing.svg",
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Crash",
+    Icon: "https://www.babu88g.com/static/svg/gameTabHolder/crash.svg",
+    link: "/",
+  },
+];
 
 // Left Side Menu
 const leftSideMenu = [
@@ -205,4 +256,4 @@ const rightSideMenu = [
   },
 ];
 
-export { topMenu, leftSideMenu, rightSideMenu };
+export { topMenu, leftSideMenuTop, leftSideMenu, rightSideMenu };

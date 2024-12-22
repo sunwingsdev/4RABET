@@ -144,6 +144,40 @@ const TopBarMenu = () => {
     }
   };
 
+  // payment methods data
+  const paymentMethods = {
+    nagad: {
+      logo: "https://pay.hostbuybd.com/assets/template/images/nagad.png",
+      name: "Nagad",
+      mobileNumber: "01700000000",
+      amount: "9000",
+      instructions: [
+        "Go to your NAGAD Mobile Menu by dialing: *167# or Open NAGAD App.",
+        'Choose: "Send Money"',
+        "Enter the Receiver Account Number: '01700000000'",
+        "Enter the amount: '1634'",
+        "Now enter your NAGAD Mobile Menu PIN to confirm.",
+        "Done! You will receive a confirmation message from NAGAD",
+        'Put the "Transaction ID" in the upper box and press "VERIFY"',
+      ],
+    },
+    rocket: {
+      logo: "https://pay.hostbuybd.com/assets/template/images/rocket.png",
+      name: "Rocket",
+      mobileNumber: "01700000001",
+      amount: "2000",
+      instructions: [
+        "Go to your Rocket Mobile Menu by dialing: *322# or Open Rocket App.",
+        'Choose: "Send Money"',
+        "Enter the Receiver Account Number: '01700000001'",
+        "Enter the amount: '2000'",
+        "Now enter your Rocket Mobile Menu PIN to confirm.",
+        "Done! You will receive a confirmation message from Rocket",
+        'Put the "Transaction ID" in the upper box and press "VERIFY"',
+      ],
+    },
+  };
+
   return (
     <div className="bg-[#18263AE6] border-b border-[#293b55]">
       <div className="hidden lg:flex justify-between items-center gap-2">
@@ -297,7 +331,6 @@ const TopBarMenu = () => {
               />
             </Link>
           </div>
-
           <div className="text-white flex gap-1 items-center">
             {user ? (
               <button onClick={openDepositModal} className="mb-2">
@@ -312,7 +345,7 @@ const TopBarMenu = () => {
                   <FaApple size={28} />
                 </Link>
                 <Link>
-                  <TbRobot size={28} />
+                  <IoPhonePortraitOutline size={28} />
                 </Link>
               </>
             )}
