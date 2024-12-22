@@ -19,6 +19,7 @@ import VirtualSport from "../pages/virtual-sports/VirtualSport";
 import OtherGames from "../pages/other-games/OtherGames";
 import AdminRoute from "./AdminRoute";
 import DepositHistory from "../pages/dashboard/deposit-history/DepositHistory";
+import Deposit from "../components/depositModal/Deposit";
 
 const Router = createBrowserRouter([
   {
@@ -84,6 +85,10 @@ const Router = createBrowserRouter([
       {
         path: "/other",
         element: <OtherGames />,
+      },
+      {
+        path: "/deposit",
+        element: <Deposit />,
       },
     ],
   },
