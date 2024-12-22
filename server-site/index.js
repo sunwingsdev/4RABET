@@ -8,9 +8,10 @@ const { upload, deleteFile } = require("./utils");
 
 const usersApi = require("./apis/usersApi/usersApi");
 const depositsApi = require("./apis/depositsApi/depositsApi");
+const withdrawsApi = require("./apis/withdrawsApi/withdrawsApi");
 
 const corsConfig = {
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173"],
   credential: true,
   optionSuccessStatus: 200,
   methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
@@ -69,11 +70,13 @@ async function run() {
     //collections start
     const usersCollection = client.db("rabet").collection("users");
     const depositsCollection = client.db("rabet").collection("deposits");
+    const withdrawsCollection = client.db("rabet").collection("withdraws");
     //collections end
 
     // APIs start
     app.use("/users", usersApi(usersCollection));
     app.use("/deposits", depositsApi(depositsCollection));
+    app.use("/withdraws", withdrawsApi(withdrawsCollection));
 
     // ---------=======>
     app.get("/api/users/:email", async (req, res) => {
@@ -86,9 +89,7 @@ async function run() {
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    console.log("Connected to MongoDB!!!✅");
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
@@ -99,9 +100,9 @@ run().catch(console.dir);
 // mongodb end
 
 app.get("/", (req, res) => {
-  res.send("4RABET server is running");
+  res.send("server is running");
 });
 
 app.listen(port, () => {
-  console.log(`4RABET Server is running on PORT: ${port}`);
+  console.log(`Server is running on PORT: ${port}`);
 });
