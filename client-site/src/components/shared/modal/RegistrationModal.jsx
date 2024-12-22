@@ -157,7 +157,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
               className="w-full mb-2 sm:mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
             />
             <input
-              type="number"
+              type="text"
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
