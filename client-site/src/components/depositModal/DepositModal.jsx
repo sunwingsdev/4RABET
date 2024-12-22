@@ -1,12 +1,5 @@
 import React, { useContext, useState } from "react";
 import { FaTimes } from "react-icons/fa";
-// import { FaFacebookMessenger } from "react-icons/fa6";
-// import { IoLogoWhatsapp } from "react-icons/io";
-// import { IoCall } from "react-icons/io5";
-// import { MdAttachEmail } from "react-icons/md";
-import { Link } from "react-router";
-import NagadModal from "../nagadModal/NagadModal";
-
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useGetUserByEmailQuery } from "../../redux/features/allApis/usersApi/usersApi";
@@ -14,18 +7,34 @@ import { useGetUserByEmailQuery } from "../../redux/features/allApis/usersApi/us
 const DepositModal = ({ closeDepositModal }) => {
   const { user } = useContext(AuthContext);
   const { data: singleUser } = useGetUserByEmailQuery(user?.email);
-  console.log("si U", singleUser);
-  //   const [activeTabTop, setActiveTabTop] = useState("SUPPORT");
+
   const [activeTabBottom, setActiveTabBottom] = useState("MOBILE_BANKING");
+  const [step, setStep] = useState(1); // Step tracker
+  const [paymentMethod, setPaymentMethod] = useState(null); // To track the selected method
+  const [depositAmount, setDepositAmount] = useState(""); // Track deposit amount
+  const [senderNumber, setSenderNumber] = useState(""); // Track sender account number
+  const [transactionId, setTransactionId] = useState(""); // Track transaction ID
 
-  const [isNagadContentOpen, setIsNagadContentOpen] = useState(false);
-  const [isRocketContentOpen, setIsRocketContentOpen] = useState(false);
+  // Step navigation handlers
+  const goNextStep = () => setStep((prevStep) => prevStep + 1);
+  const goPreviousStep = () => setStep((prevStep) => prevStep - 1);
 
-  const openNagadContent = () => setIsNagadContentOpen(true);
-  const backNagadContent = () => setIsNagadContentOpen(false);
+  const selectPaymentMethod = (method) => {
+    setPaymentMethod(method);
+    goNextStep();
+  };
 
-  const openRocketContent = () => setIsRocketContentOpen(true);
-  const backRocketContent = () => setIsRocketContentOpen(false);
+  const handlePaymentSubmit = (e) => {
+    e.preventDefault();
+    // Handle payment submission logic here
+    console.log({
+      paymentMethod,
+      depositAmount,
+      senderNumber,
+      transactionId,
+    });
+    closeDepositModal(); // Close the modal after submission
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -38,10 +47,9 @@ const DepositModal = ({ closeDepositModal }) => {
           <FaTimes />
         </button>
 
-        {/* Show Header and Bottom Tabs only if Nagad Modal is not open */}
-        {!isNagadContentOpen && !isRocketContentOpen && (
+        {/* Step 1: Select Payment Method */}
+        {step === 1 && (
           <div className="p-6">
-            {/* Header */}
             <div className="flex justify-center items-center space-x-3">
               <div className="w-10 h-10 rounded-full bg-indigo-500 flex justify-center items-center text-white text-lg font-bold">
                 BR
@@ -51,8 +59,6 @@ const DepositModal = ({ closeDepositModal }) => {
               </h2>
               <p className="text-2xl font-bold text-white">Deposit</p>
             </div>
-
-            {/* Bottom Tabs */}
             <div className="mt-6">
               <div className="flex">
                 <button
@@ -76,330 +82,142 @@ const DepositModal = ({ closeDepositModal }) => {
                   BANK TRANSFER
                 </button>
               </div>
-
-              {/* Tab Content for Bottom Tabs */}
               <div className="mt-4">
                 {activeTabBottom === "MOBILE_BANKING" ? (
                   <div className="grid grid-cols-3 gap-2">
-                    <Link>
+                    <button onClick={() => selectPaymentMethod("bKash")}>
                       <div className="p-2 bg-gray-200 rounded-md text-center group">
                         <img
                           className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
                           src="https://pay.hostbuybd.com/assets/template/images/bkash.png"
-                          alt=""
+                          alt="bKash"
                         />
                       </div>
-                    </Link>
-                    <button onClick={openNagadContent}>
+                    </button>
+                    <button onClick={() => selectPaymentMethod("Nagad")}>
                       <div className="p-2 bg-gray-200 rounded-md text-center group">
                         <img
                           className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
                           src="https://pay.hostbuybd.com/assets/template/images/nagad.png"
-                          alt=""
+                          alt="Nagad"
                         />
                       </div>
                     </button>
-                    <button onClick={openRocketContent}>
+                    <button onClick={() => selectPaymentMethod("Rocket")}>
                       <div className="p-2 bg-gray-200 rounded-md text-center group">
                         <img
                           className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
                           src="https://pay.hostbuybd.com/assets/template/images/rocket.png"
-                          alt=""
+                          alt="Rocket"
                         />
                       </div>
                     </button>
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 gap-2">
-                    <Link>
+                    <button onClick={() => selectPaymentMethod("IBBL")}>
                       <div className="p-2 bg-gray-200 rounded-md text-center group">
                         <img
                           className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
                           src="https://pay.hostbuybd.com/uploads/bank_logo/ibbl.png"
-                          alt=""
+                          alt="IBBL"
                         />
                       </div>
-                    </Link>
-                    <Link>
+                    </button>
+                    <button onClick={() => selectPaymentMethod("DBBL")}>
                       <div className="p-2 bg-gray-200 rounded-md text-center group">
                         <img
                           className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
                           src="https://pay.hostbuybd.com/uploads/bank_logo/dbbl.png"
-                          alt=""
+                          alt="DBBL"
                         />
                       </div>
-                    </Link>
+                    </button>
                   </div>
                 )}
               </div>
             </div>
-
-            {/* Payment Button */}
-            {/* <button className="mt-6 w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-              Pay
-            </button> */}
           </div>
         )}
 
-        {/* Nagad In Modal */}
-        {isNagadContentOpen && (
-          <div className=" bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="w-full max-w-md bg-[#152234] rounded-lg shadow-md p-6 flex flex-col overflow-hidden relative">
-              {/* Close Button */}
-              <button
-                onClick={backNagadContent}
-                className="absolute top-2 md:top-4 left-2 md:left-2 px-4 py-1 rounded-md text-slate-500 hover:text-red-500 text-lg duration-300 flex items-center justify-center"
-              >
-                <HiArrowLongLeft className="text-2xl" />
-              </button>
-
-              {/* Nagad Content */}
-              <div className="flex items-center space-x-3">
-                <img
-                  className="w-32 m-auto"
-                  src="https://pay.hostbuybd.com/assets/template/images/nagad.png"
-                  alt=""
-                />
-              </div>
-
-              <div className="flex gap-2">
-                <div className="w-3/4 text-white bg-[#ee3c42] py-2 px-3 rounded-lg">
-                  <h2 className="text-xl font-semibold">Hasan Islam</h2>
-                  <p className="text-sm">Mobile : 01700000000</p>
-                </div>
-                <div className="w-1/4 text-center text-white bg-[#ee3c42] py-2 px-3 rounded-lg">
-                  <div className="text-xl font-semibold flex flex-col items-center justify-center">
-                    <span className="">9000</span>{" "}
-                    <span className="text-base leading-3 font-normal">BDT</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="my-4">
-                <div className="grid grid-cols-3 gap-2">
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                </div>
-              </div>
-
-              {/* Form */}
-              <form action="">
-                <input
-                  type="text"
-                  className="w-full my-2 px-5 py-3 bg-[#152234] border-2 border-gray-400 rounded-lg focus:outline-none placeholder-gray-400 text-white"
-                  placeholder="Sender Account Number"
-                  required
-                />
-                <input
-                  type="text"
-                  className="w-full my-2 px-5 py-3 bg-[#152234] border-2 border-gray-400 rounded-lg focus:outline-none placeholder-gray-400 text-white"
-                  placeholder="Transaction ID"
-                  required
-                />
-                {/* Instructions */}
-                <div className="text-[#f3f3f3] bg-[#ee3c42] text-base rounded-md py-4 pl-6 pr-3 mt-2">
-                  <ul>
-                    <li className="list-decimal">
-                      Go to your NAGAD Mobile Menu by dialing: *167# or Open
-                      NAGAD App.
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Choose: {'"'}
-                      <Link className="text-white font-bold">Send Money</Link>
-                      {'"'}
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Enter the Receiver Account Number: {'"'}
-                      <Link className="text-white font-bold">01700000000</Link>
-                      {'"'}
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Enter the amount: {'"'}
-                      <span className="text-white font-bold">1634</span>
-                      {'"'}
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Now enter your NAGAD Mobile Menu PIN to confirm.
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Done! You will receive a confirmation message from NAGAD
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Put the {'"'}
-                      <span className="text-white font-bold">
-                        Transaction ID
-                      </span>
-                      {'"'} in the upper box and press{" "}
-                      <span className="text-white font-bold">VERIFY</span>
-                      {'"'}
-                    </li>
-                  </ul>
-                </div>
-                {/* Deposit Button */}
-                <button
-                  type="submit"
-                  className="mt-6 w-full py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all ease-in-out duration-500 uppercase font-bold"
-                >
-                  Deposit Now
-                </button>
-              </form>
+        {/* Step 2: Enter Deposit Amount */}
+        {step === 2 && (
+          <div className="p-6">
+            <button
+              onClick={goPreviousStep}
+              className="absolute top-2 left-2 text-white text-xl"
+            >
+              <HiArrowLongLeft />
+            </button>
+            <div className="text-center">
+              <h2 className="text-2xl text-white font-semibold">
+                Enter Deposit Amount
+              </h2>
+              <p className="text-gray-400 mt-2">
+                Provide the amount you wish to deposit via {paymentMethod}.
+              </p>
             </div>
+            <form className="mt-4" onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="number"
+                placeholder="Enter Amount"
+                value={depositAmount}
+                onChange={(e) => setDepositAmount(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg border border-gray-400 bg-[#152234] text-white focus:outline-none placeholder-gray-400"
+                required
+              />
+              <button
+                type="button"
+                onClick={goNextStep}
+                className="mt-6 w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                Next
+              </button>
+            </form>
           </div>
         )}
 
-        {/* Rocket Modal */}
-        {isRocketContentOpen && (
-          <div className=" bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="w-full max-w-md bg-[#152234] rounded-lg shadow-md p-6 flex flex-col overflow-hidden relative">
-              {/* Close Button */}
-              <button
-                onClick={backRocketContent}
-                className="absolute top-2 md:top-4 left-2 md:left-2 px-4 py-1 rounded-md text-slate-500 hover:text-[#8a288f] text-lg duration-300 flex items-center justify-center"
-              >
-                <HiArrowLongLeft className="text-2xl" />
-              </button>
-
-              {/* Rocket Content */}
-              <div className="flex items-center space-x-3">
-                <img
-                  className="w-32 m-auto"
-                  src="https://pay.hostbuybd.com/assets/template/images/rocket.png"
-                  alt=""
-                />
-              </div>
-
-              <div className="flex gap-2">
-                <div className="w-3/4 text-white bg-[#8a288f] py-2 px-3 rounded-lg">
-                  <h2 className="text-xl font-semibold">Hasan Islam</h2>
-                  <p className="text-sm">Mobile : 01700000000</p>
-                </div>
-                <div className="w-1/4 text-center text-white bg-[#8a288f] py-2 px-3 rounded-lg">
-                  <div className="text-xl font-semibold flex flex-col items-center justify-center">
-                    <span className="">9000</span>{" "}
-                    <span className="text-base leading-3 font-normal">BDT</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="my-4">
-                <div className="grid grid-cols-3 gap-2">
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                  <p className="py-2 px-4 text-center text-lg font-bold text-gray-600 bg-slate-200 hover:bg-slate-300 duration-300 rounded-md border border-dashed">
-                    400 BDT
-                  </p>
-                </div>
-              </div>
-
-              {/* Form */}
-              <form action="">
-                <input
-                  type="text"
-                  className="w-full my-2 px-5 py-3 bg-[#152234] border-2 border-gray-400 rounded-lg focus:outline-none placeholder-gray-400 text-white"
-                  placeholder="Sender Account Number"
-                  required
-                />
-                <input
-                  type="text"
-                  className="w-full my-2 px-5 py-3 bg-[#152234] border-2 border-gray-400 rounded-lg focus:outline-none placeholder-gray-400 text-white"
-                  placeholder="Transaction ID"
-                  required
-                />
-                {/* Instructions */}
-                <div className="text-[#f3f3f3] bg-[#8a288f] text-base rounded-md py-4 pl-6 pr-3 mt-2">
-                  <ul>
-                    <li className="list-decimal">
-                      Go to your Rocket Mobile Menu by dialing: *322# or Open
-                      Rocket App.
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Choose: {'"'}
-                      <Link className="text-white font-bold">Send Money</Link>
-                      {'"'}
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Enter the Receiver Account Number: {'"'}
-                      <Link className="text-white font-bold">01700000001</Link>
-                      {'"'}
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Enter the amount: {'"'}
-                      <span className="text-white font-bold">1634</span>
-                      {'"'}
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Now enter your Rocket Mobile Menu PIN to confirm.
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Done! You will receive a confirmation message from Rocket
-                    </li>
-                    <li className="list-decimal mt-1">
-                      Put the {'"'}
-                      <span className="text-white font-bold">
-                        Transaction ID
-                      </span>
-                      {'"'} in the upper box and press{" "}
-                      <span className="text-white font-bold">VERIFY</span>
-                      {'"'}
-                    </li>
-                  </ul>
-                </div>
-                {/* Deposit Button */}
-                <button
-                  type="submit"
-                  className="mt-6 w-full py-2 bg-[#8a288f] text-white rounded-md hover:bg-[#6f2074] transition-all ease-in-out duration-500 uppercase font-bold"
-                >
-                  Deposit Now
-                </button>
-              </form>
+        {/* Step 3: Enter Payment Details */}
+        {step === 3 && (
+          <div className="p-6">
+            <button
+              onClick={goPreviousStep}
+              className="absolute top-2 left-2 text-white text-xl"
+            >
+              <HiArrowLongLeft />
+            </button>
+            <div className="text-center">
+              <h2 className="text-2xl text-white font-semibold">
+                {paymentMethod} Payment
+              </h2>
+              <p className="text-gray-400 mt-2">
+                Enter your account number and transaction ID.
+              </p>
             </div>
+            <form className="mt-4" onSubmit={handlePaymentSubmit}>
+              <input
+                type="text"
+                placeholder="Sender Account Number"
+                value={senderNumber}
+                onChange={(e) => setSenderNumber(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg border border-gray-400 bg-[#152234] text-white focus:outline-none placeholder-gray-400"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Transaction ID"
+                value={transactionId}
+                onChange={(e) => setTransactionId(e.target.value)}
+                className="w-full px-4 py-2 mt-4 rounded-lg border border-gray-400 bg-[#152234] text-white focus:outline-none placeholder-gray-400"
+                required
+              />
+              <button
+                type="submit"
+                className="mt-6 w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                Pay
+              </button>
+            </form>
           </div>
         )}
       </div>
