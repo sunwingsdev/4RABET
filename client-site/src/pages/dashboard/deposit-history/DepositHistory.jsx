@@ -1,12 +1,32 @@
 import { IoIosSearch } from "react-icons/io";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useGetAllDepositsQuery } from "../../../redux/features/allApis/depositApi/depositApi";
+import { useState } from "react";
+import ReasonModal from "../../../components/dashboard/deposit-history/ReasonModal";
 
 const DepositHistory = () => {
   const { data: allDeposits, isLoading, isError } = useGetAllDepositsQuery();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedDeposit, setSelectedDeposit] = useState(null);
+  const [status, setStatus] = useState("");
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading deposits.</div>;
+
+  const handleStatusClick = (deposit, status) => {
+    setSelectedDeposit(deposit);
+    setStatus(status);
+    setModalOpen(true);
+  };
+
+  const handleSubmit = (reason) => {
+    console.log(`Status: ${status}, Reason: ${reason}`);
+    setModalOpen(false);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <div>
@@ -41,6 +61,9 @@ const DepositHistory = () => {
                 TRXID
               </th>
               <th scope="col" className="px-6 py-3">
+                Amount
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Slip
               </th>
               <th scope="col" className="px-6 py-3">
@@ -63,7 +86,7 @@ const DepositHistory = () => {
               >
                 <th
                   scope="row"
-                  className="px-6 py-4 font-medium whitespace-nowrap "
+                  className="px-6 py-4 font-medium whitespace-nowrap"
                 >
                   {deposit?.userInfo?.fullName}
                 </th>
@@ -72,6 +95,7 @@ const DepositHistory = () => {
                 <td className="px-6 py-4 uppercase">
                   {deposit?.transactionId}
                 </td>
+                <td className="px-6 py-4 uppercase">{deposit?.amount}</td>
                 <td className="px-6 py-4">
                   <IoCloudUploadOutline className="text-2xl cursor-pointer" />
                 </td>
@@ -87,7 +111,7 @@ const DepositHistory = () => {
                 </td>
                 <td className="px-6 py-4 text-center">
                   <button
-                    className={`px-4 py-2 font-bold rounded ${
+                    className={`px-4 py-2 font-bold rounded capitalize ${
                       deposit?.status === "pending"
                         ? "bg-yellow-500 text-black hover:bg-yellow-600"
                         : deposit?.status === "approve"
@@ -96,6 +120,7 @@ const DepositHistory = () => {
                         ? "bg-red-500 text-white hover:bg-red-600"
                         : ""
                     }`}
+                    onClick={() => handleStatusClick(deposit, deposit?.status)}
                   >
                     {deposit?.status}
                   </button>
@@ -112,6 +137,13 @@ const DepositHistory = () => {
           </tbody>
         </table>
       </div>
+      {/* Reason Modal */}
+      <ReasonModal
+        isOpen={modalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleSubmit}
+        status={status}
+      />
     </div>
   );
 };
