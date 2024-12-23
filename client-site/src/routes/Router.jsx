@@ -20,6 +20,10 @@ import OtherGames from "../pages/other-games/OtherGames";
 import AdminRoute from "./AdminRoute";
 import DepositHistory from "../pages/dashboard/deposit-history/DepositHistory";
 import Deposit from "../components/depositModal/Deposit";
+import MyProfile from "../pages/my-profile/MyProfile";
+import PaymentHistory from "../pages/payment-history/PaymentHistory";
+import Rules from "../pages/rules/Rules";
+import WithdrawHistory from "../pages/dashboard/withdraw-history/WithdrawHistory";
 
 const Router = createBrowserRouter([
   {
@@ -90,6 +94,18 @@ const Router = createBrowserRouter([
         path: "/deposit",
         element: <Deposit />,
       },
+      {
+        path: "/profile",
+        element: <MyProfile />,
+      },
+      {
+        path: "/payment-history",
+        element: <PaymentHistory />,
+      },
+      {
+        path: "/rules",
+        element: <Rules />,
+      },
     ],
   },
   {
@@ -107,6 +123,10 @@ const Router = createBrowserRouter([
       {
         path: "deposits",
         element: <DepositHistory />,
+      },
+      {
+        path: "withdraws",
+        element: <WithdrawHistory />,
       },
     ],
   },

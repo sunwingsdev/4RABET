@@ -170,11 +170,11 @@ const DashboardSidebar = ({ open, setOpen }) => {
       ],
     },
     {
-      label: "Banking Withdrow",
+      label: "Banking Withdraw",
       icon: <BsBank />,
       submenu: [
-        { label: "Withdrow Methord", to: "/dashboard" },
-        { label: "withdrow History", to: "/dashboard" },
+        { label: "Withdraw Methord", to: "/dashboard" },
+        { label: "Withdraw History", to: "/dashboard/withdraws" },
       ],
     },
     {
