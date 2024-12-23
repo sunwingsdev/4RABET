@@ -1,19 +1,118 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { FaTimes } from "react-icons/fa";
-import { HiArrowLongLeft } from "react-icons/hi2";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useGetUserByEmailQuery } from "../../redux/features/allApis/usersApi/usersApi";
+import { BsArrowLeftSquare } from "react-icons/bs";
+import { IoMdClose } from "react-icons/io";
+import { MdGTranslate } from "react-icons/md";
+import { IoHomeOutline } from "react-icons/io5";
+import { useAddDepositMutation } from "../../redux/features/allApis/depositsApi/depositsApi";
+import { useToasts } from "react-toast-notifications";
+
+const mobilePaymentMethods = [
+  {
+    image: "https://pay.hostbuybd.com/assets/template/images/bkash.png",
+    gateway: "MOBILE_BANKING",
+    paymentMethod: "bKash",
+    bgColor: "#e2136e",
+    instructions: [
+      "Go to your bKash Mobile Menu by dialing: *247# or Open bKash App.",
+      "Enter the Receiver Account Number: 013000000",
+      "Choose: Send Money",
+      "Now enter your bKash Mobile Menu PIN to confirm.",
+      "Done! You will receive a confirmation message from bKash",
+      "Put theTransaction ID in the upper box and pressVERIFY",
+    ],
+    amounts: [200, 500, 1000, 5000, 10000, 15000, 20000, 25000],
+    inputs: [
+      {
+        property: "senderAccountNumber",
+        type: "text",
+        label: "Enter Sender Account Number",
+      },
+      {
+        property: "transactionId",
+        type: "text",
+        label: "Enter transaction id",
+      },
+    ],
+  },
+  {
+    image: "https://pay.hostbuybd.com/assets/template/images/nagad.png",
+    gateway: "MOBILE_BANKING",
+    paymentMethod: "Nagad",
+    bgColor: "#ec1d25",
+    instructions: [
+      "Go to your NAGAD Mobile Menu by dialing: *167# or Open NAGAD App.",
+      "Enter the Receiver Account Number: 013000000",
+      "Choose: Send Money",
+      "Now enter your NAGAD Mobile Menu PIN to confirm.",
+      "Done! You will receive a confirmation message from NAGAD",
+      "Put theTransaction ID in the upper box and pressVERIFY",
+    ],
+    amounts: [200, 500, 1000, 5000, 10000, 12000, 20000, 35000],
+    inputs: [
+      {
+        property: "senderAccountNumber",
+        type: "text",
+        label: "Enter Sender Account Number",
+      },
+      {
+        property: "transactionId",
+        type: "text",
+        label: "Enter transaction id",
+      },
+    ],
+  },
+];
+
+const bankPaymentMethods = [
+  {
+    image: "https://pay.hostbuybd.com/uploads/bank_logo/ibbl.png",
+    gateway: "BANK_TRANSFER",
+    paymentMethod: "IBBL",
+    bgColor: "#02733c",
+    instructions: [
+      "Go to your bKash Mobile Menu by dialing: *247# or Open bKash App.",
+      "Enter the Receiver Account Number: 013000000",
+      "Choose: Send Money",
+      "Now enter your NAGAD Mobile Menu PIN to confirm.",
+      "Done! You will receive a confirmation message from NAGAD",
+      "Put theTransaction ID in the upper box and pressVERIFY",
+    ],
+    amounts: [200, 500, 1000, 5000, 10000, 12000, 20000, 35000],
+    inputs: [
+      {
+        property: "senderAccountNumber",
+        type: "text",
+        label: "Enter Sender Account Number",
+      },
+      {
+        property: "accountHolderName",
+        type: "text",
+        label: "Enter Account Holder Name",
+      },
+      {
+        property: "screenshot",
+        type: "file",
+        label: "Attach a screenshot",
+      },
+    ],
+  },
+];
 
 const DepositModal = ({ closeDepositModal }) => {
   const { user } = useContext(AuthContext);
   const { data: singleUser } = useGetUserByEmailQuery(user?.email);
-
+  const [addDeposit] = useAddDepositMutation();
+  const formRef = useRef();
+  const [loading, setLoading] = useState(false);
   const [activeTabBottom, setActiveTabBottom] = useState("MOBILE_BANKING");
-  const [step, setStep] = useState(1); // Step tracker
-  const [paymentMethod, setPaymentMethod] = useState(null); // To track the selected method
-  const [depositAmount, setDepositAmount] = useState(""); // Track deposit amount
-  const [senderNumber, setSenderNumber] = useState(""); // Track sender account number
-  const [transactionId, setTransactionId] = useState(""); // Track transaction ID
+  const [step, setStep] = useState(1);
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [depositAmount, setDepositAmount] = useState("");
+  const [files, setFiles] = useState({});
+  const { addToast } = useToasts();
 
   // Step navigation handlers
   const goNextStep = () => setStep((prevStep) => prevStep + 1);
@@ -24,16 +123,48 @@ const DepositModal = ({ closeDepositModal }) => {
     goNextStep();
   };
 
-  const handlePaymentSubmit = (e) => {
-    e.preventDefault();
-    // Handle payment submission logic here
-    console.log({
-      paymentMethod,
-      depositAmount,
-      senderNumber,
-      transactionId,
+  const handleFileChange = (e, label) => {
+    const selectedFile = e.target.files[0];
+    setFiles({
+      ...files,
+      [label]: selectedFile,
     });
-    closeDepositModal(); // Close the modal after submission
+  };
+
+  const handlePaymentSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(formRef.current);
+    const paymentInputs = [];
+    formData.forEach((value, key) => {
+      const paymentInput = {
+        [key]: value,
+      };
+      paymentInputs.push(paymentInput);
+    });
+    const depositInfo = {
+      amount: depositAmount,
+      userId: singleUser?._id,
+      method: paymentMethod?.paymentMethod,
+      gateway: paymentMethod?.gateway,
+      paymentInputs: paymentInputs,
+    };
+
+    try {
+      setLoading(true);
+      const { data } = await addDeposit(depositInfo);
+      if (data.insertedId) {
+        addToast("Depositted successfully.Wait for the response", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+        closeDepositModal();
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log("Error during deposit submission:", error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,7 +186,7 @@ const DepositModal = ({ closeDepositModal }) => {
                 BR
               </div>
               <h2 className="text-2xl font-semibold text-white">
-                <span className="text-yellow-300">Bet</span>Rush
+                <span className="text-yellow-300">Bet</span>Russ
               </h2>
               <p className="text-2xl font-bold text-white">Deposit</p>
             </div>
@@ -85,54 +216,37 @@ const DepositModal = ({ closeDepositModal }) => {
               <div className="mt-4">
                 {activeTabBottom === "MOBILE_BANKING" ? (
                   <div className="grid grid-cols-3 gap-2">
-                    <button onClick={() => selectPaymentMethod("bKash")}>
-                      <div className="p-2 bg-gray-200 rounded-md text-center group">
-                        <img
-                          className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
-                          src="https://pay.hostbuybd.com/assets/template/images/bkash.png"
-                          alt="bKash"
-                        />
-                      </div>
-                    </button>
-                    <button onClick={() => selectPaymentMethod("Nagad")}>
-                      <div className="p-2 bg-gray-200 rounded-md text-center group">
-                        <img
-                          className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
-                          src="https://pay.hostbuybd.com/assets/template/images/nagad.png"
-                          alt="Nagad"
-                        />
-                      </div>
-                    </button>
-                    <button onClick={() => selectPaymentMethod("Rocket")}>
-                      <div className="p-2 bg-gray-200 rounded-md text-center group">
-                        <img
-                          className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
-                          src="https://pay.hostbuybd.com/assets/template/images/rocket.png"
-                          alt="Rocket"
-                        />
-                      </div>
-                    </button>
+                    {mobilePaymentMethods?.map((item) => (
+                      <button
+                        key={item}
+                        onClick={() => selectPaymentMethod(item)}
+                      >
+                        <div className="p-2 bg-gray-200 rounded-md text-center group">
+                          <img
+                            className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
+                            src={item.image}
+                            alt={item.paymentMethod}
+                          />
+                        </div>
+                      </button>
+                    ))}
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 gap-2">
-                    <button onClick={() => selectPaymentMethod("IBBL")}>
-                      <div className="p-2 bg-gray-200 rounded-md text-center group">
-                        <img
-                          className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
-                          src="https://pay.hostbuybd.com/uploads/bank_logo/ibbl.png"
-                          alt="IBBL"
-                        />
-                      </div>
-                    </button>
-                    <button onClick={() => selectPaymentMethod("DBBL")}>
-                      <div className="p-2 bg-gray-200 rounded-md text-center group">
-                        <img
-                          className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
-                          src="https://pay.hostbuybd.com/uploads/bank_logo/dbbl.png"
-                          alt="DBBL"
-                        />
-                      </div>
-                    </button>
+                    {bankPaymentMethods?.map((item) => (
+                      <button
+                        key={item}
+                        onClick={() => selectPaymentMethod(item)}
+                      >
+                        <div className="p-2 bg-gray-200 rounded-md text-center group">
+                          <img
+                            className="w-20 m-auto transform transition-transform duration-300 group-hover:scale-110"
+                            src={item.image}
+                            alt={item.paymentMethod}
+                          />
+                        </div>
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
@@ -142,82 +256,162 @@ const DepositModal = ({ closeDepositModal }) => {
 
         {/* Step 2: Enter Deposit Amount */}
         {step === 2 && (
-          <div className="p-6">
-            <button
-              onClick={goPreviousStep}
-              className="absolute top-2 left-2 text-white text-xl"
-            >
-              <HiArrowLongLeft />
-            </button>
-            <div className="text-center">
-              <h2 className="text-2xl text-white font-semibold">
-                Enter Deposit Amount
-              </h2>
-              <p className="text-gray-400 mt-2">
-                Provide the amount you wish to deposit via {paymentMethod}.
-              </p>
+          <div className="space-y-2">
+            <h2 className="p-2 w-full text-center text-lg font-semibold text-white border-b-2 border-gray-500">
+              Deposit
+            </h2>
+            <div className="pb-4 px-4 space-y-4">
+              <div className="flex items-center gap-3">
+                <BsArrowLeftSquare
+                  onClick={goPreviousStep}
+                  size={26}
+                  className="text-gray-500"
+                />
+                <p className="text-white text-base font-semibold">
+                  Choose other payment
+                </p>
+              </div>
+              <div className="my-4">
+                <form action="">
+                  <div className="grid grid-cols-3 gap-2">
+                    {paymentMethod.amounts?.map((amount) => (
+                      <p
+                        onClick={() => setDepositAmount(amount)}
+                        key={amount}
+                        className="py-2 px-4 text-center text-lg font-bold text-white bg-[#152234] hover:bg-[#0e1723] duration-300 rounded-md border border-dashed border-gray-400 hover:border-blue-500"
+                      >
+                        {amount} BDT
+                      </p>
+                    ))}
+                  </div>
+                  <div className="mt-4">
+                    <label
+                      htmlFor=""
+                      className="text-gray-500 text-base font-semibold"
+                    >
+                      Enter Amount
+                    </label>
+                    <p className="w-full my-2 px-5 py-2 font-bold bg-[#152234] border border-gray-500 rounded-lg focus:outline-none placeholder-white text-white">
+                      {depositAmount ? depositAmount : 0} BDT
+                    </p>
+                  </div>
+                  <p className="text-base font-medium text-gray-500">
+                    Max. deposit :{" "}
+                    <span className="text-cyan-400">
+                      {paymentMethod.amounts[paymentMethod.amounts.length - 1]}{" "}
+                      BDT
+                    </span>
+                  </p>
+                  <div className="w-full m-auto pt-3">
+                    <button
+                      onClick={goNextStep}
+                      className="py-1 px-4 w-full text-xl font-semibold text-white bg-blue-600 hover:bg-blue-700 border border-white rounded-lg duration-300"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-            <form className="mt-4" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="number"
-                placeholder="Enter Amount"
-                value={depositAmount}
-                onChange={(e) => setDepositAmount(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-gray-400 bg-[#152234] text-white focus:outline-none placeholder-gray-400"
-                required
-              />
-              <button
-                type="button"
-                onClick={goNextStep}
-                className="mt-6 w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              >
-                Next
-              </button>
-            </form>
           </div>
         )}
 
         {/* Step 3: Enter Payment Details */}
         {step === 3 && (
-          <div className="p-6">
-            <button
-              onClick={goPreviousStep}
-              className="absolute top-2 left-2 text-white text-xl"
-            >
-              <HiArrowLongLeft />
-            </button>
-            <div className="text-center">
-              <h2 className="text-2xl text-white font-semibold">
-                {paymentMethod} Payment
-              </h2>
-              <p className="text-gray-400 mt-2">
-                Enter your account number and transaction ID.
-              </p>
+          <div className="space-y-2 p-4">
+            <div className="flex items-center gap-3">
+              <BsArrowLeftSquare
+                onClick={goPreviousStep}
+                size={26}
+                className="text-gray-500"
+              />
             </div>
-            <form className="mt-4" onSubmit={handlePaymentSubmit}>
-              <input
-                type="text"
-                placeholder="Sender Account Number"
-                value={senderNumber}
-                onChange={(e) => setSenderNumber(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-gray-400 bg-[#152234] text-white focus:outline-none placeholder-gray-400"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Transaction ID"
-                value={transactionId}
-                onChange={(e) => setTransactionId(e.target.value)}
-                className="w-full px-4 py-2 mt-4 rounded-lg border border-gray-400 bg-[#152234] text-white focus:outline-none placeholder-gray-400"
-                required
-              />
-              <button
-                type="submit"
-                className="mt-6 w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              >
-                Pay
-              </button>
-            </form>
+
+            <div className="flex justify-between items-center gap-4 py-2 px-4 text-gray-700 bg-gray-50 border-2 border-blue-500">
+              <IoHomeOutline onClick={() => setStep(1)} size={30} />
+              <div className="flex gap-3">
+                <MdGTranslate size={30} />
+                <IoMdClose onClick={closeDepositModal} size={30} />
+              </div>
+            </div>
+            <div
+              style={{ backgroundColor: `${paymentMethod?.bgColor}` }}
+              className={`p-3 bg-red-600  border-2 border-white`}
+            >
+              <div className="flex justify-around gap-2">
+                <div className="bg-white rounded-xl">
+                  <img
+                    className="w-32 m-auto"
+                    src={paymentMethod.image}
+                    alt=""
+                  />
+                </div>
+                <div className="">
+                  <p className="text-base text-center font-semibold text-white">
+                    টাকার পরিমান{" "}
+                  </p>
+                  <div className="bg-white w-full mt-1 py-1 px-20 text-2xl text-center rounded-lg font-bold">
+                    {depositAmount} BDT
+                  </div>
+                </div>
+              </div>
+              <form ref={formRef}>
+                <div>
+                  {paymentMethod?.inputs?.map(
+                    ({ label, type, property }, index) => (
+                      <div key={index}>
+                        <p className="text-white mt-4 text-sm font-semibold">
+                          {label}
+                        </p>
+                        {type === "file" ? (
+                          <div>
+                            <input
+                              type="file"
+                              name={property}
+                              onChange={(e) => handleFileChange(e, label)}
+                              className="w-full my-2 px-5 py-2 font-semibold bg-white border border-gray-500 rounded-lg focus:outline-none placeholder-gray-500 text-black"
+                              required
+                            />
+                            {files[label] && (
+                              <p className="mt-2 text-sm text-gray-500">
+                                Selected file: {files[label].name}
+                              </p>
+                            )}
+                          </div>
+                        ) : (
+                          <input
+                            name={property}
+                            type={type}
+                            className="w-full my-2 px-5 py-2 font-semibold bg-white border border-gray-500 rounded-lg focus:outline-none placeholder-gray-500 text-black"
+                            placeholder={label}
+                            required
+                          />
+                        )}
+                      </div>
+                    )
+                  )}
+                </div>
+                <div className="">
+                  {paymentMethod?.instructions?.map((item) => (
+                    <p
+                      key={item}
+                      className="text-xs font-semibold text-gray-300 py-2 border-b border-gray-600"
+                    >
+                      ▪{item}
+                    </p>
+                  ))}
+                </div>
+                <div className="w-40 m-auto pt-3">
+                  <button
+                    disabled={loading}
+                    onClick={handlePaymentSubmit}
+                    className="py-2 px-4 w-full text-xl font-semibold text-white disabled:bg-slate-400 disabled:text-black disabled:cursor-not-allowed bg-red-600 hover:bg-red-700 border border-white rounded-lg duration-300"
+                  >
+                    {loading ? "..." : "Deposit Now"}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         )}
       </div>
