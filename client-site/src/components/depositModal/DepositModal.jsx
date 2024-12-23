@@ -149,21 +149,28 @@ const DepositModal = ({ closeDepositModal }) => {
       gateway: paymentMethod?.gateway,
       paymentInputs: paymentInputs,
     };
-
-    try {
-      setLoading(true);
-      const { data } = await addDeposit(depositInfo);
-      if (data.insertedId) {
-        addToast("Depositted successfully.Wait for the response", {
-          appearance: "success",
-          autoDismiss: true,
-        });
-        closeDepositModal();
+    if (depositAmount) {
+      try {
+        setLoading(true);
+        const { data } = await addDeposit(depositInfo);
+        if (data.insertedId) {
+          addToast("Depositted successfully.Wait for the response", {
+            appearance: "success",
+            autoDismiss: true,
+          });
+          closeDepositModal();
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log("Error during deposit submission:", error);
         setLoading(false);
       }
-    } catch (error) {
-      console.log("Error during deposit submission:", error);
-      setLoading(false);
+    } else {
+      addToast("Add amount to deposit", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      setStep(2);
     }
   };
 
