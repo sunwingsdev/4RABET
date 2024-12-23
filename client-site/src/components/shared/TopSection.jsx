@@ -29,7 +29,7 @@ const TopSection = () => {
         </div>
       </div>
 
-      <div className="flex gap-3 mb-3 mt-3 sm:mt-0 overflow-x-auto scrollbar-hide lg:hidden">
+      <div className="flex gap-3 mb-3 mt-3 w-[1920px] overflow-x-auto scrollbar-hide bg-[#282828] lg:pr-16">
         {leftSideMenuTop?.map((menuBottom) => (
           <MobileBottomMenuTop
             key={menuBottom.id}
