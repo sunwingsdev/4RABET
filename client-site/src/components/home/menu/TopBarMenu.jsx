@@ -255,7 +255,7 @@ const TopBarMenu = () => {
                         </div>
                       </div>
                       <div className="p-4 flex flex-col items-center gap-2">
-                        <Link to="/my-profile" className="w-full">
+                        <Link to="/profile" className="w-full">
                           <button className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold">
                             MY PROFILE
                           </button>
@@ -386,7 +386,7 @@ const TopBarMenu = () => {
               </button> */}
               <div className="flex flex-row items-center gap-2 whitespace-nowrap">
                 <Link
-                  to="/my-profile"
+                  to="/profile"
                   className="uppercase text-slate-500 text-[10px] md:text-[12px]"
                 >
                   Profile

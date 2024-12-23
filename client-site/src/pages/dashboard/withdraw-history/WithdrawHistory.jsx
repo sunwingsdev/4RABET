@@ -4,14 +4,14 @@ import { useState } from "react";
 import ReasonModal from "../../../components/dashboard/deposit-history/ReasonModal";
 import { useGetDepositsQuery } from "../../../redux/features/allApis/depositsApi/depositsApi";
 
-const DepositHistory = () => {
+const WithdrawHistory = () => {
   const { data: allDeposits, isLoading, isError } = useGetDepositsQuery();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDeposit, setSelectedDeposit] = useState(null);
   const [status, setStatus] = useState("");
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading deposits.</div>;
+  if (isError) return <div>Error loading withdrawals.</div>;
 
   const handleStatusClick = (deposit, status) => {
     setSelectedDeposit(deposit);
@@ -31,11 +31,11 @@ const DepositHistory = () => {
   return (
     <div>
       <div className="bg-[#172437] flex flex-row items-center justify-between p-4 mb-2">
-        <h1 className="text-2xl text-white font-bold">Deposit History</h1>
+        <h1 className="text-2xl text-white font-bold">Withdraw History</h1>
         <form className="w-1/2 md:w-1/4 flex flex-row items-center">
           <input
             type="text"
-            placeholder="Type Account User Name or Account Number..."
+            placeholder="Type Name or Receiver A/C Number..."
             className="py-2 px-1 w-full outline-none"
           />
 
@@ -52,19 +52,13 @@ const DepositHistory = () => {
                 Name
               </th>
               <th scope="col" className="px-6 py-3">
-                Deposit Method
+                Withdraw Method
               </th>
               <th scope="col" className="px-6 py-3">
-                Sender A/C Number
-              </th>
-              <th scope="col" className="px-6 py-3">
-                TRXID
+                Receiver A/C Number
               </th>
               <th scope="col" className="px-6 py-3">
                 Amount
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Slip
               </th>
               <th scope="col" className="px-6 py-3">
                 Time & Date
@@ -78,7 +72,7 @@ const DepositHistory = () => {
             {allDeposits?.map((deposit, index) =>
               deposit?.paymentInputs?.map((input, inputIndex) => (
                 <tr
-                  key={`${deposit._id}-${inputIndex}`} // Unique key for each row
+                  key={`${deposit._id}-${inputIndex}`}
                   className={`border-b border-gray-700 ${
                     index % 2 === 0
                       ? "bg-white text-black"
@@ -105,9 +99,6 @@ const DepositHistory = () => {
                   <td className="px-6 py-4">
                     {input?.senderAccountNumber || "N/A"}
                   </td>
-                  <td className="px-6 py-4 uppercase">
-                    {input?.transactionId || "N/A"}
-                  </td>
                   {inputIndex === 0 && (
                     <>
                       <td
@@ -115,12 +106,6 @@ const DepositHistory = () => {
                         className="px-6 py-4"
                       >
                         {deposit?.amount || "N/A"}
-                      </td>
-                      <td
-                        rowSpan={deposit?.paymentInputs?.length || 1}
-                        className="px-6 py-4"
-                      >
-                        <IoCloudUploadOutline className="text-2xl cursor-pointer" />
                       </td>
                       <td
                         rowSpan={deposit?.paymentInputs?.length || 1}
@@ -168,7 +153,7 @@ const DepositHistory = () => {
             )}
             {allDeposits?.length === 0 && (
               <tr>
-                <td colSpan="8" className="text-center py-4 text-white">
+                <td colSpan="6" className="text-center py-4 text-white">
                   No deposits found.
                 </td>
               </tr>
@@ -187,4 +172,4 @@ const DepositHistory = () => {
   );
 };
 
-export default DepositHistory;
+export default WithdrawHistory;
