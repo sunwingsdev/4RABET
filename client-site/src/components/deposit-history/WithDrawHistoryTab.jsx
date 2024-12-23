@@ -25,10 +25,10 @@ const WithDrawHistoryTab = () => {
   // Calculate the indices of the cards to show
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  const currentCards = historyData.slice(indexOfFirstCard, indexOfLastCard);
+  const currentCards = historyData?.slice(indexOfFirstCard, indexOfLastCard);
 
   // Calculate total pages
-  const totalPages = Math.ceil(historyData.length / cardsPerPage);
+  const totalPages = Math.ceil(historyData?.length / cardsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -44,7 +44,7 @@ const WithDrawHistoryTab = () => {
   return (
     <div className="pl-6 md:pl-6 pr-6 md:pr-28 py-6 md:py-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {currentCards.map((card, index) => (
+        {currentCards?.map((card, index) => (
           <HistoryCard key={index} status={card.status} amount={card.amount} />
         ))}
       </div>
