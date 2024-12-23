@@ -1,11 +1,11 @@
 import { IoIosSearch } from "react-icons/io";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { useGetAllDepositsQuery } from "../../../redux/features/allApis/depositApi/depositApi";
 import { useState } from "react";
 import ReasonModal from "../../../components/dashboard/deposit-history/ReasonModal";
+import { useGetDepositsQuery } from "../../../redux/features/allApis/depositsApi/depositsApi";
 
 const DepositHistory = () => {
-  const { data: allDeposits, isLoading, isError } = useGetAllDepositsQuery();
+  const { data: allDeposits, isLoading, isError } = useGetDepositsQuery();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDeposit, setSelectedDeposit] = useState(null);
   const [status, setStatus] = useState("");
@@ -49,7 +49,7 @@ const DepositHistory = () => {
           <thead className="text-xs text-gray-700 uppercase bg-[#172437] dark:bg-[#172437] dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
-                User name
+                Name
               </th>
               <th scope="col" className="px-6 py-3">
                 Deposit Method

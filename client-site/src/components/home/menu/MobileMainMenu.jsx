@@ -12,9 +12,14 @@ import { LuMonitorStop, LuTableColumnsSplit } from "react-icons/lu";
 import { PiNumberCircleSevenFill } from "react-icons/pi";
 import { Link } from "react-router";
 import { AuthContext } from "../../../providers/AuthProvider";
+import { useToasts } from "react-toast-notifications";
+import ApiConnectionModal from "../../shared/ApiConnectionModal";
 
 const MobileMainMenu = ({ isMenuOpen, toggleMenu, openDepositModal }) => {
-  const { user } = useContext(AuthContext);
+  const { user, setIsApiModalOpen, setIsModalOpen, isApiModalOpen } =
+    useContext(AuthContext);
+  const { addToast } = useToasts();
+
   useEffect(() => {
     // Prevent body scrolling when the menu is open
     if (isMenuOpen) {
@@ -28,9 +33,21 @@ const MobileMainMenu = ({ isMenuOpen, toggleMenu, openDepositModal }) => {
     };
   }, [isMenuOpen]);
 
+  const handleMenuSelect = () => {
+    if (!user) {
+      setIsModalOpen(true);
+      addToast("Please login first", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    } else {
+      setIsApiModalOpen(true);
+    }
+  };
+
   return (
     <div
-      className={`fixed top-0 left-0 h-full w-[70%] sm:w-1/2 bg-[#152133] z-50 py-6 transform overflow-y-auto ${
+      className={`fixed top-0 left-0 h-full w-[70%] sm:w-1/2 z-50 bg-[#152133] py-6 transform overflow-y-auto ${
         isMenuOpen ? "translate-x-0" : "-translate-x-full"
       } transition-transform duration-300`}
     >
@@ -93,110 +110,113 @@ const MobileMainMenu = ({ isMenuOpen, toggleMenu, openDepositModal }) => {
           </Link>
         </li>
         <li>
-          <Link to="/live">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <LuMonitorStop size={20} className="text-blue-500" />
               LIVE
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/sports">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <LuTableColumnsSplit size={20} className="text-blue-500" />
               SPORTS
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/cricket">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <FaBaseballBatBall size={20} className="text-blue-500" />
               Cricket
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/casino">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <PiNumberCircleSevenFill size={20} className="text-blue-500" />
               Casino
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/live-dealers">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <CgLivePhoto size={20} className="text-blue-500" />
               Live Dealers
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/tv-games">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <LuMonitorStop size={20} className="text-blue-500" />
               TV Games
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/auiatior">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center text-red-600 hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <GiRocketThruster size={20} className="text-red-600" />
               Aviator
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/jetx">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <LiaProceduresSolid size={20} className="text-blue-500" />
               JetX
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/aviatrix">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <FaAvianex size={20} className="text-blue-500" />
               AviatriX
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/esport">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <IoIosFootball size={20} className="text-blue-500" />
               eSport
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/bonuses">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <GiDonut size={20} className="text-blue-500" />
               Bonuses
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/rules">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <FaUserTag size={20} className="text-blue-500" />
               Rules
             </p>
-          </Link>
+          </div>
         </li>
         <li>
-          <Link to="/tutorials">
+          <div onClick={handleMenuSelect}>
             <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
               <BiBookBookmark size={20} className="text-blue-500" />
               Tutorials
             </p>
-          </Link>
+          </div>
         </li>
       </ul>
+      {isApiModalOpen && (
+        <ApiConnectionModal closeApiModal={() => setIsApiModalOpen(false)} />
+      )}
     </div>
   );
 };
