@@ -90,22 +90,22 @@ const Router = createBrowserRouter([
         path: "/other",
         element: <OtherGames />,
       },
-      {
-        path: "/deposit",
-        element: <Deposit />,
-      },
-      {
-        path: "/profile",
-        element: <MyProfile />,
-      },
-      {
-        path: "/payment-history",
-        element: <PaymentHistory />,
-      },
-      {
-        path: "/rules",
-        element: <Rules />,
-      },
+      // {
+      //   path: "/deposit",
+      //   element: <Deposit />,
+      // },
+      // {
+      //   path: "/profile",
+      //   element: <MyProfile />,
+      // },
+      // {
+      //   path: "/payment-history",
+      //   element: <PaymentHistory />,
+      // },
+      // {
+      //   path: "/rules",
+      //   element: <Rules />,
+      // },
     ],
   },
   {
@@ -120,14 +120,14 @@ const Router = createBrowserRouter([
         path: "",
         element: <DashboardHome />,
       },
-      {
-        path: "deposits",
-        element: <DepositHistory />,
-      },
-      {
-        path: "withdraws",
-        element: <WithdrawHistory />,
-      },
+      // {
+      //   path: "deposits",
+      //   element: <DepositHistory />,
+      // },
+      // {
+      //   path: "withdraws",
+      //   element: <WithdrawHistory />,
+      // },
     ],
   },
 ]);

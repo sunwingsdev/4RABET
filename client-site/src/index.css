@@ -21,9 +21,9 @@ input[type="number"] {
 }
 
 /* Style the container to allow proper positioning */
-.slider-container {
+/* .slider-container {
   position: relative;
-}
+} */
 
 /* Position the pagination dots */
 .mySwiper .swiper-pagination {

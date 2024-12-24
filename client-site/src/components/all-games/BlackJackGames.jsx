@@ -19,7 +19,7 @@ const BlackJackGames = () => {
   }, []);
 
   return (
-    <div className="w-full lg:pr-16 2xl:pr-0 bg-gradient-to-b from-[#0e192a] to-[#091222]">
+    <div className="w-dvw max-w-[100%] overflow-hidden rounded-md relative mx-auto bg-gradient-to-b from-[#0e192a] to-[#091222]">
       {/* Header Section */}
       <div className="flex flex-row items-center justify-between  py-4">
         <div className="flex flex-row items-center gap-1">
