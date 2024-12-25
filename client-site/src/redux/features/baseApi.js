@@ -12,10 +12,8 @@ const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["users"],
+  tagTypes: ["users", "deposits", "withdraws"],
   endpoints: () => ({}),
 });
 
-export const { useLoginMutation, useRegisterMutation, useFetchProfileQuery } =
-  baseApi;
 export default baseApi;

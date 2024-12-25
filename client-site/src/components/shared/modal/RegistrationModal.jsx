@@ -5,6 +5,8 @@ import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { Link } from "react-router";
 import GoogleSignIn from "./GoogleSignIn";
+import { useAddUserMutation } from "../../../redux/features/allApis/usersApi/usersApi";
+import { useToasts } from "react-toast-notifications";
 
 const CustomDropdown = ({
   currencies,
@@ -63,6 +65,7 @@ const CustomDropdown = ({
 
 const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
   const { createUser } = useContext(AuthContext); // Using context for Firebase Auth
+  const [addUser] = useAddUserMutation();
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -70,7 +73,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
   const [selectedOffer, setSelectedOffer] = useState(offers[0]);
   const [showPromoInput, setShowPromoInput] = useState(false);
   const [promoCode, setPromoCode] = useState("");
-
+  const { addToast } = useToasts();
 
   const handleApplyPromoCode = () => {
     // Handle promo code application logic here
@@ -93,21 +96,21 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
         promoCode,
       };
 
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_API_URL}/api/users`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
+      try {
+        const result = await addUser(userData);
+        if (result.data.insertedId) {
+          addToast("Registration successful!", {
+            appearance: "success",
+            autoDismiss: true,
+          });
+          closeRegistrationModal();
         }
-      );
-      const data = await response.json();
-      console.log(data);
-
-      // Close modal after successful registration
-      closeRegistrationModal();
+      } catch (error) {
+        addToast("Failed to register!", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+      }
     } catch (error) {
       console.error("Error during registration:", error.message);
     }
@@ -154,7 +157,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
               className="w-full mb-2 sm:mb-4 px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
             />
             <input
-              type="number"
+              type="text"
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}

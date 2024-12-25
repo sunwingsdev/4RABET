@@ -4,9 +4,14 @@ const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
+const { upload, deleteFile } = require("./utils");
+
+const usersApi = require("./apis/usersApi/usersApi");
+const depositsApi = require("./apis/depositsApi/depositsApi");
+const withdrawsApi = require("./apis/withdrawsApi/withdrawsApi");
 
 const corsConfig = {
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173"],
   credential: true,
   optionSuccessStatus: 200,
   methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
@@ -19,7 +24,7 @@ app.use(express.json());
 
 // mongodb start
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.u53dl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = process.env.DB_URI;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -30,6 +35,33 @@ const client = new MongoClient(uri, {
   },
 });
 
+// Routes for image upload and delete
+app.post("/upload", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded" });
+  }
+  res.status(200).json({
+    message: "File uploaded successfully",
+    filePath: `/uploads/images/${req.file.filename}`,
+  });
+});
+
+app.delete("/delete", async (req, res) => {
+  const { filePath } = req.body;
+
+  if (!filePath) {
+    return res.status(400).json({ error: "File path not provided" });
+  }
+
+  try {
+    await deleteFile(filePath);
+    res.status(200).json({ message: "File deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -37,31 +69,16 @@ async function run() {
 
     //collections start
     const usersCollection = client.db("rabet").collection("users");
+    const depositsCollection = client.db("rabet").collection("deposits");
+    const withdrawsCollection = client.db("rabet").collection("withdraws");
     //collections end
 
     // APIs start
+    app.use("/users", usersApi(usersCollection));
+    app.use("/deposits", depositsApi(depositsCollection));
+    app.use("/withdraws", withdrawsApi(withdrawsCollection));
 
-    // POST API to save user data after Firebase registration
-    app.post("/api/users", async (req, res) => {
-      const user = req.body; // Getting the user data from frontend
-
-      try {
-        const result = await usersCollection.insertOne(user);
-        res.status(201).send({
-          success: true,
-          message: "User registered successfully",
-          data: result,
-        });
-      } catch (error) {
-        console.error("Error inserting user:", error.message);
-        res.status(500).send({
-          success: false,
-          message: "Failed to register user",
-          error: error.message,
-        });
-      }
-    });
-
+    // ---------=======>
     app.get("/api/users/:email", async (req, res) => {
       const { email } = req.params;
       const query = { email };
@@ -72,9 +89,7 @@ async function run() {
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    console.log("Connected to MongoDB!!!✅");
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
@@ -85,9 +100,9 @@ run().catch(console.dir);
 // mongodb end
 
 app.get("/", (req, res) => {
-  res.send("4RABET server is running");
+  res.send("server is running");
 });
 
 app.listen(port, () => {
-  console.log(`4RABET Server is running on PORT: ${port}`);
+  console.log(`Server is running on PORT: ${port}`);
 });

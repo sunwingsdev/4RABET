@@ -14,7 +14,7 @@ const ApiConnectionModal = ({ closeApiModal }) => {
         </button>
 
         {/* Modal Content */}
-        <div className="flex items-center justify-center py-8 text-xl">
+        <div className="flex items-center text-center justify-center py-8 text-xl">
           Please contact your developer team to connect API
         </div>
       </div>

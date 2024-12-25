@@ -13,6 +13,30 @@ import blackjackImg from "../assets/menu/12.png";
 import tableImg from "../assets/menu/13.png";
 import virtualSportsImg from "../assets/menu/14.png";
 import otherImg from "../assets/menu/15.png";
+import cricket from "../assets/icon-menu-banner/zClass_Cricket.svg";
+import soccer from "../assets/icon-menu-banner/zClass_Soccer.svg";
+import tennis from "../assets/icon-menu-banner/zClass_Tennis.svg";
+import horses from "../assets/icon-menu-banner/zClass_Greyhounds2.svg";
+import casino from "../assets/icon-menu-banner/zClass_Casino.svg";
+import basketball from "../assets/icon-menu-banner/zClass_Basketball.svg";
+import fantasy from "../assets/icon-menu-banner/zClass_FantasySports.svg";
+import virtual from "../assets/icon-menu-banner/zClass_VirtualSports.svg";
+import esports from "../assets/icon-menu-banner/zClass_ESports.svg";
+import tableTennis from "../assets/icon-menu-banner/zClass_TableTennis.svg";
+import UFCFightNight from "../assets/icon-menu-banner/UCL_Official.svg";
+import boxing from "../assets/icon-menu-banner/zClass_Boxing.svg";
+import golf from "../assets/icon-menu-banner/zClass_Golf (1).svg";
+import futsal from "../assets/icon-menu-banner/zClass_Futsal.svg";
+import rugbyUnion from "../assets/icon-menu-banner/zClass_RugbyUnion.svg";
+import badminton from "../assets/icon-menu-banner/zClass_Badminton.svg";
+import formula from "../assets/icon-menu-banner/zClass_Formula1.svg";
+import iceHockey from "../assets/icon-menu-banner/zClass_IceHockey.svg";
+import volleyball from "../assets/icon-menu-banner/zClass_Volleyball.svg";
+import darts from "../assets/icon-menu-banner/zClass_Darts.svg";
+import rugbyLeague from "../assets/icon-menu-banner/zClass_RugbyLeague.svg";
+import snooker from "../assets/icon-menu-banner/zClass_Soccer.svg";
+import greyhounds from "../assets/icon-menu-banner/zClass_Greyhounds2.svg";
+
 // Top Menu
 const topMenu = [
   {
@@ -68,6 +92,147 @@ const topMenu = [
     label: "Bonuses",
     Icon: "FaUser",
     link: "/bonuses",
+  },
+];
+// main menu bottom menu
+const leftSideMenuTop = [
+  {
+    id: 1,
+    label: "Cricket",
+    Icon: cricket,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Soccer",
+    Icon: soccer,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Tennis",
+    Icon: tennis,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Horses",
+    Icon: horses,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Casino",
+    Icon: casino,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Basketball",
+    Icon: basketball,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Fantasy",
+    Icon: fantasy,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Virtual",
+    Icon: virtual,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Esports",
+    Icon: esports,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Table Tennis",
+    Icon: tableTennis,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "UFC Fight Night",
+    Icon: UFCFightNight,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Boxing",
+    Icon: boxing,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Golf",
+    Icon: golf,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Futsal",
+    Icon: futsal,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Rugby Union",
+    Icon: rugbyUnion,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Badminton",
+    Icon: badminton,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Formula 1",
+    Icon: formula,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Ice Hockey",
+    Icon: iceHockey,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Volleyball",
+    Icon: volleyball,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Darts",
+    Icon: darts,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Rugby League",
+    Icon: rugbyLeague,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Snooker",
+    Icon: snooker,
+    link: "/",
+  },
+  {
+    id: 1,
+    label: "Greyhounds",
+    Icon: greyhounds,
+    link: "/",
   },
 ];
 
@@ -205,4 +370,4 @@ const rightSideMenu = [
   },
 ];
 
-export { topMenu, leftSideMenu, rightSideMenu };
+export { topMenu, leftSideMenuTop, leftSideMenu, rightSideMenu };

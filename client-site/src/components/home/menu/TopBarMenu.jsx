@@ -10,28 +10,21 @@ import gearImg from "../../../assets/images/offers/gear.png";
 import holdAndWinImg from "../../../assets/images/offers/holdAndWin.png";
 import ladyImg from "../../../assets/images/offers/lady.png";
 import sportImg from "../../../assets/images/offers/sport.jpg";
-import { HiMenuAlt1, HiX } from "react-icons/hi";
+import { HiMenuAlt1 } from "react-icons/hi";
 import { TiMessages } from "react-icons/ti";
-import { FaApple, FaAvianex, FaUserTag, FaRegUserCircle } from "react-icons/fa";
-import { TbRobot } from "react-icons/tb";
-import { BsGridFill } from "react-icons/bs";
-import { LuMonitorStop, LuTableColumnsSplit } from "react-icons/lu";
-import { FaBaseballBatBall } from "react-icons/fa6";
-import { PiNumberCircleSevenFill } from "react-icons/pi";
-import { CgLivePhoto } from "react-icons/cg";
-import { GiDonut, GiRocketThruster } from "react-icons/gi";
-import { LiaProceduresSolid } from "react-icons/lia";
+import { FaApple, FaRegUserCircle } from "react-icons/fa";
+import { GoPlusCircle } from "react-icons/go";
 import {
-  IoIosFootball,
   IoIosArrowDown,
   IoIosArrowUp,
   IoIosMail,
+  IoLogoAndroid,
 } from "react-icons/io";
-import { BiBookBookmark } from "react-icons/bi";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
 import ApiConnectionModal from "../../shared/ApiConnectionModal";
 import DepositModal from "../../depositModal/DepositModal";
+import MobileMainMenu from "./MobileMainMenu";
 
 const TopBarMenu = () => {
   const {
@@ -155,6 +148,40 @@ const TopBarMenu = () => {
     }
   };
 
+  // payment methods data
+  const paymentMethods = {
+    nagad: {
+      logo: "https://pay.hostbuybd.com/assets/template/images/nagad.png",
+      name: "Nagad",
+      mobileNumber: "01700000000",
+      amount: "9000",
+      instructions: [
+        "Go to your NAGAD Mobile Menu by dialing: *167# or Open NAGAD App.",
+        'Choose: "Send Money"',
+        "Enter the Receiver Account Number: '01700000000'",
+        "Enter the amount: '1634'",
+        "Now enter your NAGAD Mobile Menu PIN to confirm.",
+        "Done! You will receive a confirmation message from NAGAD",
+        'Put the "Transaction ID" in the upper box and press "VERIFY"',
+      ],
+    },
+    rocket: {
+      logo: "https://pay.hostbuybd.com/assets/template/images/rocket.png",
+      name: "Rocket",
+      mobileNumber: "01700000001",
+      amount: "2000",
+      instructions: [
+        "Go to your Rocket Mobile Menu by dialing: *322# or Open Rocket App.",
+        'Choose: "Send Money"',
+        "Enter the Receiver Account Number: '01700000001'",
+        "Enter the amount: '2000'",
+        "Now enter your Rocket Mobile Menu PIN to confirm.",
+        "Done! You will receive a confirmation message from Rocket",
+        'Put the "Transaction ID" in the upper box and press "VERIFY"',
+      ],
+    },
+  };
+
   return (
     <div className="bg-[#18263AE6] border-b border-[#293b55]">
       <div className="hidden lg:flex justify-between items-center gap-2">
@@ -228,7 +255,7 @@ const TopBarMenu = () => {
                         </div>
                       </div>
                       <div className="p-4 flex flex-col items-center gap-2">
-                        <Link to="/my-profile" className="w-full">
+                        <Link to="/profile" className="w-full">
                           <button className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold">
                             MY PROFILE
                           </button>
@@ -288,7 +315,7 @@ const TopBarMenu = () => {
       </div>
 
       {/* mobile menu */}
-      <div className="px-4 sm:px-6 lg:hidden">
+      <div className="px-4 sm:px-6 lg:hidden bg-[#18283d]">
         <div className="flex items-center justify-between py-3">
           <div className="text-white flex gap-3 sm:gap-4 items-center">
             <button onClick={toggleMenu}>
@@ -309,12 +336,28 @@ const TopBarMenu = () => {
             </Link>
           </div>
           <div className="text-white flex gap-1 items-center">
-            <Link>
-              <FaApple size={28} />
-            </Link>
-            <Link>
-              <TbRobot size={28} />
-            </Link>
+            {user ? (
+              <button onClick={openDepositModal} className="mb-2">
+                <div className="flex flex-row items-center gap-1 px-4 xl:px-6 py-2 rounded-full bg-red-700 hover:bg-red-600 duration-300 whitespace-nowrap">
+                  <p className="text-[12px] font-extrabold">DEPOSIT</p>
+                  <GoPlusCircle className="text-xl" />
+                </div>
+              </button>
+            ) : (
+              <>
+                <Link>
+                  <FaApple size={28} className="text-blue-500" />
+                </Link>
+                <Link>
+                  <div className="relative flex items-center justify-center">
+                    <IoLogoAndroid className="text-3xl text-blue-500" />
+                    <p className="absolute bg-yellow-400 text-black px-1.5 py-0.5 text-[10px] -bottom-1 rounded-sm">
+                      NEW
+                    </p>
+                  </div>
+                </Link>
+              </>
+            )}
           </div>
         </div>
 
@@ -327,163 +370,46 @@ const TopBarMenu = () => {
         )}
 
         {/* Side Menu */}
-        <div
-          className={`fixed top-0 left-0 h-full w-[70%] sm:w-1/2 bg-[#152133] z-50 py-6 transform overflow-y-auto ${
-            isMenuOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300`}
-        >
-          <button
-            onClick={toggleMenu}
-            className="text-white absolute top-3 right-3"
-          >
-            <HiX size={28} />
-          </button>
-          <div className="px-5">
-            <button
-              onClick={openDepositModal}
-              className="mt-6 w-full py-2 rounded-md text-sm font-bold text-white bg-blue-500"
-            >
-              DEPOSIT
-            </button>
-          </div>
-          <p className="flex justify-between gap-5 text-xs font-bold items-center text-white bg-[#18263a] mt-3 py-3 px-5">
-            OUR APPLICATION
-            <div className="flex gap-1 items-center text-blue-500">
-              <FaApple size={22} />
-              <TbRobot size={22} />
-            </div>
-          </p>
-          <ul className="font-bold text-white">
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <BsGridFill size={20} className="text-blue-500" />
-                  Main
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <LuMonitorStop size={20} className="text-blue-500" />
-                  LIVE
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <LuTableColumnsSplit size={20} className="text-blue-500" />
-                  SPORTS
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <FaBaseballBatBall size={20} className="text-blue-500" />
-                  Cricket
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <PiNumberCircleSevenFill
-                    size={20}
-                    className="text-blue-500"
-                  />
-                  Casino
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <CgLivePhoto size={20} className="text-blue-500" />
-                  Live Dealers
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <LuMonitorStop size={20} className="text-blue-500" />
-                  TV Games
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center text-red-600 hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <GiRocketThruster size={20} className="text-red-600" />
-                  Auiator
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <LiaProceduresSolid size={20} className="text-blue-500" />
-                  JetX
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <FaAvianex size={20} className="text-blue-500" />
-                  AviatriX
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <IoIosFootball size={20} className="text-blue-500" />
-                  eSport
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <GiDonut size={20} className="text-blue-500" />
-                  Bonuses
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <FaUserTag size={20} className="text-blue-500" />
-                  Rules
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-                  <BiBookBookmark size={20} className="text-blue-500" />
-                  Tutorials
-                </p>
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="flex items-center justify-center gap-2 text-sm font-bold text-white w-full">
+        <MobileMainMenu
+          isMenuOpen={isMenuOpen}
+          toggleMenu={toggleMenu}
+          openDepositModal={openDepositModal}
+        />
+
+        <div className="flex items-center justify-start gap-2 text-sm font-bold text-white w-full">
           {user ? (
             <>
-              <button className="mb-2">
-                <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-[#2B81D6] hover:bg-[#4ba2f8] duration-300 whitespace-nowrap">
-                  DEPOSIT
-                </p>
-              </button>
-              <button onClick={handleLogout} className="mb-2">
+              {/* <button onClick={handleLogout} className="mb-2">
                 <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-red-600 hover:bg-red-700 duration-300 whitespace-nowrap">
                   LOGOUT
                 </p>
-              </button>
+              </button> */}
+              <div className="flex flex-row items-center gap-2 whitespace-nowrap">
+                <Link
+                  to="/profile"
+                  className="uppercase text-slate-500 text-[10px] md:text-[12px]"
+                >
+                  Profile
+                </Link>
+                <div
+                  onClick={openDepositModal}
+                  className="uppercase text-slate-500 text-[10px] md:text-[12px]"
+                >
+                  Deposit
+                </div>
+                <Link
+                  to="/payment-history"
+                  className="uppercase text-slate-500 text-[10px] md:text-[12px]"
+                >
+                  payment history
+                </Link>
+                <Link
+                  to="/bet-history"
+                  className="uppercase text-slate-500 text-[10px] md:text-[12px]"
+                >
+                  bet history
+                </Link>
+              </div>
             </>
           ) : (
             <>
