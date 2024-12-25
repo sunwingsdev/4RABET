@@ -17,7 +17,7 @@ const Rules = () => {
   return (
     <div className="bg-[#091222] pt-10 sm:pt-14 mt-[51px] lg:mt-0 pb-8 md:pr-20">
       <div className="bg-[#152234] mt-8 mx-8">
-        <div className="flex flex-col items-center gap-4 overflow-y-auto h-[70vh] md:h-[80vh]">
+        <div className="flex flex-col items-center gap-4 overflow-y-auto h-[70vh] md:h-[80vh] scrollbar-hide">
           <p className="text-xl text-white font-bold mt-6 text-center">
             Rules for Specific sports - New Entertainment Development N.V.
           </p>

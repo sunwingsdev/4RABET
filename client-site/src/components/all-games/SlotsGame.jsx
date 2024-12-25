@@ -19,7 +19,7 @@ const SlotsGame = () => {
   }, []);
 
   return (
-    <div className="w-full lg:pr-16 2xl:pr-0 bg-gradient-to-b from-[#0e192a] to-[#091222]">
+    <div className="w-dvw max-w-[100%] overflow-hidden rounded-md relative mx-auto bg-gradient-to-b from-[#0e192a] to-[#091222] px-2">
       {/* Header Section */}
       <div className="flex flex-row items-center justify-between  py-4">
         <div className="flex flex-row items-center gap-1">
@@ -28,19 +28,21 @@ const SlotsGame = () => {
             className="w-10 h-10"
             alt="new game category image"
           />
-          <h1 className="text-lg font-bold text-white">Slots</h1>
+          <h1 className="text-lg font-bold text-white whitespace-nowrap">
+            Slots
+          </h1>
         </div>
         <div className="flex flex-row items-center gap-2 2xl:pr-16">
-          <div className="px-4 py-1 bg-[#152436] rounded-md">
-            <p className="text-sm text-slate-400">4865 Games</p>
+          <div className="px-2 md:px-4 py-1 bg-[#152436] rounded-md">
+            <p className="text-xs md:text-sm text-slate-400">4865 Games</p>
           </div>
           {/* Custom Swiper Navigation */}
           <div className="flex flex-row items-center gap-2">
-            <div className="slot-prev bg-[#152436] w-8 h-8 rounded-md flex items-center justify-center cursor-pointer">
-              <IoIosArrowBack className="text-slate-400 text-xl" />
+            <div className="slot-prev bg-[#152436] w-6 md:w-8 h-6 md:h-8 rounded-md flex items-center justify-center cursor-pointer">
+              <IoIosArrowBack className="text-slate-400 text-base md:text-xl" />
             </div>
-            <div className="slot-next bg-[#152436] w-8 h-8 rounded-md flex items-center justify-center cursor-pointer">
-              <IoIosArrowForward className="text-slate-400 text-xl" />
+            <div className="slot-next bg-[#152436] w-6 md:w-8 h-6 md:h-8 rounded-md flex items-center justify-center cursor-pointer">
+              <IoIosArrowForward className="text-slate-400 text-base md:text-xl" />
             </div>
           </div>
         </div>
@@ -66,7 +68,7 @@ const SlotsGame = () => {
               slidesPerView: 9, // 1280px স্ক্রিনে 7 স্লাইড দেখাবে
             },
           }}
-          slidesPerView={2.5}
+          slidesPerView={2}
           spaceBetween={8}
           navigation={{
             prevEl: ".slot-prev",
