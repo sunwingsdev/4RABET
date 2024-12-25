@@ -19,7 +19,7 @@ import ScrollContent from "../../components/shared/ScrollContent";
 
 const AllGames = () => {
   return (
-    <div className="bg-[#091222] pt-10 sm:pt-14 mt-[51px] lg:mt-0">
+    <div className="bg-[#091222] pt-10 sm:pt-14 mt-[51px] lg:mt-0 lg:pr-16">
       <PageTop title="All Games" Icon={FaGamepad} />
       <div className="">
         <TopSection />
