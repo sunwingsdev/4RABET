@@ -23,9 +23,9 @@ const AllGames = () => {
       <PageTop title="All Games" Icon={FaGamepad} />
       <div className="">
         <TopSection />
-        {/* <div className="hidden sm:flex md:flex lg:flex">
-          <ScrollContent />
-        </div> */}
+        {/* <div className="hidden sm:flex md:flex lg:flex"> */}
+        <ScrollContent />
+        {/* </div> */}
 
         <div className="flex flex-col gap-4">
           <PopularCategory />

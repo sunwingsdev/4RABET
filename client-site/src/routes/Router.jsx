@@ -24,6 +24,7 @@ import MyProfile from "../pages/my-profile/MyProfile";
 import PaymentHistory from "../pages/payment-history/PaymentHistory";
 import Rules from "../pages/rules/Rules";
 import WithdrawHistory from "../pages/dashboard/withdraw-history/WithdrawHistory";
+import AdminLogin from "../pages/home/admin-login/AdminLogin";
 
 const Router = createBrowserRouter([
   {
@@ -129,6 +130,10 @@ const Router = createBrowserRouter([
         element: <WithdrawHistory />,
       },
     ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLogin />,
   },
 ]);
 

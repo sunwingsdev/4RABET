@@ -27,7 +27,7 @@ const AdminRoute = ({ children }) => {
 
   if (!authLoading && !userLoading) {
     setIsModalOpen(true);
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/admin" state={{ from: location }} replace />;
   }
 
   return null;
