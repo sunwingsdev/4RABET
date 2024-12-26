@@ -5,16 +5,20 @@ import { FaCircleUser } from "react-icons/fa6";
 import { useToasts } from "react-toast-notifications";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../../providers/AuthProvider";
+import {
+  useGetUserByEmailQuery,
+  useLazyGetUserByEmailQuery,
+} from "../../../redux/features/allApis/usersApi/usersApi";
 
 const AdminLogin = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, logOut } = useContext(AuthContext);
+  const [getSingleUser] = useLazyGetUserByEmailQuery();
   const navigate = useNavigate();
   const { addToast } = useToasts();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const from = location.state?.from?.pathname || "/";
   const [isLoading, setIsLoading] = useState(false);
   // Update form fields
   const handleChange = (e) => {
@@ -29,11 +33,30 @@ const AdminLogin = () => {
     try {
       setIsLoading(true);
       await signIn(formData?.email, formData?.password);
-      addToast("Login successful!", { appearance: "success" });
-      navigate(from || "/dashboard");
+      const { data: singleUser } = await getSingleUser(formData?.email);
+      if (singleUser?.role === "admin") {
+        addToast("Login successful!", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+        navigate("/dashboard");
+        setIsLoading(false);
+        setFormData({
+          email: "",
+          password: "",
+        });
+      } else {
+        logOut();
+        addToast("Login failed. Please check your credentials.", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+        setIsLoading(false);
+      }
     } catch (err) {
       addToast("Login failed. Please check your credentials.", {
         appearance: "error",
+        autoDismiss: true,
       });
       console.error("Sign-in error:", err.message);
       setIsLoading(false);

@@ -4,11 +4,7 @@ import { Navigate, useLocation } from "react-router";
 import { useGetUserByEmailQuery } from "../redux/features/allApis/usersApi/usersApi";
 
 const AdminRoute = ({ children }) => {
-  const {
-    user,
-    loading: authLoading,
-    setIsModalOpen,
-  } = useContext(AuthContext);
+  const { user, loading: authLoading } = useContext(AuthContext);
   const { data: singleUser, isLoading: userLoading } = useGetUserByEmailQuery(
     user?.email,
     {
@@ -26,7 +22,6 @@ const AdminRoute = ({ children }) => {
   }
 
   if (!authLoading && !userLoading) {
-    setIsModalOpen(true);
     return <Navigate to="/admin" state={{ from: location }} replace />;
   }
 

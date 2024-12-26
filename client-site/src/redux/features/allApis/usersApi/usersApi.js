@@ -25,5 +25,9 @@ const usersApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useAddUserMutation, useGetUsersQuery, useGetUserByEmailQuery } =
-  usersApi;
+export const {
+  useAddUserMutation,
+  useGetUsersQuery,
+  useGetUserByEmailQuery,
+  useLazyGetUserByEmailQuery,
+} = usersApi;
