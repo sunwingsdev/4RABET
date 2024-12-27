@@ -4,12 +4,15 @@ import {
   IoIosArrowDown,
   IoIosArrowForward,
 } from "react-icons/io";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoClose } from "react-icons/io5"; // Close icon
 import { Link } from "react-router";
 import logo from "../../../assets/logo.png";
+import { AuthContext } from "../../../providers/AuthProvider";
+import { useToasts } from "react-toast-notifications";
 
 const DashboardMobilMenu = ({ open }) => {
+  const { logOut } = useContext(AuthContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = useState({
@@ -22,6 +25,7 @@ const DashboardMobilMenu = ({ open }) => {
     Pages: false,
     Settings: false,
   });
+  const addToast = useToasts();
 
   // Toggle the sidebar
   const toggleSidebar = () => {
@@ -44,6 +48,14 @@ const DashboardMobilMenu = ({ open }) => {
   // Toggle the dropdown
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLogout = () => {
+    logOut();
+    addToast("Successfully logged out!", {
+      appearance: "success",
+      autoDismiss: true,
+    });
   };
 
   return (
@@ -70,8 +82,8 @@ const DashboardMobilMenu = ({ open }) => {
               </div>
             </div>
             {isDropdownOpen && (
-              <div className="absolute top-full right-0 mt-2 bg-white shadow-lg rounded-sm">
-                <ul className="py-2">
+              <div className="absolute top-full right-0 bg-white shadow-lg rounded-sm">
+                <ul className="">
                   <li className="px-4 py-2 hover:bg-[#213450] hover:text-yellow-400 cursor-pointer">
                     <Link to="/admin">Admin</Link>
                   </li>
@@ -82,7 +94,7 @@ const DashboardMobilMenu = ({ open }) => {
                     <Link to="/settings">Settings</Link>
                   </li>
                   <li className="px-4 py-2 hover:bg-[#213450] hover:text-yellow-400 cursor-pointer">
-                    <Link to="/logout">Logout</Link>
+                    <div onClick={handleLogout}>Logout</div>
                   </li>
                 </ul>
               </div>
