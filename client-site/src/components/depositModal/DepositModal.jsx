@@ -57,11 +57,13 @@ const mobilePaymentMethods = [
         property: "senderAccountNumber",
         type: "text",
         label: "Enter Sender Account Number",
+        required: true,
       },
       {
         property: "transactionId",
         type: "text",
         label: "Enter transaction id",
+        required: true,
       },
     ],
   },
@@ -87,21 +89,19 @@ const bankPaymentMethods = [
         property: "senderAccountNumber",
         type: "text",
         label: "Enter Sender Account Number",
+        required: true,
       },
       {
         property: "accountHolderName",
         type: "text",
         label: "Enter Account Holder Name",
+        required: true,
       },
       {
         property: "screenshot",
         type: "file",
         label: "Attach a screenshot",
-      },
-      {
-        property: "ss",
-        type: "file",
-        label: "Attach a ss",
+        required: true,
       },
     ],
   },
@@ -387,7 +387,7 @@ const DepositModal = ({ closeDepositModal }) => {
               <form ref={formRef}>
                 <div>
                   {paymentMethod?.inputs?.map(
-                    ({ label, type, property }, index) => (
+                    ({ label, type, property, required }, index) => (
                       <div key={index}>
                         <p className="text-white mt-4 text-sm font-semibold">
                           {label}
@@ -396,10 +396,11 @@ const DepositModal = ({ closeDepositModal }) => {
                           <div>
                             <input
                               type="file"
+                              accept="image/*"
                               name={property}
                               onChange={(e) => handleFileChange(e, property)}
                               className="w-full my-2 px-5 py-2 font-semibold bg-white border border-gray-500 rounded-lg focus:outline-none placeholder-gray-500 text-black"
-                              required
+                              required={required}
                             />
                             {files[label] && (
                               <p className="mt-2 text-sm text-gray-500">
@@ -413,7 +414,7 @@ const DepositModal = ({ closeDepositModal }) => {
                             type={type}
                             className="w-full my-2 px-5 py-2 font-semibold bg-white border border-gray-500 rounded-lg focus:outline-none placeholder-gray-500 text-black"
                             placeholder={label}
-                            required
+                            required={required}
                           />
                         )}
                       </div>

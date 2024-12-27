@@ -52,7 +52,6 @@ app.post("/upload", upload.single("image"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
-  console.log(req.file);
   res.status(200).json({
     message: "File uploaded successfully",
     filePath: `/uploads/images/${req.file.filename}`,
