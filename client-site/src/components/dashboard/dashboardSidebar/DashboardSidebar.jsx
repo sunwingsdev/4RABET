@@ -90,8 +90,12 @@ const DashboardSidebar = ({ open, setOpen }) => {
   // Menu items with dynamic submenu
   const menuItems = [
     { label: "Dashboard", icon: <IoMdHome />, to: "/dashboard" },
-    { label: "Users", icon: <FaUsers />, to: "/dashboard/users" },
-    { label: "Cash Agent", icon: <PiCashRegister />, to: "/dashboard/users" },
+    { label: "Users", icon: <FaUsers />, to: "/dashboard/alluser" },
+    {
+      label: "Cash Agent",
+      icon: <PiCashRegister />,
+      to: "/dashboard/agenttree",
+    },
     {
       label: "Affiliators",
       icon: <FaAffiliatetheme />,
@@ -101,16 +105,16 @@ const DashboardSidebar = ({ open, setOpen }) => {
       label: "Games Control",
       icon: <IoGameController />,
       submenu: [
-        { label: "Categories", to: "/dashboard/games" },
-        { label: "Active Games", to: "/dashboard/allusers" },
-        { label: "Inactive Games", to: "/dashboard/userProfile" },
+        { label: "Categories", to: "/dashboard/gamecategories" },
+        { label: "Active Games", to: "/dashboard/userprofile" },
+        { label: "Inactive Games", to: "/dashboard/agentprofile" },
       ],
     },
     {
       label: "Games Api key",
       icon: <GiGamepadCross />,
       submenu: [
-        { label: "Sprots Live TV", to: "/dashboard/gamesApi" },
+        { label: "Sprots Live TV", to: "/dashboard/gamesapi" },
         { label: "BetFair API", to: "/dashboard" },
         { label: "Sports Radar API", to: "/dashboard/userProfile" },
         { label: "Odds Jam API", to: "/dashboard/userProfile" },
@@ -151,8 +155,8 @@ const DashboardSidebar = ({ open, setOpen }) => {
       label: "Fontend",
       icon: <BsFront />,
       submenu: [
-        { label: "Slaider", to: "/dashboard" },
-        { label: "Promotions", to: "/dashboard" },
+        { label: "Slaider", to: "/dashboard/fontendslider" },
+        { label: "Promotions", to: "/dashboard/promotionoffer" },
         { label: "Pages", to: "/dashboard" },
         { label: "Notice", to: "/dashboard" },
         { label: "About Us", to: "/dashboard" },

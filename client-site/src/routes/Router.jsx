@@ -24,6 +24,17 @@ import MyProfile from "../pages/my-profile/MyProfile";
 import PaymentHistory from "../pages/payment-history/PaymentHistory";
 import Rules from "../pages/rules/Rules";
 import WithdrawHistory from "../pages/dashboard/withdraw-history/WithdrawHistory";
+import AllUsers from "../pages/users/AllUser";
+import AgentTree from "../pages/agent/AgentTree";
+import Affilitors from "../pages/affilitors/Affilitors";
+import GameCategories from "../pages/dashboard/games/GameCategoris";
+import UserProfile from "../pages/users/UserProfile";
+import GamesApi from "../pages/dashboard/games/GamesApi";
+import AgentProfile from "../pages/agent/AgentProfile";
+import FontendSlider from "../components/dashboard/fontend/FontendSlider";
+import PromotionsOffer from "../components/dashboard/fontend/PromotionOffer";
+import GameCategoriesAdd from "../pages/dashboard/games/CategoriesAdd";
+import AdminLogin from "../pages/home/admin-login/AdminLogin";
 
 const Router = createBrowserRouter([
   {
@@ -121,6 +132,46 @@ const Router = createBrowserRouter([
         element: <DashboardHome />,
       },
       {
+        path: "alluser",
+        element: <AllUsers />,
+      },
+      {
+        path: "agenttree",
+        element: <AgentTree />,
+      },
+      {
+        path: "affilitors",
+        element: <Affilitors />,
+      },
+      {
+        path: "gamecategories",
+        element: <GameCategories />,
+      },
+      {
+        path: "userprofile",
+        element: <UserProfile />,
+      },
+      {
+        path: "agentprofile",
+        element: <AgentProfile />,
+      },
+      {
+        path: "gamesapi",
+        element: <GamesApi />,
+      },
+      {
+        path: "gamesCategorisAdd",
+        element: <GameCategoriesAdd />,
+      },
+      {
+        path: "fontendslider",
+        element: <FontendSlider />,
+      },
+      {
+        path: "promotionoffer",
+        element: <PromotionsOffer />,
+      },
+      {
         path: "deposits",
         element: <DepositHistory />,
       },
@@ -129,6 +180,10 @@ const Router = createBrowserRouter([
         element: <WithdrawHistory />,
       },
     ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLogin />,
   },
 ]);
 
