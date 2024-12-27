@@ -34,6 +34,7 @@ import AgentProfile from "../pages/agent/AgentProfile";
 import FontendSlider from "../components/dashboard/fontend/FontendSlider";
 import PromotionsOffer from "../components/dashboard/fontend/PromotionOffer";
 import GameCategoriesAdd from "../pages/dashboard/games/CategoriesAdd";
+import AdminLogin from "../pages/home/admin-login/AdminLogin";
 
 const Router = createBrowserRouter([
   {
@@ -179,6 +180,10 @@ const Router = createBrowserRouter([
         element: <WithdrawHistory />,
       },
     ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLogin />,
   },
 ]);
 

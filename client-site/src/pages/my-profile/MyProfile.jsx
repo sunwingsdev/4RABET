@@ -3,8 +3,21 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { FaPencilAlt } from "react-icons/fa";
 import { BsUiRadiosGrid } from "react-icons/bs";
 import { Link } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import { useToasts } from "react-toast-notifications";
 
 const MyProfile = () => {
+  const { logOut } = useContext(AuthContext);
+  const { addToast } = useToasts();
+  const handleLogout = () => {
+    logOut();
+
+    addToast("Successfully logged out!", {
+      appearance: "success",
+      autoDismiss: true,
+    });
+  };
   return (
     <div className="bg-[#091222] pt-10 sm:pt-14 mt-[51px] lg:mt-0">
       <PageTop title="Personal Data" Icon={BsUiRadiosGrid} />
@@ -198,7 +211,10 @@ const MyProfile = () => {
         </form>
         <div className="pl-4 md:pl-10 pr-4 md:pr-28 py-12 md:py-14 w-full flex items-center justify-center">
           <div className="w-[95%] border-t border-slate-600 pt-10 flex items-center justify-center">
-            <button className="bg-red-600 hover:bg-red-700 px-20 py-3 text-xl font-bold text-white uppercase rounded-full">
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 hover:bg-red-700 px-20 py-3 text-xl font-bold text-white uppercase rounded-full"
+            >
               Logout
             </button>
           </div>

@@ -638,6 +638,14 @@ const DashboardMobilMenu = ({ open }) => {
     closeSidebar();
   };
 
+  const handleLogout = () => {
+    logOut();
+    addToast("Successfully logged out!", {
+      appearance: "success",
+      autoDismiss: true,
+    });
+  };
+
   return (
     <div>
       <div
