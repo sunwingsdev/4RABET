@@ -40,7 +40,7 @@ const TopSection = () => {
         ))}
       </div>
 
-      <div className="flex gap-3 mb-3 mt-3 sm:mt-0 overflow-x-auto scrollbar-hide lg:hidden">
+      <div className="flex gap-3 mb-3 mt-3 sm:mt-0  lg:hidden">
         {leftSideMenu?.map((menuBottom) => (
           <MobileBannerBottom
             key={menuBottom.id}
