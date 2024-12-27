@@ -29,7 +29,22 @@ const TopSection = () => {
         </div>
       </div>
 
+
+      <div className="flex gap-3 mb-3 mt-3 overflow-x-auto scrollbar-hide bg-[#282828] lg:pr-16">
+        {leftSideMenuTop?.map((menuBottom) => (
+          <MobileBottomMenuTop
+            key={menuBottom.id}
+            title={menuBottom?.label}
+            img={menuBottom.Icon}
+            link={menuBottom.link}
+          />
+        ))}
+      </div>
+
+      <div className="flex gap-3 mb-3 mt-3 sm:mt-0  lg:hidden">
+
       {/* <div className="flex gap-3 mb-3 mt-3 sm:mt-0 overflow-x-auto scrollbar-hide lg:hidden">
+
         {leftSideMenu?.map((menuBottom) => (
           <MobileBannerBottom
             key={menuBottom.id}
