@@ -137,7 +137,7 @@ const DashboardSidebar = ({ open, setOpen }) => {
       ],
     },
     {
-      label: "game History",
+      label: "Game History",
       icon: <SlGameController />,
       submenu: [
         { label: "Play Stats", to: "/dashboard" },
@@ -148,7 +148,7 @@ const DashboardSidebar = ({ open, setOpen }) => {
     { label: "Tournament", icon: <BsShop />, to: "/dashboard" },
     { label: "Jack Pot", icon: <BsShop />, to: "/dashboard" },
     {
-      label: "Fontend",
+      label: "Frontend",
       icon: <BsFront />,
       submenu: [
         { label: "Slaider", to: "/dashboard" },

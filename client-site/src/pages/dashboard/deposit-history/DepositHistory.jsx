@@ -3,6 +3,7 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 import { useState } from "react";
 import ReasonModal from "../../../components/dashboard/deposit-history/ReasonModal";
 import { useGetDepositsQuery } from "../../../redux/features/allApis/depositsApi/depositsApi";
+import { Link } from "react-router";
 
 const DepositHistory = () => {
   const { data: allDeposits, isLoading, isError } = useGetDepositsQuery();
@@ -20,7 +21,9 @@ const DepositHistory = () => {
   };
 
   const handleSubmit = (reason) => {
-    console.log(`Status: ${status}, Reason: ${reason}`);
+    console.log(
+      `Deposit ID: ${selectedDeposit?._id}, Status: ${status}, Reason: ${reason}`
+    );
     setModalOpen(false);
   };
 
@@ -38,47 +41,29 @@ const DepositHistory = () => {
             placeholder="Type Account User Name or Account Number..."
             className="py-2 px-1 w-full outline-none"
           />
-
           <button className="bg-white p-3">
             <IoIosSearch />
           </button>
         </form>
       </div>
       <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border border-[#172437]">
           <thead className="text-xs text-gray-700 uppercase bg-[#172437] dark:bg-[#172437] dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Deposit Method
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Sender A/C Number
-              </th>
-              <th scope="col" className="px-6 py-3">
-                TRXID
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Amount
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Slip
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Time & Date
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Status
-              </th>
+              <th className="px-6 py-3">Name</th>
+              <th className="px-6 py-3">Deposit Method</th>
+              <th className="px-6 py-3">Sender Inputs</th>
+              <th className="px-6 py-3">Amount</th>
+              <th className="px-6 py-3">Slip</th>
+              <th className="px-6 py-3">Time & Date</th>
+              <th className="px-6 py-3">Status</th>
             </tr>
           </thead>
           <tbody>
             {allDeposits?.map((deposit, index) =>
               deposit?.paymentInputs?.map((input, inputIndex) => (
                 <tr
-                  key={`${deposit._id}-${inputIndex}`} // Unique key for each row
+                  key={`${deposit?._id}-${inputIndex}`}
                   className={`border-b border-gray-700 ${
                     index % 2 === 0
                       ? "bg-white text-black"
@@ -87,13 +72,12 @@ const DepositHistory = () => {
                 >
                   {inputIndex === 0 && (
                     <>
-                      <th
-                        scope="row"
+                      <td
                         rowSpan={deposit?.paymentInputs?.length || 1}
                         className="px-6 py-4 font-medium whitespace-nowrap"
                       >
-                        {deposit?.userInfo?.fullName || "N/A"}
-                      </th>
+                        {deposit?.userInfo?.name || "N/A"}
+                      </td>
                       <td
                         rowSpan={deposit?.paymentInputs?.length || 1}
                         className="px-6 py-4"
@@ -102,12 +86,38 @@ const DepositHistory = () => {
                       </td>
                     </>
                   )}
-                  <td className="px-6 py-4">
-                    {input?.senderAccountNumber || "N/A"}
+                  <td className="px-6 py-4 inline-flex flex-col">
+                    {Object.entries(input || {}).map(([key, value]) => {
+                      const isImage =
+                        typeof value === "string" &&
+                        /\.(jpg|jpeg|png|gif)$/i.test(value);
+
+                      if (isImage) {
+                        return (
+                          <Link
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            to={`${import.meta.env.VITE_BASE_API_URL}${value}`}
+                            key={key}
+                          >
+                            <img
+                              src={`${
+                                import.meta.env.VITE_BASE_API_URL
+                              }${value}`}
+                              alt="Deposit Screenshot"
+                              className="w-full h-24 object-cover rounded"
+                            />
+                          </Link>
+                        );
+                      }
+                      return (
+                        <span key={key} className="font-bold capitalize">
+                          {key}: {value || "N/A"}
+                        </span>
+                      );
+                    })}
                   </td>
-                  <td className="px-6 py-4 uppercase">
-                    {input?.transactionId || "N/A"}
-                  </td>
+
                   {inputIndex === 0 && (
                     <>
                       <td
@@ -142,24 +152,38 @@ const DepositHistory = () => {
                       </td>
                       <td
                         rowSpan={deposit?.paymentInputs?.length || 1}
-                        className="px-6 py-4 text-center"
+                        className="px-6 py-4 text-center flex flex-col items-center gap-2"
                       >
-                        <button
-                          className={`px-4 py-2 font-bold rounded capitalize ${
-                            deposit?.status === "pending"
-                              ? "bg-yellow-500 text-black hover:bg-yellow-600"
-                              : deposit?.status === "approve"
-                              ? "bg-green-500 text-white hover:bg-green-600"
-                              : deposit?.status === "reject"
-                              ? "bg-red-500 text-white hover:bg-red-600"
-                              : "bg-gray-500 text-white hover:bg-gray-600"
-                          }`}
-                          onClick={() =>
-                            handleStatusClick(deposit, deposit?.status)
-                          }
-                        >
-                          {deposit?.status || "Unknown"}
-                        </button>
+                        {deposit?.status === "pending" ? (
+                          <>
+                            <button
+                              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                              onClick={() =>
+                                handleStatusClick(deposit, "completed")
+                              }
+                            >
+                              Complete
+                            </button>
+                            <button
+                              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                              onClick={() =>
+                                handleStatusClick(deposit, "reject")
+                              }
+                            >
+                              Reject
+                            </button>
+                          </>
+                        ) : (
+                          <span
+                            className={`rounded-full border px-3 py-1 capitalize ${
+                              deposit?.status === "completed"
+                                ? "bg-green-500 text-white"
+                                : "bg-red-500 text-white"
+                            }`}
+                          >
+                            {deposit?.status}
+                          </span>
+                        )}
                       </td>
                     </>
                   )}
@@ -168,7 +192,7 @@ const DepositHistory = () => {
             )}
             {allDeposits?.length === 0 && (
               <tr>
-                <td colSpan="8" className="text-center py-4 text-white">
+                <td colSpan="7" className="text-center py-4 text-white">
                   No deposits found.
                 </td>
               </tr>
@@ -176,12 +200,12 @@ const DepositHistory = () => {
           </tbody>
         </table>
       </div>
-      {/* Reason Modal */}
       <ReasonModal
         isOpen={modalOpen}
         onClose={handleCloseModal}
         onSubmit={handleSubmit}
         status={status}
+        deposit={selectedDeposit}
       />
     </div>
   );

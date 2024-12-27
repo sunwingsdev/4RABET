@@ -8,6 +8,7 @@ import { MdGTranslate } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import { useAddDepositMutation } from "../../redux/features/allApis/depositsApi/depositsApi";
 import { useToasts } from "react-toast-notifications";
+import { uploadImage } from "../../hooks/files";
 
 const mobilePaymentMethods = [
   {
@@ -97,6 +98,11 @@ const bankPaymentMethods = [
         type: "file",
         label: "Attach a screenshot",
       },
+      {
+        property: "ss",
+        type: "file",
+        label: "Attach a ss",
+      },
     ],
   },
 ];
@@ -123,54 +129,70 @@ const DepositModal = ({ closeDepositModal }) => {
     goNextStep();
   };
 
-  const handleFileChange = (e, label) => {
-    const selectedFile = e.target.files[0];
-    setFiles({
-      ...files,
-      [label]: selectedFile,
-    });
+  const handleFileChange = (e, property) => {
+    if (e.target.files) {
+      setFiles((prevFiles) => ({
+        ...prevFiles,
+        [property]: e.target.files[0],
+      }));
+    }
   };
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData(formRef.current);
-    const paymentInputs = [];
-    formData.forEach((value, key) => {
-      const paymentInput = {
-        [key]: value,
+
+    const images = [files];
+    let paymentInputs = [];
+
+    try {
+      if (files) {
+        const uploadPromises = images.flatMap((item) =>
+          Object.keys(item).map((key) =>
+            uploadImage(item[key]).then((result) => ({
+              [key]: result.filePath,
+            }))
+          )
+        );
+        const uploadedImages = await Promise.all(uploadPromises);
+        paymentInputs = [...paymentInputs, ...uploadedImages];
+      }
+      formData.forEach((value, key) => {
+        if (!(value instanceof File)) {
+          const paymentInput = {
+            [key]: value,
+          };
+          paymentInputs.push(paymentInput);
+        }
+      });
+      const depositInfo = {
+        amount: depositAmount,
+        userId: singleUser?._id,
+        method: paymentMethod?.paymentMethod,
+        gateway: paymentMethod?.gateway,
+        paymentInputs: paymentInputs,
       };
-      paymentInputs.push(paymentInput);
-    });
-    const depositInfo = {
-      amount: depositAmount,
-      userId: singleUser?._id,
-      method: paymentMethod?.paymentMethod,
-      gateway: paymentMethod?.gateway,
-      paymentInputs: paymentInputs,
-    };
-    if (depositAmount) {
-      try {
+      if (depositAmount) {
         setLoading(true);
         const { data } = await addDeposit(depositInfo);
         if (data.insertedId) {
-          addToast("Depositted successfully.Wait for the response", {
+          addToast("Deposited successfully. Wait for the response.", {
             appearance: "success",
             autoDismiss: true,
           });
           closeDepositModal();
           setLoading(false);
         }
-      } catch (error) {
-        console.log("Error during deposit submission:", error);
-        setLoading(false);
+      } else {
+        addToast("Add amount to deposit", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+        setStep(2);
       }
-    } else {
-      addToast("Add amount to deposit", {
-        appearance: "error",
-        autoDismiss: true,
-      });
-      setStep(2);
+    } catch (error) {
+      console.error("Error during deposit submission:", error);
+      setLoading(false);
     }
   };
 
@@ -375,7 +397,7 @@ const DepositModal = ({ closeDepositModal }) => {
                             <input
                               type="file"
                               name={property}
-                              onChange={(e) => handleFileChange(e, label)}
+                              onChange={(e) => handleFileChange(e, property)}
                               className="w-full my-2 px-5 py-2 font-semibold bg-white border border-gray-500 rounded-lg focus:outline-none placeholder-gray-500 text-black"
                               required
                             />
