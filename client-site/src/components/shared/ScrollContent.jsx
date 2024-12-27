@@ -4,7 +4,7 @@ import MobileBottomMenuTop from "../home/menu/MobileBottomMenuTop";
 const ScrollContent = () => {
   return (
     <div>
-      <div className="flex justify-center overflow-x-auto space-x-8 w-[99vw] md:w-screen h-20 mx-auto">
+      <div className="flex justify-center overflow-x-auto space-x-8 md:w-screen h-20 mx-auto">
         {leftSideMenuTop?.map((menuBottom) => (
           <MobileBottomMenuTop
             key={menuBottom.id}
