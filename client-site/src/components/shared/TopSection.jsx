@@ -1,8 +1,9 @@
 import { CiSearch } from "react-icons/ci";
 import TopSlider from "../all-games/TopSlider";
 import { FaStar } from "react-icons/fa6";
-import { leftSideMenu } from "../MenuItems";
+import { leftSideMenu, leftSideMenuTop } from "../MenuItems";
 import MobileBannerBottom from "../home/menu/MobileBannerBottom";
+import MobileBottomMenuTop from "../home/menu/MobileBottomMenuTop";
 // import MobileBottomMenuTop from "../home/menu/MobileBottomMenuTop";
 // import { leftSideMenuTop } from "../MenuItems";
 const TopSection = () => {
@@ -29,7 +30,6 @@ const TopSection = () => {
         </div>
       </div>
 
-
       <div className="flex gap-3 mb-3 mt-3 overflow-x-auto scrollbar-hide bg-[#282828] lg:pr-16">
         {leftSideMenuTop?.map((menuBottom) => (
           <MobileBottomMenuTop
@@ -42,8 +42,7 @@ const TopSection = () => {
       </div>
 
       <div className="flex gap-3 mb-3 mt-3 sm:mt-0  lg:hidden">
-
-      {/* <div className="flex gap-3 mb-3 mt-3 sm:mt-0 overflow-x-auto scrollbar-hide lg:hidden">
+        {/* <div className="flex gap-3 mb-3 mt-3 sm:mt-0 overflow-x-auto scrollbar-hide lg:hidden">
 
         {leftSideMenu?.map((menuBottom) => (
           <MobileBannerBottom
@@ -54,6 +53,7 @@ const TopSection = () => {
           />
         ))}
       </div> */}
+      </div>
     </div>
   );
 };
