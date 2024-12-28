@@ -148,40 +148,6 @@ const TopBarMenu = () => {
     }
   };
 
-  // payment methods data
-  const paymentMethods = {
-    nagad: {
-      logo: "https://pay.hostbuybd.com/assets/template/images/nagad.png",
-      name: "Nagad",
-      mobileNumber: "01700000000",
-      amount: "9000",
-      instructions: [
-        "Go to your NAGAD Mobile Menu by dialing: *167# or Open NAGAD App.",
-        'Choose: "Send Money"',
-        "Enter the Receiver Account Number: '01700000000'",
-        "Enter the amount: '1634'",
-        "Now enter your NAGAD Mobile Menu PIN to confirm.",
-        "Done! You will receive a confirmation message from NAGAD",
-        'Put the "Transaction ID" in the upper box and press "VERIFY"',
-      ],
-    },
-    rocket: {
-      logo: "https://pay.hostbuybd.com/assets/template/images/rocket.png",
-      name: "Rocket",
-      mobileNumber: "01700000001",
-      amount: "2000",
-      instructions: [
-        "Go to your Rocket Mobile Menu by dialing: *322# or Open Rocket App.",
-        'Choose: "Send Money"',
-        "Enter the Receiver Account Number: '01700000001'",
-        "Enter the amount: '2000'",
-        "Now enter your Rocket Mobile Menu PIN to confirm.",
-        "Done! You will receive a confirmation message from Rocket",
-        'Put the "Transaction ID" in the upper box and press "VERIFY"',
-      ],
-    },
-  };
-
   return (
     <div className="bg-[#18263AE6] border-b border-[#293b55]">
       <div className="hidden lg:flex justify-between items-center gap-2">
@@ -302,14 +268,8 @@ const TopBarMenu = () => {
             )}
           </div>
 
-          <div className="w-16 h-14 text-white border-l border-[#293b55]">
-            <Link>
-              <img
-                className="p-4 px-5 w-16 h-14 rounded-full object-cover"
-                src={flag}
-                alt=""
-              />
-            </Link>
+          <div className="w-24 px-5 text-white border-l border-[#293b55]">
+            <img className="rounded-full" src={flag} alt="" />
           </div>
         </div>
       </div>
@@ -338,7 +298,7 @@ const TopBarMenu = () => {
           <div className="text-white flex gap-1 items-center">
             {user ? (
               <button onClick={openDepositModal} className="mb-2">
-                <div className="flex flex-row items-center gap-1 px-4 xl:px-6 py-2 rounded-full bg-red-700 hover:bg-red-600 duration-300 whitespace-nowrap">
+                <div className="flex flex-row items-center gap-1 px-3 xl:px-6 py-1 rounded-full bg-red-700 hover:bg-red-600 duration-300 whitespace-nowrap">
                   <p className="text-[12px] font-extrabold">DEPOSIT</p>
                   <GoPlusCircle className="text-xl" />
                 </div>
@@ -379,11 +339,6 @@ const TopBarMenu = () => {
         <div className="flex items-center justify-start gap-2 text-sm font-bold text-white w-full">
           {user ? (
             <>
-              {/* <button onClick={handleLogout} className="mb-2">
-                <p className="text-sm font-bold px-4 xl:px-6 py-2 rounded-full bg-red-600 hover:bg-red-700 duration-300 whitespace-nowrap">
-                  LOGOUT
-                </p>
-              </button> */}
               <div className="flex flex-row items-center gap-2 whitespace-nowrap">
                 <Link
                   to="/profile"

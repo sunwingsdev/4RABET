@@ -1,16 +1,18 @@
 import { CiSearch } from "react-icons/ci";
 import TopSlider from "../all-games/TopSlider";
 import { FaStar } from "react-icons/fa6";
-import { leftSideMenu } from "../MenuItems";
+import { leftSideMenu, leftSideMenuTop } from "../MenuItems";
 import MobileBannerBottom from "../home/menu/MobileBannerBottom";
 import MobileBottomMenuTop from "../home/menu/MobileBottomMenuTop";
-import { leftSideMenuTop } from "../MenuItems";
+import ScrollContent from "./ScrollContent";
+// import MobileBottomMenuTop from "../home/menu/MobileBottomMenuTop";
+// import { leftSideMenuTop } from "../MenuItems";
 const TopSection = () => {
   return (
-    <>
-      <div className="flex flex-col-reverse lg:flex-col">
+    <div>
+      <div className="flex flex-col-reverse lg:flex-col mx-auto px-2 py-2">
         <TopSlider />
-        <div className="my-4 flex flex-row items-center gap-2 w-full lg:pr-16">
+        <div className="my-4 flex flex-row items-center gap-2 w-full">
           <label className="relative block w-full">
             <span className="sr-only">Search</span>
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -28,19 +30,10 @@ const TopSection = () => {
           </button>
         </div>
       </div>
-
-      <div className="flex gap-3 mb-3 mt-3 overflow-x-auto scrollbar-hide bg-[#282828] lg:pr-16">
-        {leftSideMenuTop?.map((menuBottom) => (
-          <MobileBottomMenuTop
-            key={menuBottom.id}
-            title={menuBottom?.label}
-            img={menuBottom.Icon}
-            link={menuBottom.link}
-          />
-        ))}
+      <div className="pb-2">
+        <ScrollContent />
       </div>
-
-      <div className="flex gap-3 mb-3 mt-3 sm:mt-0 overflow-x-auto scrollbar-hide lg:hidden">
+      <div className="lg:hidden flex gap-3 mb-3 mt-3 sm:mt-0 overflow-x-auto scrollbar-hide px-2">
         {leftSideMenu?.map((menuBottom) => (
           <MobileBannerBottom
             key={menuBottom.id}
@@ -50,7 +43,7 @@ const TopSection = () => {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

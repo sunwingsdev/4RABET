@@ -8,6 +8,7 @@ import { MdGTranslate } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import { useAddDepositMutation } from "../../redux/features/allApis/depositsApi/depositsApi";
 import { useToasts } from "react-toast-notifications";
+import { uploadImage } from "../../hooks/files";
 
 const mobilePaymentMethods = [
   {
@@ -56,11 +57,13 @@ const mobilePaymentMethods = [
         property: "senderAccountNumber",
         type: "text",
         label: "Enter Sender Account Number",
+        required: true,
       },
       {
         property: "transactionId",
         type: "text",
         label: "Enter transaction id",
+        required: true,
       },
     ],
   },
@@ -86,16 +89,19 @@ const bankPaymentMethods = [
         property: "senderAccountNumber",
         type: "text",
         label: "Enter Sender Account Number",
+        required: true,
       },
       {
         property: "accountHolderName",
         type: "text",
         label: "Enter Account Holder Name",
+        required: true,
       },
       {
         property: "screenshot",
         type: "file",
         label: "Attach a screenshot",
+        required: true,
       },
     ],
   },
@@ -123,54 +129,70 @@ const DepositModal = ({ closeDepositModal }) => {
     goNextStep();
   };
 
-  const handleFileChange = (e, label) => {
-    const selectedFile = e.target.files[0];
-    setFiles({
-      ...files,
-      [label]: selectedFile,
-    });
+  const handleFileChange = (e, property) => {
+    if (e.target.files) {
+      setFiles((prevFiles) => ({
+        ...prevFiles,
+        [property]: e.target.files[0],
+      }));
+    }
   };
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData(formRef.current);
-    const paymentInputs = [];
-    formData.forEach((value, key) => {
-      const paymentInput = {
-        [key]: value,
+
+    const images = [files];
+    let paymentInputs = [];
+
+    try {
+      if (files) {
+        const uploadPromises = images.flatMap((item) =>
+          Object.keys(item).map((key) =>
+            uploadImage(item[key]).then((result) => ({
+              [key]: result.filePath,
+            }))
+          )
+        );
+        const uploadedImages = await Promise.all(uploadPromises);
+        paymentInputs = [...paymentInputs, ...uploadedImages];
+      }
+      formData.forEach((value, key) => {
+        if (!(value instanceof File)) {
+          const paymentInput = {
+            [key]: value,
+          };
+          paymentInputs.push(paymentInput);
+        }
+      });
+      const depositInfo = {
+        amount: depositAmount,
+        userId: singleUser?._id,
+        method: paymentMethod?.paymentMethod,
+        gateway: paymentMethod?.gateway,
+        paymentInputs: paymentInputs,
       };
-      paymentInputs.push(paymentInput);
-    });
-    const depositInfo = {
-      amount: depositAmount,
-      userId: singleUser?._id,
-      method: paymentMethod?.paymentMethod,
-      gateway: paymentMethod?.gateway,
-      paymentInputs: paymentInputs,
-    };
-    if (depositAmount) {
-      try {
+      if (depositAmount) {
         setLoading(true);
         const { data } = await addDeposit(depositInfo);
         if (data.insertedId) {
-          addToast("Depositted successfully.Wait for the response", {
+          addToast("Deposited successfully. Wait for the response.", {
             appearance: "success",
             autoDismiss: true,
           });
           closeDepositModal();
           setLoading(false);
         }
-      } catch (error) {
-        console.log("Error during deposit submission:", error);
-        setLoading(false);
+      } else {
+        addToast("Add amount to deposit", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+        setStep(2);
       }
-    } else {
-      addToast("Add amount to deposit", {
-        appearance: "error",
-        autoDismiss: true,
-      });
-      setStep(2);
+    } catch (error) {
+      console.error("Error during deposit submission:", error);
+      setLoading(false);
     }
   };
 
@@ -196,6 +218,13 @@ const DepositModal = ({ closeDepositModal }) => {
                 <span className="text-yellow-300">Bet</span>Russ
               </h2>
               <p className="text-2xl font-bold text-white">Deposit</p>
+            </div>
+            <div className="flex mt-2 justify-between items-center gap-4 py-2 px-4 text-gray-700 bg-gray-50 border-2 border-blue-500">
+              <IoHomeOutline onClick={() => setStep(1)} size={30} />
+              <div className="flex gap-3">
+                <MdGTranslate size={30} />
+                <IoMdClose onClick={closeDepositModal} size={30} />
+              </div>
             </div>
             <div className="mt-6">
               <div className="flex">
@@ -365,7 +394,7 @@ const DepositModal = ({ closeDepositModal }) => {
               <form ref={formRef}>
                 <div>
                   {paymentMethod?.inputs?.map(
-                    ({ label, type, property }, index) => (
+                    ({ label, type, property, required }, index) => (
                       <div key={index}>
                         <p className="text-white mt-4 text-sm font-semibold">
                           {label}
@@ -374,10 +403,11 @@ const DepositModal = ({ closeDepositModal }) => {
                           <div>
                             <input
                               type="file"
+                              accept="image/*"
                               name={property}
-                              onChange={(e) => handleFileChange(e, label)}
+                              onChange={(e) => handleFileChange(e, property)}
                               className="w-full my-2 px-5 py-2 font-semibold bg-white border border-gray-500 rounded-lg focus:outline-none placeholder-gray-500 text-black"
-                              required
+                              required={required}
                             />
                             {files[label] && (
                               <p className="mt-2 text-sm text-gray-500">
@@ -391,7 +421,7 @@ const DepositModal = ({ closeDepositModal }) => {
                             type={type}
                             className="w-full my-2 px-5 py-2 font-semibold bg-white border border-gray-500 rounded-lg focus:outline-none placeholder-gray-500 text-black"
                             placeholder={label}
-                            required
+                            required={required}
                           />
                         )}
                       </div>

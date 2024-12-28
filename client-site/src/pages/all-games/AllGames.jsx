@@ -15,30 +15,29 @@ import VirtualSports from "../../components/all-games/VirtualSports";
 import OtherGames from "../../components/all-games/OtherGames";
 import TopSection from "../../components/shared/TopSection";
 import PageTop from "../../components/shared/PageTop";
+import ScrollContent from "../../components/shared/ScrollContent";
 
 const AllGames = () => {
   return (
-    <div className="bg-[#091222] pt-10 sm:pt-14 mt-[51px] lg:mt-0">
+    <div className="bg-[#091222]">
       <PageTop title="All Games" Icon={FaGamepad} />
-      <div className="p-4">
-        <TopSection />
-
-        <div className="flex flex-col gap-4">
-          <PopularCategory />
-          <RabetExclusive />
-          <NewGames />
-          <LiveGames />
-          <SlotsGame />
-          <CrashGames />
-          <LocalGames />
-          <FastGames />
-          <RouletteGames />
-          <BaccaratGames />
-          <BlackJackGames />
-          <TableGames />
-          <VirtualSports />
-          <OtherGames />
-        </div>
+      <TopSection />
+     
+      <div className="flex flex-col gap-4">
+        <PopularCategory />
+        <RabetExclusive />
+        <NewGames />
+        <LiveGames />
+        <SlotsGame />
+        <CrashGames />
+        <LocalGames />
+        <FastGames />
+        <RouletteGames />
+        <BaccaratGames />
+        <BlackJackGames />
+        <TableGames />
+        <VirtualSports />
+        <OtherGames />
       </div>
     </div>
   );
