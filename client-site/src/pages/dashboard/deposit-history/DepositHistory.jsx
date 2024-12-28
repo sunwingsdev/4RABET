@@ -46,17 +46,17 @@ const DepositHistory = () => {
           </button>
         </form>
       </div>
-      <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border border-[#172437]">
-          <thead className="text-xs text-gray-700 uppercase bg-[#172437] dark:bg-[#172437] dark:text-gray-400">
-            <tr>
-              <th className="px-6 py-3">Name</th>
-              <th className="px-6 py-3">Deposit Method</th>
-              <th className="px-6 py-3">Sender Inputs</th>
-              <th className="px-6 py-3">Amount</th>
-              <th className="px-6 py-3">Slip</th>
-              <th className="px-6 py-3">Time & Date</th>
-              <th className="px-6 py-3">Status</th>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse border border-gray-700">
+          <thead>
+            <tr className="bg-gray-700 text-white">
+              <th className="px-4 py-2">Name</th>
+              <th className="px-4 py-2">Deposit Method</th>
+              <th className="px-4 py-2">Sender Inputs</th>
+              <th className="px-4 py-2">Amount</th>
+              <th className="px-4 py-2">Slip</th>
+              <th className="px-4 py-2">Time & Date</th>
+              <th className="px-4 py-2">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -64,29 +64,27 @@ const DepositHistory = () => {
               deposit?.paymentInputs?.map((input, inputIndex) => (
                 <tr
                   key={`${deposit?._id}-${inputIndex}`}
-                  className={`border-b border-gray-700 ${
-                    index % 2 === 0
-                      ? "bg-white text-black"
-                      : "bg-[#223550] text-white"
-                  }`}
+                  className={`${
+                    index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
+                  } text-black`}
                 >
                   {inputIndex === 0 && (
                     <>
                       <td
                         rowSpan={deposit?.paymentInputs?.length || 1}
-                        className="px-6 py-4 font-medium whitespace-nowrap"
+                        className="px-4 py-2 font-medium"
                       >
                         {deposit?.userInfo?.name || "N/A"}
                       </td>
                       <td
                         rowSpan={deposit?.paymentInputs?.length || 1}
-                        className="px-6 py-4"
+                        className="px-4 py-2"
                       >
                         {deposit?.method || "N/A"}
                       </td>
                     </>
                   )}
-                  <td className="px-6 py-4 inline-flex flex-col">
+                  <td className="px-4 py-2">
                     {Object.entries(input || {}).map(([key, value]) => {
                       const isImage =
                         typeof value === "string" &&
@@ -101,17 +99,17 @@ const DepositHistory = () => {
                             key={key}
                           >
                             <img
-                              src={`${
-                                import.meta.env.VITE_BASE_API_URL
-                              }${value}`}
+                              src={`${import.meta.env.VITE_BASE_API_URL}${
+                                deposit?.screenshot
+                              }`}
                               alt="Deposit Screenshot"
-                              className="w-full h-24 object-cover rounded"
+                              className="w-20 h-20 object-cover rounded-md"
                             />
                           </Link>
                         );
                       }
                       return (
-                        <span key={key} className="font-bold capitalize">
+                        <span key={key} className="block">
                           {key}: {value || "N/A"}
                         </span>
                       );
@@ -122,19 +120,19 @@ const DepositHistory = () => {
                     <>
                       <td
                         rowSpan={deposit?.paymentInputs?.length || 1}
-                        className="px-6 py-4"
+                        className="px-4 py-2"
                       >
                         {deposit?.amount || "N/A"}
                       </td>
                       <td
                         rowSpan={deposit?.paymentInputs?.length || 1}
-                        className="px-6 py-4"
+                        className="px-4 py-2 text-center"
                       >
                         <IoCloudUploadOutline className="text-2xl cursor-pointer" />
                       </td>
                       <td
                         rowSpan={deposit?.paymentInputs?.length || 1}
-                        className="px-6 py-4"
+                        className="px-4 py-2"
                       >
                         {deposit?.createdAt
                           ? new Date(deposit.createdAt).toLocaleString(
@@ -152,12 +150,12 @@ const DepositHistory = () => {
                       </td>
                       <td
                         rowSpan={deposit?.paymentInputs?.length || 1}
-                        className="px-6 py-4 text-center flex flex-col items-center gap-2"
+                        className="px-4 py-2 text-center"
                       >
                         {deposit?.status === "pending" ? (
-                          <>
+                          <div className="flex flex-col gap-2">
                             <button
-                              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                              className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
                               onClick={() =>
                                 handleStatusClick(deposit, "completed")
                               }
@@ -165,20 +163,20 @@ const DepositHistory = () => {
                               Complete
                             </button>
                             <button
-                              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                              className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
                               onClick={() =>
                                 handleStatusClick(deposit, "reject")
                               }
                             >
                               Reject
                             </button>
-                          </>
+                          </div>
                         ) : (
                           <span
-                            className={`rounded-full border px-3 py-1 capitalize ${
+                            className={`rounded-full px-3 py-1 text-white capitalize ${
                               deposit?.status === "completed"
-                                ? "bg-green-500 text-white"
-                                : "bg-red-500 text-white"
+                                ? "bg-green-500"
+                                : "bg-red-500"
                             }`}
                           >
                             {deposit?.status}
@@ -192,7 +190,7 @@ const DepositHistory = () => {
             )}
             {allDeposits?.length === 0 && (
               <tr>
-                <td colSpan="7" className="text-center py-4 text-white">
+                <td colSpan="7" className="text-center py-4 text-gray-500">
                   No deposits found.
                 </td>
               </tr>
