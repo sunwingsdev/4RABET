@@ -219,6 +219,13 @@ const DepositModal = ({ closeDepositModal }) => {
               </h2>
               <p className="text-2xl font-bold text-white">Deposit</p>
             </div>
+            <div className="flex mt-2 justify-between items-center gap-4 py-2 px-4 text-gray-700 bg-gray-50 border-2 border-blue-500">
+              <IoHomeOutline onClick={() => setStep(1)} size={30} />
+              <div className="flex gap-3">
+                <MdGTranslate size={30} />
+                <IoMdClose onClick={closeDepositModal} size={30} />
+              </div>
+            </div>
             <div className="mt-6">
               <div className="flex">
                 <button
