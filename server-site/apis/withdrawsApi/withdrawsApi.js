@@ -61,6 +61,13 @@ const withdrawsApi = (withdrawsCollection) => {
     res.send(result);
   });
 
+  // delete a withdraw
+  router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    const query = { _id: new ObjectId(id) };
+    const result = await withdrawsCollection.deleteOne(query);
+    res.send(result);
+  });
   return router;
 };
 module.exports = withdrawsApi;

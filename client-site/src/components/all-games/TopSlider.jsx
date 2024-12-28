@@ -18,7 +18,7 @@ const TopSlider = () => {
           disableOnInteraction: false,
         }}
         modules={[Autoplay, Pagination]}
-        className="mySwiper"
+        className="mySwiper rounded-md"
       >
         {/* Slide 1 */}
         <SwiperSlide>
