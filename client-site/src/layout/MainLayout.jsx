@@ -12,36 +12,36 @@ const MainLayout = () => {
     location.pathname === "/payment-history" ||
     location.pathname === "/rules";
   return (
-    <div className="bg-[#152234]">
-      {/* <Menu /> */}
-      <div className="fixed top-0 z-50 w-full">
+    <div className="bg-[#152234] relative">
+      {/* Top Navigation */}
+      <header className="fixed top-0 z-[1000] w-full">
         <TopBarMenu />
-      </div>
-      <div className="flex">
-        {!isSpecialRoute && (
-          <div className="fixed left-0 z-10 lg:block hidden">
-            <div className="w-52 xl:w-60 h-screen overflow-y-auto scrollbar-hide bg-[#0d1827] border-r border-[#293b55]">
-              <LeftSitBarMenu />
-            </div>
-          </div>
-        )}
-        <div
-          className={`absolute top-0 ${
-            !isSpecialRoute ? "lg:left-52 xl:left-60" : "left-0"
-          } right-0`}
-        >
-          <Outlet />
-          <Footer />
-        </div>
-        <div className="fixed right-0 z-10 lg:block hidden">
-          <div className="w-16 h-screen overflow-y-auto scrollbar-hide bg-[#182539] border-l border-[#293b55]">
-            <RightSitBarMenu />
-          </div>
-        </div>
-      </div>
-      <div className="">
-        <MobileMenu />
-      </div>
+      </header>
+
+      {/* Left Sidebar */}
+      {!isSpecialRoute && (
+        <aside className="fixed left-0 z-[998] lg:block hidden w-[20%] h-screen overflow-y-auto bg-[#0d1827] border-r border-[#293b55]">
+          <LeftSitBarMenu />
+        </aside>
+      )}
+
+      {/* Right Sidebar */}
+      <aside className="fixed right-0 z-[999] lg:block hidden w-[7%] xl:w-[5%] h-screen overflow-y-auto bg-[#182539] border-l border-[#293b55]">
+        <RightSitBarMenu />
+      </aside>
+
+      {/* Main Content */}
+      <main
+        className={`pt-16 ${
+          !isSpecialRoute ? "lg:ps-[20%] lg:pe-[7%] xl:pe-[5%]" : ""
+        }`}
+      >
+        <Outlet />
+        <Footer />
+      </main>
+
+      {/* Mobile Menu */}
+      <MobileMenu />
     </div>
   );
 };

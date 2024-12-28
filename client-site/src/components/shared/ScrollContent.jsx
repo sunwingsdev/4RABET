@@ -1,20 +1,18 @@
-import { Link } from "react-router";
 import { leftSideMenuTop } from "../MenuItems";
 import MobileBottomMenuTop from "../home/menu/MobileBottomMenuTop";
 
 const ScrollContent = () => {
   return (
-    <div>
-      <div className="flex justify-center overflow-x-auto space-x-8 md:w-screen h-20 mx-auto">
-        {leftSideMenuTop?.map((menuBottom) => (
-          <MobileBottomMenuTop
-            key={menuBottom.id}
-            title={menuBottom.label}
-            img={menuBottom.Icon}
-            link={menuBottom.link}
-          />
-        ))}
-      </div>
+    <div className="flex py-3 justify-start gap-2 overflow-x-auto scrollbar-hide bg-[#282828] scroll-smooth scroll-snap-x snap-mandatory">
+      {leftSideMenuTop?.map((menuBottom) => (
+        <MobileBottomMenuTop
+          key={menuBottom.id}
+          title={menuBottom.label}
+          img={menuBottom.Icon}
+          link={menuBottom.link}
+          className="scroll-snap-align-start"
+        />
+      ))}
     </div>
   );
 };
