@@ -10,7 +10,7 @@ const path = require("path");
 const usersApi = require("./apis/usersApi/usersApi");
 const depositsApi = require("./apis/depositsApi/depositsApi");
 const withdrawsApi = require("./apis/withdrawsApi/withdrawsApi");
-const homeControlsApi = require("./apis/homeControlsApi/homeControlsApi");
+const homeControlApi = require("./apis/homeControlApi/homeControlApi");
 
 const corsConfig = {
   origin: [
@@ -93,7 +93,7 @@ async function run() {
     app.use("/users", usersApi(usersCollection));
     app.use("/deposits", depositsApi(depositsCollection));
     app.use("/withdraws", withdrawsApi(withdrawsCollection));
-    app.use("/home-controls", homeControlsApi(homeControlsCollection));
+    app.use("/home-controls", homeControlApi(homeControlsCollection));
 
     // ---------=======>
     app.get("/api/users/:email", async (req, res) => {
