@@ -8,7 +8,7 @@ import image3 from "../../assets/images/3.jpg";
 
 const TopSlider = () => {
   return (
-    <div className="w-dvw max-w-[100%] overflow-hidden rounded-md relative mx-auto">
+    <div className="rounded-md relative">
       <Swiper
         pagination={{
           clickable: true,
@@ -22,15 +22,27 @@ const TopSlider = () => {
       >
         {/* Slide 1 */}
         <SwiperSlide>
-          <img className="h-auto w-full" src={image1} alt="Slide 1" />
+          <img
+            className="h-auto w-full rounded-md"
+            src={image1}
+            alt="Slide 1"
+          />
         </SwiperSlide>
         {/* Slide 2 */}
         <SwiperSlide>
-          <img className="h-auto w-full" src={image2} alt="Slide 2" />
+          <img
+            className="h-auto w-full rounded-md"
+            src={image2}
+            alt="Slide 2"
+          />
         </SwiperSlide>
         {/* Slide 3 */}
         <SwiperSlide>
-          <img className="h-auto w-full" src={image3} alt="Slide 3" />
+          <img
+            className="h-auto w-full rounded-md"
+            src={image3}
+            alt="Slide 3"
+          />
         </SwiperSlide>
       </Swiper>
     </div>
