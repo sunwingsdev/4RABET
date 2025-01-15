@@ -10,6 +10,7 @@ const path = require("path");
 const usersApi = require("./apis/usersApi/usersApi");
 const depositsApi = require("./apis/depositsApi/depositsApi");
 const withdrawsApi = require("./apis/withdrawsApi/withdrawsApi");
+const homeControlApi = require("./apis/homeControlApi/homeControlApi");
 
 const corsConfig = {
   origin: [
@@ -19,6 +20,11 @@ const corsConfig = {
     "https://www.betruss.com",
     "www.betruss.com",
     "betruss.com",
+    "https://4rabet.oraclesoft.org",
+    "http://4rabet.oraclesoft.org",
+    "https://www.4rabet.oraclesoft.org",
+    "www.4rabet.oraclesoft.org",
+    "4rabet.oraclesoft.org",
     "*",
   ],
   credential: true,
@@ -83,12 +89,16 @@ async function run() {
     const usersCollection = client.db("rabet").collection("users");
     const depositsCollection = client.db("rabet").collection("deposits");
     const withdrawsCollection = client.db("rabet").collection("withdraws");
+    const homeControlsCollection = client
+      .db("rabet")
+      .collection("homeControls");
     //collections end
 
     // APIs start
     app.use("/users", usersApi(usersCollection));
     app.use("/deposits", depositsApi(depositsCollection));
     app.use("/withdraws", withdrawsApi(withdrawsCollection));
+    app.use("/home-controls", homeControlApi(homeControlsCollection));
 
     // ---------=======>
     app.get("/api/users/:email", async (req, res) => {
