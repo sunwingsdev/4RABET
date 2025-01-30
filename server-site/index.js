@@ -5,13 +5,28 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 const { upload, deleteFile } = require("./utils");
+const path = require("path");
 
 const usersApi = require("./apis/usersApi/usersApi");
 const depositsApi = require("./apis/depositsApi/depositsApi");
 const withdrawsApi = require("./apis/withdrawsApi/withdrawsApi");
+const homeControlApi = require("./apis/homeControlApi/homeControlApi");
 
 const corsConfig = {
-  origin: ["http://localhost:5173"],
+  origin: [
+    "http://localhost:5173",
+    "https://betruss.com",
+    "http://betruss.com",
+    "https://www.betruss.com",
+    "www.betruss.com",
+    "betruss.com",
+    "https://4rabet.oraclesoft.org",
+    "http://4rabet.oraclesoft.org",
+    "https://www.4rabet.oraclesoft.org",
+    "www.4rabet.oraclesoft.org",
+    "4rabet.oraclesoft.org",
+    "*",
+  ],
   credential: true,
   optionSuccessStatus: 200,
   methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
@@ -34,6 +49,9 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
+
+// Serve static files from the "uploads" directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes for image upload and delete
 app.post("/upload", upload.single("image"), (req, res) => {
@@ -71,12 +89,16 @@ async function run() {
     const usersCollection = client.db("rabet").collection("users");
     const depositsCollection = client.db("rabet").collection("deposits");
     const withdrawsCollection = client.db("rabet").collection("withdraws");
+    const homeControlsCollection = client
+      .db("rabet")
+      .collection("homeControls");
     //collections end
 
     // APIs start
     app.use("/users", usersApi(usersCollection));
     app.use("/deposits", depositsApi(depositsCollection));
     app.use("/withdraws", withdrawsApi(withdrawsCollection));
+    app.use("/home-controls", homeControlApi(homeControlsCollection));
 
     // ---------=======>
     app.get("/api/users/:email", async (req, res) => {

@@ -1,52 +1,11 @@
 import { useState } from "react";
-import { SlGameController } from "react-icons/sl";
-import { GiGamepadCross, GiRibbonMedal } from "react-icons/gi";
-import { BsFront } from "react-icons/bs";
-import logo from "../../../assets/logo.png";
-import {
-  FaAffiliatetheme,
-  FaAngleDown,
-  FaChartLine,
-  FaGamepad,
-  FaKey,
-  FaRegBellSlash,
-  FaRegCircle,
-  FaTree,
-  FaTrophy,
-} from "react-icons/fa";
-import { IoIosArrowBack, IoMdHome, IoMdMenu } from "react-icons/io";
-import { PiFlagBannerFoldDuotone, PiCashRegister } from "react-icons/pi";
+import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router";
-import { TbAffiliate } from "react-icons/tb";
-import { FaUsers } from "react-icons/fa";
-import { PiHandWithdrawDuotone, PiHandDepositDuotone } from "react-icons/pi";
-import {
-  MdConnectWithoutContact,
-  MdHistory,
-  MdOutlineRemoveFromQueue,
-  MdOutlineSecurity,
-  MdSupport,
-} from "react-icons/md";
-import { VscSymbolMethod } from "react-icons/vsc";
-import { CiSliderHorizontal } from "react-icons/ci";
-import {
-  BsChatText,
-  BsPiggyBank,
-  BsQrCode,
-  BsShop,
-  BsBank,
-} from "react-icons/bs";
-import {
-  IoDiamondOutline,
-  IoLogoWechat,
-  IoSettingsSharp,
-  IoGameController,
-} from "react-icons/io5";
-// import Modal from "@/components/shared/Modal";
-// import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
+import { FaAngleDown, FaRegCircle, FaTimes } from "react-icons/fa";
+import logo from "../../../assets/logo.png";
 
-const DashboardSidebar = ({ open, setOpen }) => {
-  // const { data: homeControls } = useGetHomeControlsQuery();
+const DashboardSidebar = ({ open, setOpen, menuItems }) => {
+  // const { data: allAgents } = useGetAgentsQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState({
     GamesControl: false,
@@ -60,16 +19,17 @@ const DashboardSidebar = ({ open, setOpen }) => {
     Settings: false, // Track submenu state for Games Control
   });
 
-  // const logoHomeControl = homeControls?.find(
-  //   (control) => control.category === "logo" && control.isSelected === true
-  // );
 
   // Toggle submenu visibility
   const toggleSubmenu = (menu) => {
-    setSubmenuOpen((prevState) => ({
-      ...prevState,
-      [menu]: !prevState[menu],
-    }));
+    setSubmenuOpen((prevState) => {
+      const updatedState = {};
+      for (let key in prevState) {
+        updatedState[key] = false;
+      }
+      updatedState[menu] = !prevState[menu];
+      return updatedState;
+    });
   };
 
   // Handle toggle sidebar visibility
@@ -87,124 +47,6 @@ const DashboardSidebar = ({ open, setOpen }) => {
     setIsModalOpen(false);
   };
 
-  // Menu items with dynamic submenu
-  const menuItems = [
-    { label: "Dashboard", icon: <IoMdHome />, to: "/dashboard" },
-    { label: "Users", icon: <FaUsers />, to: "/dashboard/users" },
-    { label: "Cash Agent", icon: <PiCashRegister />, to: "/dashboard/users" },
-    {
-      label: "Affiliators",
-      icon: <FaAffiliatetheme />,
-      to: "/dashboard/affilitors",
-    },
-    {
-      label: "Games Control",
-      icon: <IoGameController />,
-      submenu: [
-        { label: "Categories", to: "/dashboard/games" },
-        { label: "Active Games", to: "/dashboard/allusers" },
-        { label: "Inactive Games", to: "/dashboard/userProfile" },
-      ],
-    },
-    {
-      label: "Games Api key",
-      icon: <GiGamepadCross />,
-      submenu: [
-        { label: "Sprots Live TV", to: "/dashboard/gamesApi" },
-        { label: "BetFair API", to: "/dashboard" },
-        { label: "Sports Radar API", to: "/dashboard/userProfile" },
-        { label: "Odds Jam API", to: "/dashboard/userProfile" },
-        { label: "Bet Construct API", to: "/dashboard/userProfile" },
-        { label: "Kambi API", to: "/dashboard/userProfile" },
-        { label: "Pinnacle API", to: "/dashboard/userProfile" },
-        { label: "SoftSwiss API", to: "/dashboard" },
-        { label: "Betradar API", to: "/dashboard" },
-        { label: "Evolution API", to: "/dashboard" },
-        { label: "Pragmatic Play API", to: "/dashboard" },
-        { label: "Playtech API", to: "/dashboard" },
-        { label: "NetEnt API", to: "/dashboard" },
-        { label: "Betsoft Gaming API", to: "/dashboard" },
-      ],
-    },
-    {
-      label: "Bonuses",
-      icon: <GiRibbonMedal />,
-      submenu: [
-        { label: "Happy Hours", to: "/dashboard/games" },
-        { label: "Deposit Bonuses", to: "/dashboard" },
-        { label: "Reffer Bonuses", to: "/dashboard" },
-        { label: "WellCome Bonuses Bonuses", to: "/dashboard" },
-      ],
-    },
-    {
-      label: "game History",
-      icon: <SlGameController />,
-      submenu: [
-        { label: "Play Stats", to: "/dashboard" },
-        { label: "Win Game Stats", to: "/dashboard" },
-        { label: "Loss Game Stats", to: "/dashboard" },
-      ],
-    },
-    { label: "Tournament", icon: <BsShop />, to: "/dashboard" },
-    { label: "Jack Pot", icon: <BsShop />, to: "/dashboard" },
-    {
-      label: "Fontend",
-      icon: <BsFront />,
-      submenu: [
-        { label: "Slaider", to: "/dashboard" },
-        { label: "Promotions", to: "/dashboard" },
-        { label: "Pages", to: "/dashboard" },
-        { label: "Notice", to: "/dashboard" },
-        { label: "About Us", to: "/dashboard" },
-        { label: "FQA", to: "/dashboard" },
-        { label: "Sponsorship", to: "/dashboard" },
-        { label: "Brand Abmassador", to: "/dashboard" },
-      ],
-    },
-    {
-      label: "Banking Deposit",
-      icon: <BsPiggyBank />,
-      submenu: [
-        { label: "Deposit Methord", to: "/dashboard" },
-        { label: "Deposit History", to: "/dashboard/deposits" },
-      ],
-    },
-    {
-      label: "Banking Withdraw",
-      icon: <BsBank />,
-      submenu: [
-        { label: "Withdraw Methord", to: "/dashboard" },
-        { label: "Withdraw History", to: "/dashboard/withdraws" },
-      ],
-    },
-    {
-      label: "Settings",
-      icon: <IoSettingsSharp />,
-      submenu: [
-        { label: "Pincodes", to: "/dashboard" },
-        { label: "Activety Log", to: "/dashboard" },
-        { label: "Permissions", to: "/dashboard" },
-        { label: "Getway Api keys", to: "/dashboard" },
-        { label: "SMS", to: "/dashboard" },
-        { label: "Mailings", to: "/dashboard" },
-        { label: "Support", to: "/dashboard" },
-        { label: "Security", to: "/dashboard" },
-      ],
-    },
-    {
-      label: "Oracle Technology",
-      icon: <IoLogoWechat />,
-      submenu: [
-        { label: "Instant Support", to: "/dashboard" },
-        { label: "Normal Support", to: "/dashboard" },
-        { label: "Permissions", to: "/dashboard" },
-        { label: "Notice", to: "/dashboard" },
-        { label: "About Us", to: "/dashboard" },
-        { label: "Contact Us", to: "/dashboard" },
-      ],
-    },
-  ];
-
   return (
     <div>
       <div
@@ -213,25 +55,18 @@ const DashboardSidebar = ({ open, setOpen }) => {
         } hidden md:block duration-300 h-screen fixed`}
       >
         {/* Start Top collapse */}
-        <div className={`bg-zinc-800 py-3 ${!open && "py-5"}`}>
+        <div className={`bg-[#152234] py-3 ${!open && "py-5"}`}>
           <div className="flex gap-x-3 items-center justify-center">
             <div className={`flex gap-1 ${!open && "hidden"}`}>
               <Link
                 to={"/"}
                 className="flex items-center gap-1 px-2 py-0.5 rounded-lg"
               >
-                {/* {logoHomeControl?.image ? (
-                  <img
-                    className="w-40"
-                    src={`${import.meta.env.VITE_BASE_API_URL}${
-                      logoHomeControl?.image
-                    }`}
-                    alt="Logo"
-                  />
-                ) : (
-                  <div className="h-10"></div>
-                )} */}
+                {/* {isLoading ? (
+                  <div className="w-32 h-10 bg-gray-300 animate-pulse rounded"></div>
+                ) : ( */}
                 <img className="w-40" src={logo} alt="Logo" />
+                {/* )} */}
               </Link>
             </div>
             <div>
@@ -249,41 +84,60 @@ const DashboardSidebar = ({ open, setOpen }) => {
 
       {/* Start Menu bar */}
       <div
-        className={`bg-[#172437] overflow-y-auto fixed mt-[62px] hidden md:block pb-16 ${
+        className={`bg-[#152234] overflow-y-auto fixed mt-[62px] hidden md:block pb-16 ${
           open ? "w-64" : "w-16"
         } text-sm text-white duration-300 font-semibold h-full scrollbar-hide`}
       >
         {/* Dynamic Menu Rendering */}
-        {menuItems.map((item, index) => (
+        {menuItems?.map((item, index) => (
           <div key={index}>
-            <Link to={item.to || "#"}>
+            <Link
+              // onClick={!item?.path && !item?.submenu && handleModalOpen}
+              onClick={() => {
+                if (!item?.submenu) {
+                  // If no submenu, check for modal
+                  if (!item?.path) handleModalOpen();
+                }
+              }}
+              to={item?.path || "#"}
+            >
               <div
-                className={`px-4 py-3 flex items-center gap-2 border-b border-gray-700 duration-300 hover:bg-[#114d3a] hover:border-l-4 hover:border-l-slate-400 ${
+                className={`px-4 py-3 flex flex-row items-center justify-between gap-2 border-b border-gray-700 duration-300 hover:bg-[#114d3a] hover:border-l-4 hover:border-l-slate-400 ${
                   !open && "justify-center"
                 }`}
-                onClick={() => item.submenu && toggleSubmenu(item.label)}
+                onClick={() => item?.submenu && toggleSubmenu(item?.name)}
               >
                 {/* Only show icon for menu items with submenus */}
-                {item.icon}
-                <p className={`${!open && "hidden"}`}>{item.label}</p>
+                <div className="flex flex-row items-center gap-2">
+                  {item?.icon}
+                  <p className={`${!open && "hidden"}`}>{item?.name}</p>
+                  {/* Show red circle if newAgentNotification is true for '/dashboard/cashagent' */}
+                  {/* {item?.path === "/dashboard/cashagent" &&
+                    newAgentNotification && (
+                      <span className="w-3 h-3 bg-red-500 border border-white rounded-full"></span>
+                    )} */}
+                </div>
                 {/* Show arrow for submenu toggle */}
-                {item.submenu && open && (
+                {item?.submenu && item?.submenu?.length !== 0 && open && (
                   <FaAngleDown className={`text-white ${!open && "hidden"}`} />
                 )}
               </div>
             </Link>
 
             {/* Only show submenu when "Games Control" is clicked */}
-            {item.submenu && submenuOpen[item.label] && open && (
+            {item?.submenu && submenuOpen[item?.name] && open && (
               <div className="pl-8 text-white text-sm font-semibold bg-[#114d3a] duration-300">
-                {item.submenu.map((subItem, subIndex) => (
+                {item?.submenu?.map((subItem, subIndex) => (
                   <Link
+                    onClick={
+                      !subItem.path && !subItem.submenu && handleModalOpen
+                    }
                     key={subIndex}
-                    to={subItem.to}
+                    to={subItem?.path}
                     className="py-2.5 flex gap-2"
                   >
                     <FaRegCircle size={22} className="text-yellow-300" />
-                    {subItem.label}
+                    {subItem?.name}
                   </Link>
                 ))}
               </div>
@@ -292,13 +146,20 @@ const DashboardSidebar = ({ open, setOpen }) => {
         ))}
       </div>
 
-      {/* Modal */}
-      {/* <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-        <h2>Dynamic Modal Content</h2>
-        <p>
-          Here you can show dynamic content based on the selected menu item.
-        </p>
-      </Modal> */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="text-white px-4 py-8 bg-[#152234] rounded-lg shadow-lg flex overflow-hidden relative">
+            {/* Close Button */}
+            <button
+              onClick={handleModalClose}
+              className="absolute top-2 md:top-4 right-2 md:right-4 text-[#59647a] text-lg hover:text-blue-600 duration-300"
+            >
+              <FaTimes />
+            </button>
+            <p>Please contact your developer team to connect API!!!</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

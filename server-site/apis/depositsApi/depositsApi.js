@@ -61,6 +61,14 @@ const depositsApi = (depositsCollection) => {
     res.send(result);
   });
 
+  //  delete a deposit
+  router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    const query = { _id: new ObjectId(id) };
+    const result = await depositsCollection.deleteOne(query);
+    res.send(result);
+  });
+
   return router;
 };
 module.exports = depositsApi;

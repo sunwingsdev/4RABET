@@ -25,6 +25,13 @@ const usersApi = (usersCollection) => {
     const result = await usersCollection.find().toArray();
     res.send(result);
   });
+
+  // delete user by id
+  router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    const result = await usersCollection.deleteOne({ _id: new ObjectId(id) });
+    res.send(result);
+  });
   return router;
 };
 module.exports = usersApi;

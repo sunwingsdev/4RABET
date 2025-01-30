@@ -66,8 +66,8 @@ const Footer = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
   return (
-    <div className="bg-[#152234]">
-      <div className="max-w-7xl m-auto bg-[#152234] pt-6 pb-24 lg:pb-12 pl-6 pr-6 lg:pr-20">
+    <div className="bg-[#152234] px-3">
+      <div className=" m-auto bg-[#152234] pt-6 pb-24 lg:pb-12  lg:pr-20">
         <div className="flex gap-6 items-center py-8">
           <img className="w-14" src={footerTop} alt="" />
           <p className="border-t border-[#283548] w-full h-1"></p>
