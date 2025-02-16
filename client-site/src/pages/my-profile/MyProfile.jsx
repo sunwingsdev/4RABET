@@ -3,16 +3,16 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { FaPencilAlt } from "react-icons/fa";
 import { BsUiRadiosGrid } from "react-icons/bs";
 import { Link } from "react-router";
-import { useContext } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
 
 const MyProfile = () => {
-  const { logOut } = useContext(AuthContext);
+  const dispatch = useDispatch();
   const { addToast } = useToasts();
   const handleLogout = () => {
-    logOut();
-
+    dispatch(logout());
+    localStorage.removeItem("token");
     addToast("Successfully logged out!", {
       appearance: "success",
       autoDismiss: true,

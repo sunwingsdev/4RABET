@@ -14,10 +14,12 @@ import { Link } from "react-router";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
 import ApiConnectionModal from "../../shared/ApiConnectionModal";
+import { useSelector } from "react-redux";
 
 const MobileMainMenu = ({ isMenuOpen, toggleMenu, openDepositModal }) => {
-  const { user, setIsApiModalOpen, setIsModalOpen, isApiModalOpen } =
+  const { setIsApiModalOpen, setIsModalOpen, isApiModalOpen } =
     useContext(AuthContext);
+  const { user } = useSelector((state) => state.auth);
   const { addToast } = useToasts();
 
   useEffect(() => {

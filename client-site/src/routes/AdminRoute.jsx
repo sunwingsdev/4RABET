@@ -1,31 +1,21 @@
-import { useContext } from "react";
-import { AuthContext } from "../providers/AuthProvider";
-import { Navigate, useLocation } from "react-router";
-import { useGetUserByEmailQuery } from "../redux/features/allApis/usersApi/usersApi";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const AdminRoute = ({ children }) => {
-  const { user, loading: authLoading } = useContext(AuthContext);
-  const { data: singleUser, isLoading: userLoading } = useGetUserByEmailQuery(
-    user?.email,
-    {
-      skip: !user?.email,
+  const { token, user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token || !user || user?.role !== "admin") {
+      navigate("/admin");
     }
-  );
-  const location = useLocation();
+  }, [token, user, navigate]);
 
-  if (authLoading || userLoading) {
-    return <div>Loading...</div>;
+  if (!token || !user || user?.role !== "admin") {
+    return null;
   }
-
-  if (user && singleUser?.role === "admin") {
-    return children;
-  }
-
-  if (!authLoading && !userLoading) {
-    return <Navigate to="/admin" state={{ from: location }} replace />;
-  }
-
-  return null;
+  return children;
 };
 
 export default AdminRoute;

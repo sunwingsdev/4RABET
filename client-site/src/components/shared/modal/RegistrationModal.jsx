@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { FaAngleDown, FaAngleUp, FaTimes } from "react-icons/fa";
 import { FiPlusCircle } from "react-icons/fi";
-import { useContext } from "react";
-import { AuthContext } from "../../../providers/AuthProvider";
 import { Link } from "react-router";
 import GoogleSignIn from "./GoogleSignIn";
-import { useAddUserMutation } from "../../../redux/features/allApis/usersApi/usersApi";
 import { useToasts } from "react-toast-notifications";
+import { useAddUserMutation } from "../../../redux/features/allApis/usersApi/usersApi";
 
 const CustomDropdown = ({
   currencies,
@@ -64,8 +62,7 @@ const CustomDropdown = ({
 };
 
 const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
-  const { createUser } = useContext(AuthContext); // Using context for Firebase Auth
-  const [addUser] = useAddUserMutation();
+  const [addUser, { isLoading }] = useAddUserMutation();
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -80,36 +77,43 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
     console.log("Promo Code Applied:", promoCode);
   };
 
+  const handleReset = () => {
+    setEmail("");
+    setPhone("");
+    setPassword("");
+    setSelectedCurrency(currencies[0]);
+    setSelectedOffer(offers[0]);
+    setShowPromoInput(false);
+    setPromoCode("");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Firebase create user with email and password
-      const userCredential = await createUser(email, password);
-      const user = userCredential.user;
-
       // Save user data to MongoDB
       const userData = {
         email,
         phone,
+        password,
         currency: selectedCurrency.label,
         offer: selectedOffer.label,
         promoCode,
       };
 
-      try {
-        const result = await addUser(userData);
-        if (result.data.insertedId) {
-          addToast("Registration successful!", {
-            appearance: "success",
-            autoDismiss: true,
-          });
-          closeRegistrationModal();
-        }
-      } catch (error) {
+      const result = await addUser(userData);
+      if (result.error) {
         addToast("Failed to register!", {
           appearance: "error",
           autoDismiss: true,
         });
+      }
+      if (result.data.insertedId) {
+        addToast("Registration successful!", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+        handleReset();
+        closeRegistrationModal();
       }
     } catch (error) {
       console.error("Error during registration:", error.message);
@@ -261,6 +265,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
 
             <button
               type="submit"
+              disabled={!email || !phone || !password || isLoading}
               className="w-full text-sm font-bold bg-blue-500 text-white py-3 rounded-full hover:bg-blue-600 duration-300"
             >
               SIGN UP

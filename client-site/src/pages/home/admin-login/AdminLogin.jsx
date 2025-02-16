@@ -1,25 +1,27 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import image from "../../../assets/admin/adminImage.webp";
 import { FaKey } from "react-icons/fa";
 import { FaCircleUser } from "react-icons/fa6";
 import { useToasts } from "react-toast-notifications";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../../providers/AuthProvider";
+import { useDispatch } from "react-redux";
 import {
-  useGetUserByEmailQuery,
-  useLazyGetUserByEmailQuery,
+  useLazyGetAuthenticatedUserQuery,
+  useLoginUserMutation,
 } from "../../../redux/features/allApis/usersApi/usersApi";
+import { logout, setCredentials } from "../../../redux/slices/authSlice";
 
 const AdminLogin = () => {
-  const { signIn, logOut } = useContext(AuthContext);
-  const [getSingleUser] = useLazyGetUserByEmailQuery();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [getUser] = useLazyGetAuthenticatedUserQuery();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { addToast } = useToasts();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
   // Update form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,35 +33,31 @@ const AdminLogin = () => {
     e.preventDefault();
 
     try {
-      setIsLoading(true);
-      await signIn(formData?.email, formData?.password);
-      const { data: singleUser } = await getSingleUser(formData?.email);
-      if (singleUser?.role === "admin") {
-        addToast("Login successful!", {
-          appearance: "success",
-          autoDismiss: true,
-        });
-        navigate("/dashboard");
-        setIsLoading(false);
-        setFormData({
-          email: "",
-          password: "",
-        });
-      } else {
-        logOut();
-        addToast("Login failed. Please check your credentials.", {
-          appearance: "error",
-          autoDismiss: true,
-        });
-        setIsLoading(false);
+      const { data: loginData } = await loginUser(formData);
+
+      if (loginData.token) {
+        const { data: userData } = await getUser(loginData.token);
+        if (userData?.role !== "admin") {
+          dispatch(logout());
+          localStorage.removeItem("token");
+          addToast("Please submit admin username and password!!!", {
+            appearance: "error",
+            autoDismiss: true,
+          });
+        } else {
+          dispatch(setCredentials({ token: loginData.token, user: userData }));
+          addToast("Login successful", {
+            appearance: "success",
+            autoDismiss: true,
+          });
+          navigate("/dashboard");
+        }
       }
-    } catch (err) {
-      addToast("Login failed. Please check your credentials.", {
+    } catch (error) {
+      addToast("Provide valid username and password", {
         appearance: "error",
         autoDismiss: true,
       });
-      console.error("Sign-in error:", err.message);
-      setIsLoading(false);
     }
   };
 

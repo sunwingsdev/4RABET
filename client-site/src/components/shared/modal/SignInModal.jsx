@@ -1,17 +1,24 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { MdOutlineMailOutline, MdPhoneAndroid } from "react-icons/md";
-import { AuthContext } from "../../../providers/AuthProvider";
 import GoogleSignIn from "./GoogleSignIn";
 import { useLocation, useNavigate } from "react-router";
 import { useToasts } from "react-toast-notifications";
+import {
+  useLazyGetAuthenticatedUserQuery,
+  useLoginUserMutation,
+} from "../../../redux/features/allApis/usersApi/usersApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../../redux/slices/authSlice";
 
 const SignInModal = ({ closeModal }) => {
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [getUser] = useLazyGetAuthenticatedUserQuery();
   const [activeTab, setActiveTab] = useState("email");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [error, setError] = useState("");
   const { addToast } = useToasts();
   const location = useLocation();
@@ -20,19 +27,16 @@ const SignInModal = ({ closeModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
-    try {
-      // Firebase সাইন ইন ফাংশন কল
-      await signIn(email, password);
-      addToast("Login successful!", { appearance: "success" });
-      navigate(from);
-      closeModal();
-    } catch (err) {
-      setError("Invalid email or password. Please try again.");
-      addToast("Login failed. Please check your credentials.", {
-        appearance: "error",
+    const { data: loginData } = await loginUser({ email, password });
+    if (loginData.token) {
+      const { data: userData } = await getUser(loginData.token);
+      dispatch(setCredentials({ token: loginData.token, user: userData }));
+      addToast("Login successful", {
+        appearance: "success",
+        autoDismiss: true,
       });
-      console.error("Sign-in error:", err.message);
+      navigate("/");
+      closeModal();
     }
   };
 

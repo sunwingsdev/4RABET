@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import logo from "../../../assets/logo.png";
 import flag from "../../../assets/EN.svg";
 import { topMenu } from "../../MenuItems";
@@ -25,17 +25,16 @@ import { useToasts } from "react-toast-notifications";
 import ApiConnectionModal from "../../shared/ApiConnectionModal";
 import DepositModal from "../../depositModal/DepositModal";
 import MobileMainMenu from "./MobileMainMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../redux/slices/authSlice";
 
 const TopBarMenu = () => {
-  const {
-    user,
-    logOut,
-    setIsModalOpen,
-    setIsApiModalOpen,
-    isModalOpen,
-    isApiModalOpen,
-  } = useContext(AuthContext);
+  const { setIsModalOpen, setIsApiModalOpen, isModalOpen, isApiModalOpen } =
+    useContext(AuthContext);
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const { addToast } = useToasts();
+  const navigate = useNavigate();
   const [isLogOutDropdownOpen, setIsLogOutDropdownOpen] = useState(false);
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
@@ -128,12 +127,13 @@ const TopBarMenu = () => {
   };
 
   const handleLogout = () => {
-    logOut();
-
+    dispatch(logout());
+    localStorage.removeItem("token");
     addToast("Successfully logged out!", {
       appearance: "success",
       autoDismiss: true,
     });
+    navigate("/");
   };
 
   const handleMenuSelect = () => {
@@ -221,6 +221,13 @@ const TopBarMenu = () => {
                         </div>
                       </div>
                       <div className="p-4 flex flex-col items-center gap-2">
+                        {user?.role === "admin" && (
+                          <Link to="/dashboard" className="w-full">
+                            <button className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold">
+                              DASHBOARD
+                            </button>
+                          </Link>
+                        )}
                         <Link to="/profile" className="w-full">
                           <button className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold">
                             MY PROFILE
@@ -340,6 +347,14 @@ const TopBarMenu = () => {
           {user ? (
             <>
               <div className="flex flex-row items-center gap-2 whitespace-nowrap">
+                {user?.role === "admin" && (
+                  <Link
+                    to="/dashboard"
+                    className="uppercase text-slate-500 text-[10px] md:text-[12px]"
+                  >
+                    Dashboard
+                  </Link>
+                )}
                 <Link
                   to="/profile"
                   className="uppercase text-slate-500 text-[10px] md:text-[12px]"
