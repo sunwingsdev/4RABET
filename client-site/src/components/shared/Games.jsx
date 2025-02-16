@@ -4,10 +4,12 @@ import { Link } from "react-router";
 import { AuthContext } from "../../providers/AuthProvider";
 import ApiConnectionModal from "./ApiConnectionModal";
 import { useToasts } from "react-toast-notifications";
+import { useSelector } from "react-redux";
 
 const Games = ({ img, title }) => {
-  const { user, setIsApiModalOpen, setIsModalOpen, isApiModalOpen } =
+  const { setIsApiModalOpen, setIsModalOpen, isApiModalOpen } =
     useContext(AuthContext);
+  const { user } = useSelector((state) => state.auth);
   const [isHovered, setIsHovered] = useState(false);
   const { addToast } = useToasts();
 

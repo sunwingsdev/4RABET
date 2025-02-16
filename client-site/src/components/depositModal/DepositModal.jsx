@@ -1,7 +1,5 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { FaTimes } from "react-icons/fa";
-import { AuthContext } from "../../providers/AuthProvider";
-import { useGetUserByEmailQuery } from "../../redux/features/allApis/usersApi/usersApi";
 import { BsArrowLeftSquare } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import { MdGTranslate } from "react-icons/md";
@@ -9,6 +7,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { useAddDepositMutation } from "../../redux/features/allApis/depositsApi/depositsApi";
 import { useToasts } from "react-toast-notifications";
 import { uploadImage } from "../../hooks/files";
+import { useSelector } from "react-redux";
 
 const mobilePaymentMethods = [
   {
@@ -108,8 +107,7 @@ const bankPaymentMethods = [
 ];
 
 const DepositModal = ({ closeDepositModal }) => {
-  const { user } = useContext(AuthContext);
-  const { data: singleUser } = useGetUserByEmailQuery(user?.email);
+  const { user } = useSelector((state) => state.auth);
   const [addDeposit] = useAddDepositMutation();
   const formRef = useRef();
   const [loading, setLoading] = useState(false);
@@ -167,7 +165,7 @@ const DepositModal = ({ closeDepositModal }) => {
       });
       const depositInfo = {
         amount: depositAmount,
-        userId: singleUser?._id,
+        userId: user?._id,
         method: paymentMethod?.paymentMethod,
         gateway: paymentMethod?.gateway,
         paymentInputs: paymentInputs,
