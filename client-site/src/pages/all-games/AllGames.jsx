@@ -16,13 +16,16 @@ import OtherGames from "../../components/all-games/OtherGames";
 import TopSection from "../../components/shared/TopSection";
 import PageTop from "../../components/shared/PageTop";
 import ScrollContent from "../../components/shared/ScrollContent";
+import MobileSlider from "../../components/all-games/MobileSlider";
 
 const AllGames = () => {
   return (
     <div className="bg-[#091222]">
       <PageTop title="All Games" Icon={FaGamepad} />
       <TopSection />
-     
+      <div className="md:hidden">
+        <MobileSlider />
+      </div>
       <div className="flex flex-col gap-4">
         <PopularCategory />
         <RabetExclusive />

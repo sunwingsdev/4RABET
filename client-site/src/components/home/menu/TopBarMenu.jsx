@@ -12,7 +12,7 @@ import ladyImg from "../../../assets/images/offers/lady.png";
 import sportImg from "../../../assets/images/offers/sport.jpg";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { TiMessages } from "react-icons/ti";
-import { FaApple, FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
 import { GoPlusCircle } from "react-icons/go";
 import {
   IoIosArrowDown,
@@ -306,14 +306,14 @@ const TopBarMenu = () => {
             ) : (
               <>
                 <Link>
-                  <FaApple size={28} className="text-blue-500" />
+                  <FaWhatsapp size={28} className="text-blue-500" />
                 </Link>
                 <Link>
                   <div className="relative flex items-center justify-center">
-                    <IoLogoAndroid className="text-3xl text-blue-500" />
-                    <p className="absolute bg-yellow-400 text-black px-1.5 py-0.5 text-[10px] -bottom-1 rounded-sm">
+                    <FaTelegramPlane className="text-3xl text-blue-500" />
+                    {/* <p className="absolute bg-yellow-400 text-black px-1.5 py-0.5 text-[10px] -bottom-1 rounded-sm">
                       NEW
-                    </p>
+                    </p> */}
                   </div>
                 </Link>
               </>

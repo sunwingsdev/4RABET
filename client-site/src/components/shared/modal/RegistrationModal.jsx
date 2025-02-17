@@ -67,7 +67,7 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
   const { createUser } = useContext(AuthContext); // Using context for Firebase Auth
   const [addUser] = useAddUserMutation();
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setphone] = useState("");
   const [password, setPassword] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
   const [selectedOffer, setSelectedOffer] = useState(offers[0]);
@@ -158,9 +158,9 @@ const RegistrationModal = ({ closeRegistrationModal, currencies, offers }) => {
             />
             <input
               type="text"
-              placeholder="Phone Number"
+              placeholder="phone"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => setphone(e.target.value)}
               className="w-full mb-2 sm:mb-4  px-5 py-2 bg-[#1c2d44] rounded-lg focus:outline-none"
             />
             <input

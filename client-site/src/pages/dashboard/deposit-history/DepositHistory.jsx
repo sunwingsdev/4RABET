@@ -84,7 +84,7 @@ const DepositHistory = () => {
                       </td>
                     </>
                   )}
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-4 inline-flex">
                     {Object.entries(input || {}).map(([key, value]) => {
                       const isImage =
                         typeof value === "string" &&
@@ -99,17 +99,20 @@ const DepositHistory = () => {
                             key={key}
                           >
                             <img
-                              src={`${import.meta.env.VITE_BASE_API_URL}${
-                                deposit?.screenshot
-                              }`}
+                              src={`${
+                                import.meta.env.VITE_BASE_API_URL
+                              }${value}`}
                               alt="Deposit Screenshot"
-                              className="w-20 h-20 object-cover rounded-md"
+                              className="w-full h-24 object-cover rounded"
                             />
                           </Link>
                         );
                       }
                       return (
-                        <span key={key} className="block">
+                        <span
+                          key={key}
+                          className="font-bold capitalize inline-flex"
+                        >
                           {key}: {value || "N/A"}
                         </span>
                       );

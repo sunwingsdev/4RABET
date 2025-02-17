@@ -10,15 +10,107 @@ import { IoIosFootball, IoLogoAndroid } from "react-icons/io";
 import { LiaProceduresSolid } from "react-icons/lia";
 import { LuMonitorStop, LuTableColumnsSplit } from "react-icons/lu";
 import { PiNumberCircleSevenFill } from "react-icons/pi";
+import { MdLanguage } from "react-icons/md";
+import { RiCustomerServiceFill } from "react-icons/ri";
+import { GrLogout } from "react-icons/gr";
 import { Link } from "react-router";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useToasts } from "react-toast-notifications";
 import ApiConnectionModal from "../../shared/ApiConnectionModal";
+import logo from "../../../assets/logo.png";
 
 const MobileMainMenu = ({ isMenuOpen, toggleMenu, openDepositModal }) => {
   const { user, setIsApiModalOpen, setIsModalOpen, isApiModalOpen } =
     useContext(AuthContext);
   const { addToast } = useToasts();
+
+  const menuItems = [
+    {
+      name: "Main",
+      icon: BsGridFill,
+      link: "/",
+    },
+    {
+      name: "LIVE",
+      icon: LuMonitorStop,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "SPORTS",
+      icon: LuTableColumnsSplit,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "Cricket",
+      icon: FaBaseballBatBall,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "Casino",
+      icon: PiNumberCircleSevenFill,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "Live Dealers",
+      icon: CgLivePhoto,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "TV Games",
+      icon: LuMonitorStop,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "Aviator",
+      icon: GiRocketThruster,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "JetX",
+      icon: LiaProceduresSolid,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "AviatriX",
+      icon: FaAvianex,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "eSport",
+      icon: IoIosFootball,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "Bonuses",
+      icon: GiDonut,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "Rules",
+      icon: FaUserTag,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "Tutorials",
+      icon: BiBookBookmark,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "ভাষা",
+      icon: MdLanguage,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "সরাসরি কথোপকথন",
+      icon: RiCustomerServiceFill,
+      action: "handleMenuSelect",
+    },
+    {
+      name: "প্রস্থান",
+      icon: GrLogout,
+      action: "handleMenuSelect",
+    },
+  ];
 
   useEffect(() => {
     // Prevent body scrolling when the menu is open
@@ -51,6 +143,16 @@ const MobileMainMenu = ({ isMenuOpen, toggleMenu, openDepositModal }) => {
         isMenuOpen ? "translate-x-0" : "-translate-x-full"
       } transition-transform duration-300`}
     >
+      <div className="w-full flex items-center justify-center gap-1">
+        <img src={logo} alt="logo" className="w-28" />
+        <Link to={"/"}>
+          <img
+            className="w-7 m-auto rounded-md object-cover"
+            src="https://ifrd.4rabetsite25.com/img/svgflags/BN.svg"
+            alt=""
+          />
+        </Link>
+      </div>
       {/* Close Button */}
       <button
         onClick={toggleMenu}
@@ -99,121 +201,93 @@ const MobileMainMenu = ({ isMenuOpen, toggleMenu, openDepositModal }) => {
       )}
 
       {/* Menu List */}
-      <ul className="font-bold text-white">
-        {/* Example of Menu Items */}
-        <li>
-          <Link to="/">
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <BsGridFill size={20} className="text-blue-500" />
-              Main
-            </p>
-          </Link>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <LuMonitorStop size={20} className="text-blue-500" />
-              LIVE
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <LuTableColumnsSplit size={20} className="text-blue-500" />
-              SPORTS
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <FaBaseballBatBall size={20} className="text-blue-500" />
-              Cricket
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <PiNumberCircleSevenFill size={20} className="text-blue-500" />
-              Casino
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <CgLivePhoto size={20} className="text-blue-500" />
-              Live Dealers
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <LuMonitorStop size={20} className="text-blue-500" />
-              TV Games
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center text-red-600 hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <GiRocketThruster size={20} className="text-red-600" />
-              Aviator
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <LiaProceduresSolid size={20} className="text-blue-500" />
-              JetX
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <FaAvianex size={20} className="text-blue-500" />
-              AviatriX
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <IoIosFootball size={20} className="text-blue-500" />
-              eSport
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <GiDonut size={20} className="text-blue-500" />
-              Bonuses
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <FaUserTag size={20} className="text-blue-500" />
-              Rules
-            </p>
-          </div>
-        </li>
-        <li>
-          <div onClick={handleMenuSelect}>
-            <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
-              <BiBookBookmark size={20} className="text-blue-500" />
-              Tutorials
-            </p>
-          </div>
-        </li>
-      </ul>
+      <div className="flex flex-col gap-5">
+        <ul className="font-bold text-white">
+          {menuItems?.slice(0, 5)?.map((item, index) => (
+            <li key={index}>
+              {item.link ? (
+                <Link to={item.link}>
+                  <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
+                    <item.icon className="text-blue-500" size={20} />
+                    {item.name}
+                  </p>
+                </Link>
+              ) : (
+                <div onClick={handleMenuSelect}>
+                  <p
+                    className={`flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a] ${
+                      item.name === "Aviator" ? "text-red-600" : ""
+                    }`}
+                  >
+                    <item.icon className="text-blue-500" size={20} />
+                    {item.name}
+                  </p>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        <ul className="grid grid-cols-3 gap-4 text-white">
+          {menuItems?.slice(5, 14)?.map((item, index) => (
+            <li key={index}>
+              {item.link ? (
+                <Link to={item.link}>
+                  <p className="flex flex-col gap-5 items-center text-center hover:bg-[#18263a] py-2 px-5 border border-[#18263a] rounded">
+                    <item.icon className="text-blue-500" size={33} />
+                    {item.name}
+                  </p>
+                </Link>
+              ) : (
+                <div onClick={handleMenuSelect}>
+                  <p
+                    className={`flex flex-col gap-5 items-center text-center hover:bg-[#18263a] py-2 px-5 border border-[#18263a] rounded ${
+                      item.name === "Aviator" ? "text-red-600" : ""
+                    }`}
+                  >
+                    <item.icon
+                      className={`${
+                        item.name === "Aviator"
+                          ? "text-red-600"
+                          : "text-blue-500"
+                      }`}
+                      size={33}
+                    />
+                    {item.name}
+                  </p>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        <ul className="font-bold text-white">
+          {menuItems?.slice(14)?.map((item, index) => (
+            <li key={index}>
+              {item.link ? (
+                <Link to={item.link}>
+                  <p className="flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a]">
+                    <item.icon className="text-blue-500" size={20} />
+                    {item.name}
+                  </p>
+                </Link>
+              ) : (
+                <div onClick={handleMenuSelect}>
+                  <p
+                    className={`flex gap-5 items-center hover:bg-[#18263a] py-2 px-5 border-b border-[#18263a] ${
+                      item.name === "Aviator" ? "text-red-600" : ""
+                    }`}
+                  >
+                    <item.icon className="text-blue-500" size={20} />
+                    {item.name}
+                  </p>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+
       {isApiModalOpen && (
         <ApiConnectionModal closeApiModal={() => setIsApiModalOpen(false)} />
       )}
