@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router";
-import logo from "../../../assets/logo.png";
 import flag from "../../../assets/EN.svg";
 import { topMenu } from "../../MenuItems";
 import { useContext, useState } from "react";
@@ -27,8 +26,10 @@ import DepositModal from "../../depositModal/DepositModal";
 import MobileMainMenu from "./MobileMainMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/slices/authSlice";
+import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
 
 const TopBarMenu = () => {
+  const { data: homeControls, isLoading } = useGetHomeControlsQuery();
   const { setIsModalOpen, setIsApiModalOpen, isModalOpen, isApiModalOpen } =
     useContext(AuthContext);
   const { user } = useSelector((state) => state.auth);
@@ -38,6 +39,10 @@ const TopBarMenu = () => {
   const [isLogOutDropdownOpen, setIsLogOutDropdownOpen] = useState(false);
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
+
+  const logo = homeControls?.find(
+    (control) => control.category === "logo" && control.isSelected
+  );
 
   const openDepositModal = () => setIsDepositModalOpen(true);
   const closeDepositModal = () => setIsDepositModalOpen(false);
@@ -154,7 +159,7 @@ const TopBarMenu = () => {
         <div className="flex items-center gap-6 xl:gap-10 2xl:gap-16">
           <div className="flex items-center gap-2 pl-5 xl:pl-3 pr-3">
             <Link to={"/"}>
-              <img className="w-36 xl:w-44 m-auto" src={logo} alt="" />
+              <img className="w-36 xl:w-44 m-auto" src={`${import.meta.env.VITE_BASE_API_URL}${logo?.image}`} alt="" />
             </Link>
             <Link to={"/"}>
               <img
